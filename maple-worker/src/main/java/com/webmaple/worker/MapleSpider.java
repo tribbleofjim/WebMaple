@@ -151,10 +151,6 @@ public class MapleSpider extends Spider {
         return this;
     }
 
-    public MapleSpider pipeline(Pipeline pipeline) {
-        return addPipeline(pipeline);
-    }
-
     @Override
     public void run() {
         checkRunningStat();
