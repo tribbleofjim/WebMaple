@@ -32,9 +32,13 @@ public class MapleSpider extends Spider {
 
     protected List<PageProcessor> processorList;
 
-    protected int tempProcessorIdx = 1;
+    protected int tempProcessorIdx;
 
-    protected int tempDownloaderIdx = 1;
+    protected int tempDownloaderIdx;
+
+    protected ReentrantLock getDownloaderLock = new ReentrantLock();
+
+    protected ReentrantLock getProcessorLock = new ReentrantLock();
 
     private ReentrantLock newUrlLock = new ReentrantLock();
 
@@ -147,22 +151,34 @@ public class MapleSpider extends Spider {
         if (processorList == null || processorList.size() == 0) {
             return pageProcessor;
         }
-        tempProcessorIdx--;
-        if (tempProcessorIdx < 0) {
-            tempProcessorIdx = processorList.size() - 1;
+        getProcessorLock.lock();
+        try {
+            tempProcessorIdx--;
+            if (tempProcessorIdx < 0) {
+                tempProcessorIdx = processorList.size() - 1;
+            }
+            return processorList.get(tempProcessorIdx);
+
+        } finally {
+            getProcessorLock.unlock();
         }
-        return processorList.get(tempProcessorIdx);
     }
 
     private Downloader getDownloader() {
         if (downloaderList == null || downloaderList.size() == 0) {
             return downloader;
         }
-        tempDownloaderIdx--;
-        if (tempDownloaderIdx < 0) {
-            tempDownloaderIdx = downloaderList.size() - 1;
+        getDownloaderLock.lock();
+        try {
+            tempDownloaderIdx--;
+            if (tempDownloaderIdx < 0) {
+                tempDownloaderIdx = downloaderList.size() - 1;
+            }
+            return downloaderList.get(tempDownloaderIdx);
+
+        } finally {
+            getDownloaderLock.unlock();
         }
-        return downloaderList.get(tempDownloaderIdx);
     }
 
     private void checkRunningStat() {
