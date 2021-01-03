@@ -1,3 +1,5 @@
+package com.webmaple.worker;
+
 import org.apache.commons.lang3.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,12 +110,57 @@ public class MapleSpider extends Spider {
         startTime = new Date();
     }
 
+    /**
+     * Add urls with information to crawl.<br>
+     *
+     * @param requests requests
+     * @return this
+     */
+    public MapleSpider addRequest(Request... requests) {
+        for (Request request : requests) {
+            addRequest(request);
+        }
+        signalNewUrl();
+        return this;
+    }
+
+    /**
+     * Add urls with information to crawl.<br>
+     *
+     * @param urls urls
+     * @return this
+     */
+    public MapleSpider addUrl(String... urls) {
+        for (String url : urls) {
+            addRequest(new Request(url));
+        }
+        return this;
+    }
+
+    /**
+     * add a pipeline for Spider
+     *
+     * @param pipeline pipeline
+     * @return this
+     * @see Pipeline
+     * @since 0.2.1
+     */
+    public MapleSpider addPipeline(Pipeline pipeline) {
+        checkIfRunning();
+        this.pipelines.add(pipeline);
+        return this;
+    }
+
+    public MapleSpider pipeline(Pipeline pipeline) {
+        return addPipeline(pipeline);
+    }
+
     @Override
     public void run() {
         checkRunningStat();
         initComponent();
         logger.info("Spider {} started!",getUUID());
-        while (!Thread.currentThread().isInterrupted() && stat.get() == STAT_RUNNING) {
+        while (!Thread.currentThread().isInterrupted() && stat.get() == Spider.STAT_RUNNING) {
             final Request request = scheduler.poll(this);
             if (request == null) {
                 if (threadPool.getThreadAlive() == 0 && exitWhenComplete) {
@@ -122,24 +169,21 @@ public class MapleSpider extends Spider {
                 // wait until new url added
                 waitNewUrl();
             } else {
-                threadPool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            processRequest(request);
-                            onSuccess(request);
-                        } catch (Exception e) {
-                            onError(request);
-                            logger.error("process request " + request + " error", e);
-                        } finally {
-                            pageCount.incrementAndGet();
-                            signalNewUrl();
-                        }
+                threadPool.execute(() -> {
+                    try {
+                        processRequest(request);
+                        onSuccess(request);
+                    } catch (Exception e) {
+                        onError(request);
+                        logger.error("process request " + request + " error", e);
+                    } finally {
+                        pageCount.incrementAndGet();
+                        signalNewUrl();
                     }
                 });
             }
         }
-        stat.set(STAT_STOPPED);
+        stat.set(Spider.STAT_STOPPED);
         // release some resources
         if (destroyWhenExit) {
             close();
@@ -184,10 +228,10 @@ public class MapleSpider extends Spider {
     private void checkRunningStat() {
         while (true) {
             int statNow = stat.get();
-            if (statNow == STAT_RUNNING) {
+            if (statNow == Spider.STAT_RUNNING) {
                 throw new IllegalStateException("Spider is already running!");
             }
-            if (stat.compareAndSet(statNow, STAT_RUNNING)) {
+            if (stat.compareAndSet(statNow, Spider.STAT_RUNNING)) {
                 break;
             }
         }
@@ -290,5 +334,4 @@ public class MapleSpider extends Spider {
             newUrlLock.unlock();
         }
     }
-
 }

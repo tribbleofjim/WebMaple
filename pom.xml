@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>maple-worker</module>
         <module>maple-admin</module>
+        <module>maple-worker</module>
     </modules>
 
     <properties>
