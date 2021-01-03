@@ -32,7 +32,9 @@ public class MapleSpider extends Spider {
 
     protected List<PageProcessor> processorList;
 
-    protected MapleManager mapleManager = new MapleManager();
+    protected int tempProcessorIdx = 1;
+
+    protected int tempDownloaderIdx = 1;
 
     private ReentrantLock newUrlLock = new ReentrantLock();
 
@@ -51,36 +53,37 @@ public class MapleSpider extends Spider {
      * the construct method is private,
      * so user can only use this method to create a maple spider.
      *
-     * @param pageProcessor pageProcessor
+     * @param processorList pageProcessor
      * @return new spider
      * @see PageProcessor
      */
-    public static MapleSpider create(PageProcessor pageProcessor) {
-        return new MapleSpider(pageProcessor);
+    public static MapleSpider create(List<PageProcessor> processorList) {
+        return new MapleSpider(processorList);
     }
 
     /**
      * create a spider with pageProcessor.
      *
-     * @param pageProcessor pageProcessor
+     * @param processorList processorList
      */
-    private MapleSpider(PageProcessor pageProcessor) {
-        super(pageProcessor);
-        initProcessorList(pageProcessor);
+    private MapleSpider(List<PageProcessor> processorList) {
+        super(processorList.get(0));
+        this.processorList = processorList;
+        this.tempProcessorIdx = processorList.size();
     }
 
-    public MapleSpider setDownloader(Downloader downloader) {
+    public MapleSpider downloaderList(List<Downloader> downloaderList) {
         checkIfRunning();
-        this.downloader = downloader;
-        initDownloaderList(downloader);
+        this.downloader = downloaderList.get(0);
+        this.downloaderList = downloaderList;
+        this.tempDownloaderIdx = downloaderList.size();
         return this;
     }
 
     protected void initComponent() {
         if (downloaderList == null || downloaderList.size() == 0) {
-            Downloader downloader = new HttpClientDownloader();
+            downloader = new HttpClientDownloader();
             downloader.setThread(threadNum);
-            initDownloaderList(downloader);
         }
         if (pipelines.isEmpty()) {
             pipelines.add(new ConsolePipeline());
@@ -101,26 +104,65 @@ public class MapleSpider extends Spider {
         startTime = new Date();
     }
 
-    private void initProcessorList(PageProcessor pageProcessor) {
-
-    }
-
-    private void initDownloaderList(Downloader downloader) {
-
+    @Override
+    public void run() {
+        checkRunningStat();
+        initComponent();
+        logger.info("Spider {} started!",getUUID());
+        while (!Thread.currentThread().isInterrupted() && stat.get() == STAT_RUNNING) {
+            final Request request = scheduler.poll(this);
+            if (request == null) {
+                if (threadPool.getThreadAlive() == 0 && exitWhenComplete) {
+                    break;
+                }
+                // wait until new url added
+                waitNewUrl();
+            } else {
+                threadPool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            processRequest(request);
+                            onSuccess(request);
+                        } catch (Exception e) {
+                            onError(request);
+                            logger.error("process request " + request + " error", e);
+                        } finally {
+                            pageCount.incrementAndGet();
+                            signalNewUrl();
+                        }
+                    }
+                });
+            }
+        }
+        stat.set(STAT_STOPPED);
+        // release some resources
+        if (destroyWhenExit) {
+            close();
+        }
+        logger.info("Spider {} closed! {} pages downloaded.", getUUID(), pageCount.get());
     }
 
     private PageProcessor getProcessor() {
         if (processorList == null || processorList.size() == 0) {
             return pageProcessor;
         }
-        return processorList.get(processorList.size() - 1);
+        tempProcessorIdx--;
+        if (tempProcessorIdx < 0) {
+            tempProcessorIdx = processorList.size() - 1;
+        }
+        return processorList.get(tempProcessorIdx);
     }
 
     private Downloader getDownloader() {
         if (downloaderList == null || downloaderList.size() == 0) {
             return downloader;
         }
-        return downloaderList.get(downloaderList.size() - 1);
+        tempDownloaderIdx--;
+        if (tempDownloaderIdx < 0) {
+            tempDownloaderIdx = downloaderList.size() - 1;
+        }
+        return downloaderList.get(tempDownloaderIdx);
     }
 
     private void checkRunningStat() {
