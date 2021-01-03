@@ -1,0 +1,2 @@
+# WebMaple
+以webmagic为内核的分布式可视化爬虫框架，参考webmagic-avalon的架构，目标是提供可分布式部署的爬虫框架，以及可视化的爬虫管理界面
