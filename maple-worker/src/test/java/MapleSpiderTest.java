@@ -2,6 +2,7 @@ import com.webmaple.worker.MapleSpider;
 import com.webmaple.worker.WorkerApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.downloader.Downloader;
 import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
@@ -29,9 +30,24 @@ public class MapleSpiderTest {
         }
         MapleSpider.create(processorList)
                 .downloaderList(downloaderList)
-                .addUrl("http://baike.baidu.com/search/word?word=水力发电&pic=1&sug=1&enc=utf8")
+                .addUrl("http://baike.baidu.com/search/word?word=地热能&pic=1&sug=1&enc=utf8",
+                        "http://baike.baidu.com/search/word?word=风力发电&pic=1&sug=1&enc=utf8",
+                        "http://baike.baidu.com/search/word?word=水力发电&pic=1&sug=1&enc=utf8",
+                        "http://baike.baidu.com/search/word?word=太阳能&pic=1&sug=1&enc=utf8")
                 .addPipeline(new ConsolePipeline())
-                .thread(1)
+                .run();
+    }
+
+    @Test
+    public void spiderTest() {
+        Spider.create(new BaiduBaikePageProcessor())
+                .setDownloader(new HttpClientDownloader())
+                .addUrl("http://baike.baidu.com/search/word?word=地热能&pic=1&sug=1&enc=utf8",
+                        "http://baike.baidu.com/search/word?word=风力发电&pic=1&sug=1&enc=utf8",
+                        "http://baike.baidu.com/search/word?word=水力发电&pic=1&sug=1&enc=utf8",
+                        "http://baike.baidu.com/search/word?word=太阳能&pic=1&sug=1&enc=utf8")
+                .addPipeline(new ConsolePipeline())
+                .thread(3)
                 .run();
     }
 }

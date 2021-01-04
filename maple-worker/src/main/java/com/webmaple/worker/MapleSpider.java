@@ -42,6 +42,10 @@ public class MapleSpider extends Spider {
 
     protected ReentrantLock getProcessorLock = new ReentrantLock();
 
+    protected int downloaderThreadNum = 1;
+
+    protected int processorThreadNum = 1;
+
     private ReentrantLock newUrlLock = new ReentrantLock();
 
     private Condition newUrlCondition = newUrlLock.newCondition();
@@ -75,14 +79,26 @@ public class MapleSpider extends Spider {
     private MapleSpider(List<PageProcessor> processorList) {
         super(processorList.get(0));
         this.processorList = processorList;
-        this.tempProcessorIdx = processorList.size();
+        this.processorThreadNum = processorList.size();
+        this.tempProcessorIdx = processorThreadNum;
     }
 
     public MapleSpider downloaderList(List<Downloader> downloaderList) {
         checkIfRunning();
         this.downloader = downloaderList.get(0);
         this.downloaderList = downloaderList;
-        this.tempDownloaderIdx = downloaderList.size();
+        this.downloaderThreadNum = downloaderList.size();
+        this.tempDownloaderIdx = downloaderThreadNum;
+        return this;
+    }
+
+    public MapleSpider downloaderThreadNum(int downloaderThreadNum) {
+        this.downloaderThreadNum = downloaderThreadNum;
+        return this;
+    }
+
+    public MapleSpider processorThreadNum(int processorThreadNum) {
+        this.processorThreadNum = processorThreadNum;
         return this;
     }
 
@@ -93,6 +109,9 @@ public class MapleSpider extends Spider {
         }
         if (pipelines.isEmpty()) {
             pipelines.add(new ConsolePipeline());
+        }
+        if (threadNum <= 1) {
+            threadNum = processorThreadNum + downloaderThreadNum;
         }
         if (threadPool == null || threadPool.isShutdown()) {
             if (executorService != null && !executorService.isShutdown()) {
@@ -258,23 +277,25 @@ public class MapleSpider extends Spider {
     }
 
     private void onDownloadSuccess(Request request, Page page) {
-        PageProcessor processor = getProcessor();
-        if (processor == null) {
-            LOGGER.error("page_processor_of_maple_spider_is_null");
-            return;
-        }
-        if (site.getAcceptStatCode().contains(page.getStatusCode())){
-            processor.process(page);
-            extractAndAddRequests(page, spawnUrl);
-            if (!page.getResultItems().isSkip()) {
-                for (Pipeline pipeline : pipelines) {
-                    pipeline.process(page.getResultItems(), this);
-                }
+        threadPool.execute(() -> {
+            PageProcessor processor = getProcessor();
+            if (processor == null) {
+                LOGGER.error("page_processor_of_maple_spider_is_null");
+                return;
             }
-        } else {
-            LOGGER.info("page status code error, page {} , code: {}", request.getUrl(), page.getStatusCode());
-        }
-        sleep(site.getSleepTime());
+            if (site.getAcceptStatCode().contains(page.getStatusCode())){
+                processor.process(page);
+                extractAndAddRequests(page, spawnUrl);
+                if (!page.getResultItems().isSkip()) {
+                    for (Pipeline pipeline : pipelines) {
+                        pipeline.process(page.getResultItems(), this);
+                    }
+                }
+            } else {
+                LOGGER.info("page status code error, page {} , code: {}", request.getUrl(), page.getStatusCode());
+            }
+            sleep(site.getSleepTime());
+        });
     }
 
     private void onDownloaderFail(Request request) {
