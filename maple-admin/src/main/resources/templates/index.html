@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>WebMaple</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+        <script type="text/javascript" src="/layui/layui.js"></script>
+    </head>
+    <body>
+        <!--新建爬虫-->
+        <div class="layui-row">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>新建爬虫</legend>
+                <div class="layui-field-box">
+                    <div th:each="keyword : ${keywords}">
+                        <span th:text="${keyword} / "></span>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
 
-</body>
+        <!--当前爬虫列表-->
+        <div class="layui-row">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>当前爬虫列表</legend>
+                <div class="layui-col-md8 layui-col-md-offset2">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">关键词</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+                            </div>
+                            <label class="layui-form-label">线程数</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="threadNum" placeholder="请输入线程数" autocomplete="off" class="layui-input">
+                            </div>
+                            <label class="layui-form-label">从第几页开始</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="startPage" placeholder="请输入起始页号" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--提交按钮-->
+                <div class="layui-col-md4 layui-col-md-offset6">
+                    <button type="button" class="layui-btn" onclick="startSpider()">开始爬取</button>
+                </div>
+            </fieldset>
+        </div>
+
+        <script type="text/javascript" src="/js/index.js"></script>
+
+    </body>
 </html>

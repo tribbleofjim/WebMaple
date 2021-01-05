@@ -1,5 +1,7 @@
 package com.webmaple.admin.model;
 
+import com.webmaple.admin.enums.CommonErrorCode;
+
 /**
  * @author lyifee
  * on 2020/12/27
@@ -33,6 +35,10 @@ public class Result {
         return new Result(message, false, null);
     }
 
+    public static Result fail(CommonErrorCode errorCode) {
+        return new Result(errorCode.getCode(), false, null);
+    }
+
     public static Result success(Object model) {
         return new Result(null, true, model);
     }
@@ -47,6 +53,10 @@ public class Result {
 
     public static Result fail(String message, Object model) {
         return new Result(message, false, model);
+    }
+
+    public static Result fail(CommonErrorCode errorCode, Object model) {
+        return new Result(errorCode.getCode(), false, model);
     }
 
     public String getMessage() {
