@@ -55,6 +55,7 @@ public class SpiderManageControllerImpl implements SpiderManageController {
 
     @Override
     @RequestMapping("/getSpiderByUUID")
+    @ResponseBody
     public Result getSpiderByUUID(String uuid) {
         if (StringUtils.isBlank(uuid)) {
             return Result.fail(CommonErrorCode.NULL_PARAM);

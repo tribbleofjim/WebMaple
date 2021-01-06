@@ -11,11 +11,72 @@
         <div class="layui-row">
             <fieldset class="layui-elem-field layui-field-title">
                 <legend>新建爬虫</legend>
-                <div class="layui-field-box">
-                    <div th:each="keyword : ${keywords}">
-                        <span th:text="${keyword} / "></span>
+                <form class="layui-form" action="">
+
+                    <label class="layui-form-label" style="width: 90px;">爬虫uuid</label>
+                    <div class="layui-input-block">
+                        <div class="layui-input-inline">
+                            <div class="layui-form-item">
+                                <div class="layui-input-inline" style="width: 300px;!important;" >
+                                    <input type="text" name="uuid"
+                                           class="layui-input" placeholder="请输入uuid(一般为网站域名)"
+                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <label class="layui-form-label" style="width: 90px;">爬虫ip</label>
+                    <div class="layui-input-block">
+                        <div class="layui-input-inline">
+                            <div class="layui-form-item">
+                                <div class="layui-input-inline" style="width: 300px;">
+                                    <select name="ip" lay-verify="required" style="width: 200%;">
+                                        <option value="0">请选择爬虫ip</option>
+                                        <option value="1">101.87.23.19</option>
+                                        <option value="2">144.34.188.164</option>
+                                        <option value="3">111.22.23.44</option>
+                                        <option value="4">111.55.33.22</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <label class="layui-form-label" style="width: 90px;">爬虫起始url</label>
+                    <div class="layui-input-block" id="startUrl">
+                        <div class="layui-input-inline">
+                            <div class="layui-form-item">
+                                <div class="layui-input-inline" style="width: 300px;!important;" >
+                                    <input type="text" name="startUrls[]"
+                                           class="layui-input"  placeholder="请输入起始url"
+                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
+                                </div>
+                                <div class="layui-input-block" style="padding-left: 500px;">
+                                    <button id="addUrl" type="button" class="layui-btn layui-btn-warm layui-btn-sm">
+                                        <i class="layui-icon">&#xe654;</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="layui-form-label" style="width: 90px;">爬虫终止url</label>
+                    <div class="layui-input-block" id="endUrl">
+                        <div class="layui-input-inline">
+                            <div class="layui-form-item">
+                                <div class="layui-input-inline" style="width: 300px;!important;" >
+                                    <input type="text" name="endUrl"
+                                           class="layui-input"  placeholder="请输入终止url"
+                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
             </fieldset>
         </div>
 
@@ -23,28 +84,7 @@
         <div class="layui-row">
             <fieldset class="layui-elem-field layui-field-title">
                 <legend>当前爬虫列表</legend>
-                <div class="layui-col-md8 layui-col-md-offset2">
-                    <form class="layui-form">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">关键词</label>
-                            <div class="layui-input-block">
-                                <input type="text" id="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">线程数</label>
-                            <div class="layui-input-block">
-                                <input type="text" id="threadNum" placeholder="请输入线程数" autocomplete="off" class="layui-input">
-                            </div>
-                            <label class="layui-form-label">从第几页开始</label>
-                            <div class="layui-input-block">
-                                <input type="text" id="startPage" placeholder="请输入起始页号" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!--提交按钮-->
-                <div class="layui-col-md4 layui-col-md-offset6">
-                    <button type="button" class="layui-btn" onclick="startSpider()">开始爬取</button>
-                </div>
+
             </fieldset>
         </div>
 
