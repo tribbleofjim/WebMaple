@@ -71,9 +71,18 @@ layui.use(['form', 'layer','table', 'jquery'], function () {
     }
 
     function stopSpider(data) {
-        // do stop spider
-        console.log(data);
-        layer.msg('停止');
+        layer.open({
+            content: '确认要停止这个爬虫吗？',
+            btn: ['确认', '取消']
+                ,btn1: function(index, layero){
+                    // do stop spider
+                    console.log(data);
+                    layer.msg('停止');
+                },
+                btn2: function(index, layero){
+                    layer.closeAll();
+                }
+        });
     }
 
     function updateSpider(data) {
