@@ -43,6 +43,18 @@
                         </div>
                     </div>
 
+                    <label class="layui-form-label" style="width: 90px;">爬虫线程数</label>
+                    <div class="layui-input-block">
+                        <div class="layui-input-inline">
+                            <div class="layui-form-item">
+                                <div class="layui-input-inline" style="width: 150px;!important;" >
+                                    <input type="text" name="threadNum"
+                                           class="layui-input" placeholder="请输入线程数"
+                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <label class="layui-form-label" style="width: 90px;">爬虫起始url</label>
                     <div class="layui-input-block" id="startUrl">
@@ -84,11 +96,38 @@
         <div class="layui-row">
             <fieldset class="layui-elem-field layui-field-title">
                 <legend>当前爬虫列表</legend>
-
             </fieldset>
+            <table class="layui-table" lay-data="{height:450, url:'/spiderList', page:true, id:'spiders'}" lay-filter="spiders">
+                <thead>
+                <tr>
+                    <th lay-data="{field:'uuid', width:170, sort: true}">uuid</th>
+                    <th lay-data="{field:'ip', width:150}">ip地址</th>
+                    <th lay-data="{field:'urls', width:850}">起始url</th>
+                    <th lay-data="{field:'state'}">当前状态</th>
+                    <th lay-data="{field:'', width:120, toolbar:'#toolBar'}">选项</th>
+                </tr>
+                </thead>
+            </table>
         </div>
 
+        <form class="layui-form" id="update" style="display:none">
+            <div class="layui-form-item">
+                <label class="layui-form-label">输入框</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入"
+                           autocomplete="on" class="layui-input" id="test" style="width:100px">
+                </div>
+            </div>
+        </form>
+
         <script type="text/javascript" src="/js/index.js"></script>
+
+        <script type="text/html" id="toolBar">
+            <a class="layui-icon layui-icon-play" lay-event="start"></a>
+            <a class="layui-icon layui-icon-pause" lay-event="stop"></a>
+            <a class="layui-icon layui-icon-edit" lay-event="update"></a>
+            <a class="layui-icon layui-icon-delete" lay-event="delete"></a>
+        </script>
 
     </body>
 </html>
