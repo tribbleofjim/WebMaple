@@ -35,6 +35,9 @@ layui.use(['form', 'layer','table', 'jquery'], function () {
             case 'start':
                 startSpider(data);
             break;
+            case 'restart':
+                restartSpider(data);
+            break;
             case 'stop':
                 stopSpider(data);
             break;
@@ -51,6 +54,20 @@ layui.use(['form', 'layer','table', 'jquery'], function () {
         // do start spider
         console.log(data);
         layer.msg('启动成功！');
+    }
+
+    function restartSpider(data) {
+        layer.open({
+            content: '确认要重启这个爬虫吗？',
+            btn: ['确认', '取消']
+                ,btn1: function(index, layero){
+                    // do restart spider
+                    layer.msg('重启成功');
+                },
+                btn2: function(index, layero){
+                    layer.closeAll();
+                }
+        });
     }
 
     function stopSpider(data) {

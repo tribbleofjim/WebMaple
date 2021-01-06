@@ -15,6 +15,8 @@ public class SpiderDTO {
 
     private String state;
 
+    private int threadNum;
+
     public String getIp() {
         return ip;
     }
@@ -45,5 +47,13 @@ public class SpiderDTO {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getThreadNum() {
+        return threadNum;
+    }
+
+    public void setThreadNum(int threadNum) {
+        this.threadNum = threadNum;
     }
 }

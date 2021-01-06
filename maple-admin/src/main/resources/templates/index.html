@@ -102,20 +102,26 @@
                 <tr>
                     <th lay-data="{field:'uuid', width:170, sort: true}">uuid</th>
                     <th lay-data="{field:'ip', width:150}">ip地址</th>
-                    <th lay-data="{field:'urls', width:850}">起始url</th>
-                    <th lay-data="{field:'state'}">当前状态</th>
-                    <th lay-data="{field:'', width:120, toolbar:'#toolBar'}">选项</th>
+                    <th lay-data="{field:'urls', width:800}">起始url</th>
+                    <th lay-data="{field:'threadNum'}">线程数</th>
+                    <th lay-data="{field:'state', width:100}">当前状态</th>
+                    <th lay-data="{field:'', width:130, toolbar:'#toolBar'}">选项</th>
                 </tr>
                 </thead>
             </table>
         </div>
 
-        <form class="layui-form" id="update" style="display:none">
+        <form class="layui-form" id="update" style="display:none; padding-top: 50px;">
             <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
+                <label class="layui-form-label">ip地址</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入"
-                           autocomplete="on" class="layui-input" id="test" style="width:100px">
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入ip地址"
+                           autocomplete="on" class="layui-input" id="newIpAddress" style="width:100px">
+                </div>
+                <label class="layui-form-label">线程数</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入线程数"
+                           autocomplete="on" class="layui-input" id="newThreadNum" style="width:100px">
                 </div>
             </div>
         </form>
@@ -124,6 +130,7 @@
 
         <script type="text/html" id="toolBar">
             <a class="layui-icon layui-icon-play" lay-event="start"></a>
+            <a class="layui-icon layui-icon-refresh" lay-event="restart"></a>
             <a class="layui-icon layui-icon-pause" lay-event="stop"></a>
             <a class="layui-icon layui-icon-edit" lay-event="update"></a>
             <a class="layui-icon layui-icon-delete" lay-event="delete"></a>
