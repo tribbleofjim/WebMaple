@@ -27,6 +27,11 @@ public class CommonController {
         return "index";
     }
 
+    @RequestMapping("/spider")
+    public String spider() {
+        return "spider";
+    }
+
     @RequestMapping("/spiderList")
     @ResponseBody
     public DataTableDTO querySpiderList(@RequestParam int page, @RequestParam int limit) {

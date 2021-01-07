@@ -17,6 +17,10 @@ public class SpiderDTO {
 
     private int threadNum;
 
+    private String createDate;
+
+    private String updateDate;
+
     public String getIp() {
         return ip;
     }
@@ -55,5 +59,21 @@ public class SpiderDTO {
 
     public void setThreadNum(int threadNum) {
         this.threadNum = threadNum;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
     }
 }

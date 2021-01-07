@@ -2,139 +2,79 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>WebMaple</title>
+        <title>爬虫</title>
         <link rel="stylesheet" href="/layui/css/layui.css">
         <script type="text/javascript" src="/layui/layui.js"></script>
     </head>
-    <body>
-        <!--新建爬虫-->
-        <div class="layui-row">
-            <fieldset class="layui-elem-field layui-field-title">
-                <legend>新建爬虫</legend>
-                <form class="layui-form" action="">
 
-                    <label class="layui-form-label" style="width: 90px;">爬虫uuid</label>
-                    <div class="layui-input-block">
-                        <div class="layui-input-inline">
-                            <div class="layui-form-item">
-                                <div class="layui-input-inline" style="width: 300px;!important;" >
-                                    <input type="text" name="uuid"
-                                           class="layui-input" placeholder="请输入uuid(一般为网站域名)"
-                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="layui-form-label" style="width: 90px;">爬虫ip</label>
-                    <div class="layui-input-block">
-                        <div class="layui-input-inline">
-                            <div class="layui-form-item">
-                                <div class="layui-input-inline" style="width: 300px;">
-                                    <select name="ip" lay-verify="required" style="width: 200%;">
-                                        <option value="0">请选择爬虫ip</option>
-                                        <option value="1">101.87.23.19</option>
-                                        <option value="2">144.34.188.164</option>
-                                        <option value="3">111.22.23.44</option>
-                                        <option value="4">111.55.33.22</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="layui-form-label" style="width: 90px;">爬虫线程数</label>
-                    <div class="layui-input-block">
-                        <div class="layui-input-inline">
-                            <div class="layui-form-item">
-                                <div class="layui-input-inline" style="width: 150px;!important;" >
-                                    <input type="text" name="threadNum"
-                                           class="layui-input" placeholder="请输入线程数"
-                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="layui-form-label" style="width: 90px;">爬虫起始url</label>
-                    <div class="layui-input-block" id="startUrl">
-                        <div class="layui-input-inline">
-                            <div class="layui-form-item">
-                                <div class="layui-input-inline" style="width: 300px;!important;" >
-                                    <input type="text" name="startUrls[]"
-                                           class="layui-input"  placeholder="请输入起始url"
-                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
-                                </div>
-                                <div class="layui-input-block" style="padding-left: 500px;">
-                                    <button id="addUrl" type="button" class="layui-btn layui-btn-warm layui-btn-sm">
-                                        <i class="layui-icon">&#xe654;</i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="layui-form-label" style="width: 90px;">爬虫终止url</label>
-                    <div class="layui-input-block" id="endUrl">
-                        <div class="layui-input-inline">
-                            <div class="layui-form-item">
-                                <div class="layui-input-inline" style="width: 300px;!important;" >
-                                    <input type="text" name="endUrl"
-                                           class="layui-input"  placeholder="请输入终止url"
-                                           required lay-verify="required"  autocomplete="off" style="width: 200%;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </form>
-            </fieldset>
+    <body class="layui-layout-body layui-bg-gray">
+        <!--左边的导航条-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree layui-nav-side"  lay-filter="nav">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">WebMaple</a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="index">
+                            <i class="layui-icon layui-icon-home"></i>
+                            主页
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="spider">爬虫列表</a></dd>
+                            <dd><a href="javascript:;">节点列表</a></dd>
+                            <dd><a href="javascript:;">定时任务</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <!--/左边的导航条-->
 
-        <!--当前爬虫列表-->
-        <div class="layui-row">
-            <fieldset class="layui-elem-field layui-field-title">
-                <legend>当前爬虫列表</legend>
-            </fieldset>
-            <table class="layui-table" lay-data="{height:450, url:'/spiderList', page:true, id:'spiders'}" lay-filter="spiders">
-                <thead>
-                <tr>
-                    <th lay-data="{field:'uuid', width:170, sort: true}">uuid</th>
-                    <th lay-data="{field:'ip', width:150}">ip地址</th>
-                    <th lay-data="{field:'urls', width:800}">起始url</th>
-                    <th lay-data="{field:'threadNum'}">线程数</th>
-                    <th lay-data="{field:'state', width:100}">当前状态</th>
-                    <th lay-data="{field:'', width:130, toolbar:'#toolBar'}">选项</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-
-        <form class="layui-form" id="update" style="display:none; padding-top: 50px;">
-            <div class="layui-form-item">
-                <label class="layui-form-label">ip地址</label>
-                <div class="layui-input-block">
-                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入ip地址"
-                           autocomplete="on" class="layui-input" id="newIpAddress" style="width:100px">
-                </div>
-                <label class="layui-form-label">线程数</label>
-                <div class="layui-input-block">
-                    <input type="text" name="title" required  lay-verify="required" placeholder="请输入线程数"
-                           autocomplete="on" class="layui-input" id="newThreadNum" style="width:100px">
+        <!--内容主体区域-->
+        <div class="layui-body">
+            <div style="padding: 15px;">
+                <div class="layui-container">
+                    <div class="padding: 20px; background-color: #F2F2F2;">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md4">
+                                <!--节点数据-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-header">节点数</div>
+                                    <div class="layui-card-body">
+                                        <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>
+                                        共有 3 个节点
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <!--爬虫数据-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-header">爬虫数</div>
+                                    <div class="layui-card-body">
+                                        <i class="layui-icon layui-icon-layer" style="font-size: 30px;"></i>
+                                        共有 6 个爬虫
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <!--定时任务数据-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-header">定时任务数</div>
+                                    <div class="layui-card-body">
+                                        <i class="layui-icon layui-icon-time" style="font-size: 30px;"></i>
+                                        共有 2 个定时任务
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
 
-        <script type="text/javascript" src="/js/index.js"></script>
-
-        <script type="text/html" id="toolBar">
-            <a class="layui-icon layui-icon-play" lay-event="start"></a>
-            <a class="layui-icon layui-icon-refresh" lay-event="restart"></a>
-            <a class="layui-icon layui-icon-pause" lay-event="stop"></a>
-            <a class="layui-icon layui-icon-edit" lay-event="update"></a>
-            <a class="layui-icon layui-icon-delete" lay-event="delete"></a>
-        </script>
+        <script type="text/javascript" src="../js/index.js"></script>
 
     </body>
 </html>
