@@ -2,7 +2,9 @@ package com.webmaple.admin.controller.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.webmaple.admin.model.DataTableDTO;
+import com.webmaple.admin.model.NodeDTO;
 import com.webmaple.admin.model.SpiderDTO;
+import com.webmaple.admin.service.NodeManageService;
 import com.webmaple.admin.service.SpiderManageService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class CommonController {
     @Resource
     private SpiderManageService spiderManageService;
 
+    @Resource
+    private NodeManageService nodeManageService;
+
     @RequestMapping("/index")
     public String index() {
         return "index";
@@ -30,6 +35,11 @@ public class CommonController {
     @RequestMapping("/spider")
     public String spider() {
         return "spider";
+    }
+
+    @RequestMapping("/node")
+    public String node() {
+        return "node";
     }
 
     @RequestMapping("/spiderList")
@@ -45,6 +55,22 @@ public class CommonController {
             dataTableDTO.setCount(spiderList.size());
         }
         dataTableDTO.setData(JSON.toJSON(spiderList));
+        return dataTableDTO;
+    }
+
+    @RequestMapping("/nodeList")
+    @ResponseBody
+    public DataTableDTO queryNodeList(@RequestParam int page, @RequestParam int limit) {
+        List<NodeDTO> nodeList = nodeManageService.queryNodeList();
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(0);
+        dataTableDTO.setMsg("");
+        if (CollectionUtils.isEmpty(nodeList)) {
+            dataTableDTO.setCount(0);
+        } else {
+            dataTableDTO.setCount(nodeList.size());
+        }
+        dataTableDTO.setData(JSON.toJSON(nodeList));
         return dataTableDTO;
     }
 }
