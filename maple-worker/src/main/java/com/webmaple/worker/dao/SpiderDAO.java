@@ -12,7 +12,6 @@ import us.codecraft.webmagic.selector.Json;
 import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,8 +39,8 @@ public class SpiderDAO {
                 spiderDO.setIp(resultSet.getString("ip"));
                 spiderDO.setState(resultSet.getString("state"));
                 spiderDO.setThreadNum(resultSet.getInt("threadNum"));
-                spiderDO.setCreateDate(resultSet.getDate("createDate").toString());
-                spiderDO.setUpdateDate(resultSet.getDate("updateDate").toString());
+                spiderDO.setCreateDate(resultSet.getDate("createDate"));
+                spiderDO.setUpdateDate(resultSet.getDate("updateDate"));
                 String rawUrls = resultSet.getString("urls");
                 List<String> urls = JSON.parseArray(rawUrls, String.class);
                 if (CollectionUtils.isNotEmpty(urls)) {

@@ -1,6 +1,8 @@
 package com.webmaple.worker;
 
 import com.webmaple.worker.dao.SpiderDAO;
+import com.webmaple.worker.dao.model.SpiderDO;
+import com.webmaple.worker.util.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
@@ -18,7 +20,6 @@ import java.util.List;
  */
 @Component
 public class SpiderProcess {
-
     @Autowired
     private SpiderDAO spiderDAO;
 
@@ -49,10 +50,12 @@ public class SpiderProcess {
     }
 
     public void run(Spider spider) {
+        SpiderDO spiderDO = ModelUtil.getSpiderDO(spider);
+        spiderDAO.insertSpider(spiderDO);
         threadPool.execute(spider);
     }
 
-    public List<Spider> getSpiders() {
-        return null;
+    public List<SpiderDO> getSpiders() {
+        return spiderDAO.querySpiderList();
     }
 }

@@ -1,5 +1,6 @@
 package com.webmaple.worker.dao.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,9 +18,9 @@ public class SpiderDO {
 
     private int threadNum;
 
-    private String createDate;
+    private Date createDate;
 
-    private String updateDate;
+    private Date updateDate;
 
     public String getIp() {
         return ip;
@@ -61,19 +62,19 @@ public class SpiderDO {
         this.threadNum = threadNum;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public String getUpdateDate() {
+    public Date getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(String updateDate) {
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 }
