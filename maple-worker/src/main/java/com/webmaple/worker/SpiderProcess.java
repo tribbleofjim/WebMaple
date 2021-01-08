@@ -1,5 +1,8 @@
 package com.webmaple.worker;
 
+import com.webmaple.worker.dao.SpiderDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.thread.CountableThreadPool;
 import java.util.List;
@@ -13,15 +16,23 @@ import java.util.List;
  * @author lyifee
  * on 2021/1/5
  */
+@Component
 public class SpiderProcess {
+
+    @Autowired
+    private SpiderDAO spiderDAO;
+
     protected CountableThreadPool threadPool;
 
     protected int threadNum = 0;
 
     private static final int DEFAULT_THREAD_NUM = 5;
 
-    public SpiderProcess(int threadNum) {
-        this.threadNum = threadNum;
+    public SpiderProcess() {
+        init();
+    }
+
+    public void init() {
         if (threadNum <= 0) {
             threadPool = new CountableThreadPool(DEFAULT_THREAD_NUM);
         } else {
@@ -31,6 +42,10 @@ public class SpiderProcess {
 
     public int getThreadNum() {
         return threadNum;
+    }
+
+    public void setThreadNum(int threadNum) {
+        this.threadNum = threadNum;
     }
 
     public void run(Spider spider) {
