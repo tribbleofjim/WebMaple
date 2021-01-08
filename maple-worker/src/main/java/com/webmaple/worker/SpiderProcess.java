@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * run a spider
- * and store information of all spiders
+ * and manage information of all spiders
  * basically one spring boot project
  * a worker can have more than one spider process
  *
@@ -57,5 +57,9 @@ public class SpiderProcess {
 
     public List<SpiderDO> getSpiders() {
         return spiderDAO.querySpiderList();
+    }
+
+    public void modifySpider(SpiderDO spiderDO) {
+
     }
 }
