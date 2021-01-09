@@ -4,6 +4,7 @@ import com.webmaple.worker.SpiderProcess;
 import com.webmaple.worker.util.ConfigUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -23,11 +24,11 @@ import java.lang.reflect.Method;
 public class SpiderProcessInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpiderProcessInterceptor.class);
 
-    @Pointcut("execution(com.webmaple.worker.SpiderProcess.init())")
+    @Pointcut("execution(* com.webmaple.worker..SpiderProcess.*init(..))")
     public void SpiderProcessAspect(){}
 
-    @Before("SpiderProcessAspect()")
-    public void insertThreadNum(ProceedingJoinPoint joinPoint) {
+    @Around("SpiderProcessAspect()")
+    public void insertThreadNum(ProceedingJoinPoint joinPoint) throws Throwable {
         LOGGER.info("spider process : insert threadNum...");
         Object spiderProcessBean = joinPoint.getTarget();
         String rawThreadNum = ConfigUtil.getValueToString("application.yml", "webmaple.spiderProcess.threadNum");
@@ -45,5 +46,6 @@ public class SpiderProcessInterceptor {
                 LOGGER.error("insert_invoke_exception:", e);
             }
         }
+        joinPoint.proceed();
     }
 }

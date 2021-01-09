@@ -1,3 +1,5 @@
+package com.webmaple.worker;
+
 import com.webmaple.worker.WorkerApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

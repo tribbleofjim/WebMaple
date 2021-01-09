@@ -16,6 +16,12 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <spring.boot.version>2.4.0</spring.boot.version>
+        <mysql.connector.version>8.0.20</mysql.connector.version>
+        <webmagic.version>0.7.3</webmagic.version>
+        <thymeleaf.version>2.3.7.RELEASE</thymeleaf.version>
+        <spring.boot.plugin.version>2.4.1</spring.boot.plugin.version>
+        <reflections.version>0.9.12</reflections.version>
     </properties>
 
     <dependencies>
@@ -25,31 +31,31 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
-            <version>2.4.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>2.4.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.4.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-aop -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>2.4.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
-            <version>2.4.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
         <!--        <dependency>-->
@@ -61,7 +67,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.4.0</version>
+            <version>${spring.boot.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -71,13 +77,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>2.4.0</version>
+            <version>${spring.boot.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.20</version>
+            <version>${mysql.connector.version}</version>
         </dependency>
 
 
@@ -85,12 +91,12 @@
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-core</artifactId>
-            <version>0.7.3</version>
+            <version>${webmagic.version}</version>
         </dependency>
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-extension</artifactId>
-            <version>0.7.3</version>
+            <version>${webmagic.version}</version>
         </dependency>
 
         <!-- ===================== thymeleaf =================== -->
@@ -98,7 +104,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>2.3.7.RELEASE</version>
+            <version>${thymeleaf.version}</version>
         </dependency>
 
     </dependencies>
@@ -109,7 +115,7 @@
                 <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.4.1</version>
+                <version>${spring.boot.plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
