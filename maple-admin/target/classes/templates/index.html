@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>首页</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+        <script type="text/javascript" src="/layui/layui.js"></script>
+    </head>
+
+    <body class="layui-layout-body layui-bg-gray">
+        <!--左边的导航条-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree layui-nav-side"  lay-filter="nav">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">WebMaple</a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">
+                            <i class="layui-icon layui-icon-home"></i>
+                            主页
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="spider">爬虫列表</a></dd>
+                            <dd><a href="node">节点列表</a></dd>
+                            <dd><a href="javascript:;">定时任务</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--/左边的导航条-->
+
+        <!--内容主体区域-->
+        <div class="layui-body">
+            <div style="padding: 15px;">
+                <div class="layui-container">
+                    <div class="padding: 20px; background-color: #F2F2F2;">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md4">
+                                <!--节点数据-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-header">节点数</div>
+                                    <div class="layui-card-body">
+                                        <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>
+                                        共有 3 个节点
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <!--爬虫数据-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-header">爬虫数</div>
+                                    <div class="layui-card-body">
+                                        <i class="layui-icon layui-icon-layer" style="font-size: 30px;"></i>
+                                        共有 6 个爬虫
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <!--定时任务数据-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-header">定时任务数</div>
+                                    <div class="layui-card-body">
+                                        <i class="layui-icon layui-icon-time" style="font-size: 30px;"></i>
+                                        共有 2 个定时任务
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="../js/spider.js"></script>
+
+    </body>
+</html>

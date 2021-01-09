@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>节点列表</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+        <script type="text/javascript" src="/layui/layui.js"></script>
+    </head>
+
+    <body class="layui-layout-body">
+        <!--左边的导航条-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree layui-nav-side"  lay-filter="nav">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">WebMaple</a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="index">
+                            <i class="layui-icon layui-icon-home"></i>
+                            主页
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="spider">爬虫列表</a></dd>
+                            <dd><a href="javascript:;">节点列表</a></dd>
+                            <dd><a href="javascript:;">定时任务</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--/左边的导航条-->
+
+        <!--内容主体区域-->
+        <div class="layui-body">
+            <div style="padding: 15px;">
+                <div class="layui-container">
+                    <!--节点列表-->
+                    <div class="layui-row">
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>分布式节点列表</legend>
+                        </fieldset>
+                        <table class="layui-table" lay-data="{height:450, url:'/nodeList', page:true,
+                            id:'nodes', toolbar: '#headBar'}" lay-filter="nodes" >
+                            <thead>
+                            <tr>
+                                <th lay-data="{field:'ip', width:150}">ip地址</th>
+                                <th lay-data="{field:'type', width:150}">节点类型</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="../js/spider.js"></script>
+
+        <script type="text/html" id="headBar">
+            <button type="button" class="layui-btn">
+                <i class="layui-icon layui-icon-delete"></i> 删除节点
+            </button>
+        </script>
+
+    </body>
+</html>
