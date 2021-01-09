@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ReflectionsConfigure {
     @Bean
-    public ReflectionsRegister reflectionsRegister() {
-        return new ReflectionsRegister("com.webmaple.worker");
+    public ReflectionsConfig reflectionsRegister() {
+        return new ReflectionsConfig("com.webmaple.worker");
     }
 }

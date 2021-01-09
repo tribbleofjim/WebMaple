@@ -21,7 +21,7 @@ public class ComponentRegister {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComponentRegister.class);
 
     @Autowired
-    private ReflectionsRegister reflectionsRegister;
+    private ReflectionsConfig reflectionsConfig;
 
     @Autowired
     private ComponentDAO componentDAO;
@@ -31,7 +31,7 @@ public class ComponentRegister {
     }
 
     public void register() {
-        Reflections reflections = reflectionsRegister.getReflections();
+        Reflections reflections = reflectionsConfig.getReflections();
 
         Set<Class<?>> processors = reflections.getTypesAnnotatedWith(MapleProcessor.class);
         LOGGER.info("start processor register...");
