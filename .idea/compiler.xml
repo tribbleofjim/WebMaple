@@ -6,8 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="maple-admin" />
+        <module name="maple-network" />
         <module name="maple-worker" />
+        <module name="maple-admin" />
       </profile>
     </annotationProcessing>
   </component>
