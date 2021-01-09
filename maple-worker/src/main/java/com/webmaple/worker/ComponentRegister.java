@@ -2,7 +2,6 @@ package com.webmaple.worker;
 
 import com.webmaple.worker.annotation.MapleProcessor;
 import org.reflections.Reflections;
-import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.downloader.Downloader;
 import us.codecraft.webmagic.processor.PageProcessor;
 
@@ -20,6 +19,7 @@ public class ComponentRegister {
     public ComponentRegister(String packagePath) {
         this.packagePath = packagePath;
         reflections = new Reflections(packagePath);
+        register();
     }
 
     public void register() {

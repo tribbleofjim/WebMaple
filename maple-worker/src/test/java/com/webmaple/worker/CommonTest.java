@@ -15,6 +15,6 @@ public class CommonTest {
 
     @Test
     public void componentRegisterTest() {
-        componentRegister.register();
+        System.out.println(componentRegister.getPackagePath());
     }
 }
