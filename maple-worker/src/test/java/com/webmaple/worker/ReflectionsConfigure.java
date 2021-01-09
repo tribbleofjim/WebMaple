@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
  * on 2021/1/9
  */
 @Configuration
-public class ComponentRegisterConfigure {
+public class ReflectionsConfigure {
     @Bean
-    public ComponentRegister componentRegister() {
-        return new ComponentRegister("com.webmaple.worker");
+    public ReflectionsRegister reflectionsRegister() {
+        return new ReflectionsRegister("com.webmaple.worker");
     }
 }

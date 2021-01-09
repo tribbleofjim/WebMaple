@@ -3,12 +3,9 @@ package com.webmaple.worker.dao;
 import com.alibaba.fastjson.JSON;
 import com.webmaple.worker.dao.model.SpiderDO;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-import us.codecraft.webmagic.selector.Json;
-
 import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,5 +46,9 @@ public class SpiderDAO {
                 return spiderDO;
             }
         });
+    }
+
+    public void modifySpider(SpiderDO spiderDO) {
+
     }
 }
