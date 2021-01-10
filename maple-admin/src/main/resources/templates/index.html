@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
         <title>首页</title>
@@ -22,9 +22,18 @@
                             主页
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="spider">爬虫列表</a></dd>
-                            <dd><a href="node">节点列表</a></dd>
-                            <dd><a href="javascript:;">定时任务</a></dd>
+                            <dd><a href="spider">
+                                <i class="layui-icon layui-icon-layer"></i>
+                                爬虫列表
+                            </a></dd>
+                            <dd><a href="node">
+                                <i class="layui-icon layui-icon-template-1"></i>
+                                节点列表
+                            </a></dd>
+                            <dd><a href="javascript:;">
+                                <i class="layui-icon layui-icon-time"></i>
+                                定时任务
+                            </a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -37,38 +46,141 @@
             <div style="padding: 15px;">
                 <div class="layui-container">
                     <div class="padding: 20px; background-color: #F2F2F2;">
+                        <!--数据总览-->
                         <div class="layui-row layui-col-space15">
                             <div class="layui-col-md4">
                                 <!--节点数据-->
                                 <div class="layui-card" style="height: 150px">
-                                    <div class="layui-card-header">节点数</div>
-                                    <div class="layui-card-body">
+                                    <div class="layui-card-header">
                                         <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>
-                                        共有 3 个节点
+                                        节点数
+                                    </div>
+                                    <div class="layui-card-body">
+                                        共有
+                                        <span class="layui-badge layui-bg-blue">3</span>
+                                        个节点
                                     </div>
                                 </div>
                             </div>
                             <div class="layui-col-md4">
                                 <!--爬虫数据-->
                                 <div class="layui-card" style="height: 150px">
-                                    <div class="layui-card-header">爬虫数</div>
-                                    <div class="layui-card-body">
+                                    <div class="layui-card-header">
                                         <i class="layui-icon layui-icon-layer" style="font-size: 30px;"></i>
-                                        共有 6 个爬虫
+                                        爬虫数
+                                    </div>
+                                    <div class="layui-card-body">
+                                        共有
+                                        <span class="layui-badge layui-bg-green">6</span>
+                                        个爬虫
                                     </div>
                                 </div>
                             </div>
                             <div class="layui-col-md4">
                                 <!--定时任务数据-->
                                 <div class="layui-card" style="height: 150px">
-                                    <div class="layui-card-header">定时任务数</div>
-                                    <div class="layui-card-body">
+                                    <div class="layui-card-header">
                                         <i class="layui-icon layui-icon-time" style="font-size: 30px;"></i>
-                                        共有 2 个定时任务
+                                        定时任务数
+                                    </div>
+                                    <div class="layui-card-body">
+                                        共有
+                                        <span class="layui-badge layui-bg-cyan">2</span>
+                                        个定时任务
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!--/数据总览-->
+
+
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md6">
+                                <!--爬取网站列表-->
+                                <div class="layui-card" style="height: 300px">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-align-center" style="font-size: 30px;"></i>
+                                        爬取网站列表
+                                    </div>
+                                    <div class="layui-card-body">
+                                        https://www.baidu.com<br>
+                                        https://jd.search.com<br>
+                                        https://wefghukwe.com<br>
+                                    </div>
+                                </div>
+                                <!--/爬取网站列表-->
+
+                                <!--爬取进度-->
+                                <div class="layui-card" style="height: 300px">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-senior" style="font-size: 30px;"></i>
+                                        爬取进度
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <tr>
+                                            <th>
+                                                https://www.baidu.com
+                                                <div class="layui-progress layui-progress-big" lay-showPercent="true">
+                                                    <div class="layui-progress-bar layui-bg-blue" lay-percent="20%"></div>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                https://jd.search.com
+                                                <div class="layui-progress layui-progress-big" lay-showPercent="true">
+                                                    <div class="layui-progress-bar layui-bg-blue" lay-percent="80%"></div>
+                                                </div>
+                                            </th>
+
+                                            <th>
+                                                https://wefghukwe.com
+                                                <div class="layui-progress layui-progress-big" lay-showPercent="true">
+                                                    <div class="layui-progress-bar layui-bg-blue" lay-percent="40%"></div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </div>
+                                </div>
+                                <!--/爬取进度-->
+                            </div>
+
+                            <!--使用说明及架构文档-->
+                            <div class="layui-col-md6">
+                                <div class="layui-card" style="height: 600px">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-file-b" style="font-size: 30px;"></i>
+                                        使用说明及架构文档
+                                    </div>
+                                    <div class="layui-card-body">
+                                        # WebMaple<br>
+
+                                        以webmagic为内核的分布式可视化爬虫框架，参考webmagic-avalon的架构，目标是提供可分布式部署的爬虫框架，以及可视化的爬虫管理界面。<br>
+
+                                        目前分为三个模块：<br>
+
+                                        1. maple-admin，为webmagic-avalon中的admin节点，对应一个java进程。负责：<br>
+
+                                        - 与多个worker通信，监听worker的存活；<br>
+                                        - 从worker处获得当前爬虫信息，并在前端页面展示；<br>
+                                        - 调用worker的接口创建爬虫。<br>
+
+                                        它是一个Springboot项目，可以直接打包上传到服务器并启动。<br>
+
+                                        2. maple-worker，为worker节点，对应一个java进程。一台机器上可部署多个worker。负责：<br>
+
+                                        - 具体爬虫（spider）的创建和管理；<br>
+                                        - 向admin节点发送心跳包确保自己的存活。<br>
+
+                                        它和admin一样是可以直接打成jar包部署的。<br>
+
+                                        3. maple-network，为网络通信部分的通用模块。<br>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/使用说明及架构文档-->
+                        </div>
+
+
                     </div>
                 </div>
             </div>
