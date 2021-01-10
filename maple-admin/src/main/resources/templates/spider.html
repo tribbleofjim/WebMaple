@@ -33,7 +33,17 @@
                                     <i class="layui-icon layui-icon-time"></i>
                                     定时任务
                                 </a></dd>
+                                <dd><a href="javascript:;">
+                                    <i class="layui-icon layui-icon-template"></i>
+                                    爬虫组件与定制化
+                                </a></dd>
                             </dl>
+                        </li>
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;">
+                                <i class="layui-icon layui-icon-username"></i>
+                                用户中心
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -43,6 +53,28 @@
             <!--内容主体区域-->
             <div class="layui-body">
                 <div class="layui-container" style="padding: 15px;">
+
+                    <!--当前爬虫列表-->
+                    <div class="layui-row">
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>当前爬虫列表</legend>
+                        </fieldset>
+                        <table class="layui-table" lay-data="{height:450, url:'/spiderList', page:true,
+                            id:'spiders'}" lay-filter="spiders" >
+                            <thead>
+                            <tr>
+                                <th lay-data="{field:'uuid', width:170, sort: true}">uuid</th>
+                                <th lay-data="{field:'ip', width:150}">ip地址</th>
+                                <th lay-data="{field:'urls', width:500}">起始url</th>
+                                <th lay-data="{field:'threadNum'}">线程数</th>
+                                <th lay-data="{field:'state', width:100}">当前状态</th>
+                                <th lay-data="{field:'', width:130, toolbar:'#toolBar'}">选项</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!--/当前爬虫列表-->
+
                     <!--新建爬虫-->
                     <div class="layui-row">
                         <fieldset class="layui-elem-field layui-field-title">
@@ -75,6 +107,46 @@
                                                 <option value="3">111.22.23.44</option>
                                                 <option value="4">111.55.33.22</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="layui-form-label" style="width: 90px;">组件选择</label>
+                            <div class="layui-input-block">
+                                <div class="layui-input-inline">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-inline" style="width: 300px;!important;">
+                                            <input type="text" name="processor"
+                                                   class="layui-input" placeholder="请输入processor类"
+                                                   required lay-verify="required" autocomplete="off">
+                                        </div>
+                                        <div class="layui-input-inline" style="width: 200px;!important;">
+                                            <div class="layui-form-mid layui-word-aux">不知道网站对应的processor？</div>
+                                        </div>
+                                        <div class="layui-input-inline" style="width: 150px;!important;">
+                                            <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
+                                                <i class="layui-icon layui-icon-unlink"></i> 去查看
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="layui-form-label" style="width:90px;">组件选择</label>
+                            <div class="layui-input-block">
+                                <div class="layui-input-inline">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-inline" style="width: 300px;!important;">
+                                            <input type="text" name="downloader"
+                                                   class="layui-input" placeholder="请输入downloader类" autocomplete="off">
+                                        </div>
+                                        <div class="layui-input-inline" style="width: 200px;!important;">
+                                            <div class="layui-form-mid layui-word-aux">不知道有哪些downloader？</div>
+                                        </div>
+                                        <div class="layui-input-inline" style="width: 150px;!important;">
+                                            <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
+                                                <i class="layui-icon layui-icon-unlink"></i> 去查看
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -123,28 +195,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
-
-                    <!--当前爬虫列表-->
-                    <div class="layui-row">
-                        <fieldset class="layui-elem-field layui-field-title">
-                            <legend>当前爬虫列表</legend>
-                        </fieldset>
-                        <table class="layui-table" lay-data="{height:450, url:'/spiderList', page:true,
-                            id:'spiders'}" lay-filter="spiders" >
-                            <thead>
-                            <tr>
-                                <th lay-data="{field:'uuid', width:170, sort: true}">uuid</th>
-                                <th lay-data="{field:'ip', width:150}">ip地址</th>
-                                <th lay-data="{field:'urls', width:500}">起始url</th>
-                                <th lay-data="{field:'threadNum'}">线程数</th>
-                                <th lay-data="{field:'state', width:100}">当前状态</th>
-                                <th lay-data="{field:'', width:130, toolbar:'#toolBar'}">选项</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    <!--/新建爬虫-->
 
                     <!-- 修改爬虫表单 -->
                     <form class="layui-form" id="update" style="display:none; padding-top: 50px;">

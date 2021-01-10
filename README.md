@@ -18,5 +18,5 @@
 
    它和admin一样是可以直接打成jar包部署的。
 
-3. maple-network，为网络通信部分的通用模块。
+3.  [chromedriver_mac64.zip](../../Downloads/chromedriver_mac64.zip) maple-network，为网络通信部分的通用模块。
 
