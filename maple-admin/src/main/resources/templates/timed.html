@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>节点列表</title>
+        <title>定时任务</title>
         <link rel="stylesheet" href="/layui/css/layui.css">
         <script type="text/javascript" src="/layui/layui.js"></script>
     </head>
@@ -26,11 +26,11 @@
                                 <i class="layui-icon layui-icon-layer"></i>
                                 爬虫列表
                             </a></dd>
-                            <dd><a href="javascript:;">
+                            <dd><a href="node">
                                 <i class="layui-icon layui-icon-template-1"></i>
                                 节点列表
                             </a></dd>
-                            <dd><a href="timed">
+                            <dd><a href="javascript:;">
                                 <i class="layui-icon layui-icon-time"></i>
                                 定时任务
                             </a></dd>
@@ -55,23 +55,27 @@
         <div class="layui-body">
             <div style="padding: 15px;">
                 <div class="layui-container">
-                    <!--节点列表-->
+                    <!--定时任务列表-->
                     <div class="layui-row">
                         <fieldset class="layui-elem-field layui-field-title">
-                            <legend>分布式节点列表</legend>
+                            <legend>定时任务列表</legend>
                         </fieldset>
-                        <table class="layui-table" lay-data="{height:450, url:'/nodeList', page:true,
-                            id:'nodes', toolbar: '#headBar'}" lay-filter="nodes" >
+                        <table class="layui-table" lay-data="{height:450, url:'/timedJobs', page:true,
+                            id:'timedJobs', toolbar: '#headBar'}" lay-filter="timedJobs" >
                             <thead>
                             <tr>
                                 <th lay-data="{checkbox:true}"></th>
                                 <th lay-data="{field:'ip', width:150}">ip地址</th>
-                                <th lay-data="{field:'type', width:150}">节点类型</th>
+                                <th lay-data="{field:'worker', width:150}">worker名称</th>
+                                <th lay-data="{field:'spiderUUID', width:200}">爬虫uuid</th>
+                                <th lay-data="{field:'spiderSite', width:200}">爬取站点</th>
+                                <th lay-data="{field:'type', width:150}">定时任务类型</th>
+                                <th lay-data="{field:'maintain'}">定时方式</th>
                             </tr>
                             </thead>
                         </table>
                     </div>
-                    <!--/节点列表-->
+                    <!--/定时任务列表-->
                 </div>
             </div>
         </div>
@@ -80,7 +84,10 @@
 
         <script type="text/html" id="headBar">
             <button type="button" class="layui-btn">
-                <i class="layui-icon layui-icon-delete"></i> 删除节点
+                <i class="layui-icon layui-icon-addition"></i> 添加定时任务
+            </button>
+            <button type="button" class="layui-btn">
+                <i class="layui-icon layui-icon-delete"></i> 删除定时任务
             </button>
         </script>
 
