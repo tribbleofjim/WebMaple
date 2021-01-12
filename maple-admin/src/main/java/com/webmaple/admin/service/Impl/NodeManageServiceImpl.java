@@ -26,9 +26,11 @@ public class NodeManageServiceImpl implements NodeManageService {
             if (i == 2) {
                 nodeDTO.setType(NodeType.ADMIN.getType());
                 nodeDTO.setIp("144.34.188.164");
+                nodeDTO.setName("myAdmin");
             } else {
                 nodeDTO.setType(NodeType.WORKER.getType());
                 nodeDTO.setIp("101.89.18.39");
+                nodeDTO.setName("myWorker");
             }
             list.add(nodeDTO);
         }

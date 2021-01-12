@@ -15,6 +15,11 @@ public class NodeDTO {
      */
     private String ip;
 
+    /**
+     * name of node
+     */
+    private String name;
+
     public String getType() {
         return type;
     }
@@ -29,5 +34,13 @@ public class NodeDTO {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
