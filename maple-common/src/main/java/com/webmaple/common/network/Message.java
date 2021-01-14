@@ -1,4 +1,4 @@
-package com.webmaple.network;
+package com.webmaple.common.network;
 
 /**
  * @author lyifee

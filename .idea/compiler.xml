@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="maple-common" />
-        <module name="maple-network" />
         <module name="maple-worker" />
         <module name="maple-admin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="maple-network" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

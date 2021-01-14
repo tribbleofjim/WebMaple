@@ -1,4 +1,4 @@
-package com.webmaple.network;
+package com.webmaple.common.network;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;

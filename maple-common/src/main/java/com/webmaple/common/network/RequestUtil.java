@@ -1,4 +1,4 @@
-package com.webmaple.network;
+package com.webmaple.common.network;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;

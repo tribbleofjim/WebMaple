@@ -11,7 +11,6 @@
     <modules>
         <module>maple-admin</module>
         <module>maple-worker</module>
-        <module>maple-network</module>
         <module>maple-common</module>
     </modules>
 
