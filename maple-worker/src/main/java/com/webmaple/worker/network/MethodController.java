@@ -16,7 +16,6 @@ public class MethodController {
     @RequestMapping
     @ResponseBody
     public Result createSpider(@RequestParam SpiderDTO spiderDTO) {
-
         return Result.success();
     }
 }
