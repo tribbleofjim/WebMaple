@@ -1,6 +1,6 @@
 package com.webmaple.admin.service;
 
-import com.webmaple.admin.model.SpiderDTO;
+import com.webmaple.common.model.SpiderDTO;
 
 import java.util.List;
 

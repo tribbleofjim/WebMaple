@@ -1,4 +1,4 @@
-package com.webmaple.admin.model;
+package com.webmaple.common.model;
 
 /**
  * @author lyifee
@@ -16,6 +16,9 @@ public class NodeDTO {
     private String ip;
 
     /**
+     * name是一个节点的唯一标识
+     * 因为用ip会出现复杂网络情况，比如机器使用了代理/连接的是动态网络等
+     *
      * name of node
      */
     private String name;

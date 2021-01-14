@@ -1,6 +1,6 @@
 package com.webmaple.admin.service;
 
-import com.webmaple.admin.model.NodeDTO;
+import com.webmaple.common.model.NodeDTO;
 
 import java.util.List;
 

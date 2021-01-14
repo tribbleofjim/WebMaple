@@ -1,10 +1,10 @@
 package com.webmaple.admin.controller.Impl;
 
 import com.alibaba.fastjson.JSON;
-import com.webmaple.admin.model.DataTableDTO;
-import com.webmaple.admin.model.JobDTO;
-import com.webmaple.admin.model.NodeDTO;
-import com.webmaple.admin.model.SpiderDTO;
+import com.webmaple.common.model.DataTableDTO;
+import com.webmaple.common.model.JobDTO;
+import com.webmaple.common.model.NodeDTO;
+import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.admin.service.NodeManageService;
 import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.admin.service.TimedJobService;

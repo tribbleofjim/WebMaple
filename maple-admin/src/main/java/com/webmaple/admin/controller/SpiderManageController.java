@@ -1,6 +1,6 @@
 package com.webmaple.admin.controller;
 
-import com.webmaple.admin.model.Result;
+import com.webmaple.common.model.Result;
 
 import java.util.List;
 

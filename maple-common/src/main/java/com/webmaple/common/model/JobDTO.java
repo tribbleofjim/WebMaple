@@ -1,4 +1,4 @@
-package com.webmaple.admin.model;
+package com.webmaple.common.model;
 
 /**
  * @author lyifee

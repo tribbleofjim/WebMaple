@@ -1,6 +1,6 @@
 package com.webmaple.admin.service;
 
-import com.webmaple.admin.model.JobDTO;
+import com.webmaple.common.model.JobDTO;
 
 import java.util.List;
 

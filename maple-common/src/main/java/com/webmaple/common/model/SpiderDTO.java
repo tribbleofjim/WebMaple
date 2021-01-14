@@ -1,4 +1,4 @@
-package com.webmaple.admin.model;
+package com.webmaple.common.model;
 
 import java.util.List;
 
@@ -16,6 +16,12 @@ public class SpiderDTO {
     private String state;
 
     private int threadNum;
+
+    private String processor;
+    
+    private String pipeline;
+
+    private String downloader;
 
     private String createDate;
 
@@ -59,6 +65,30 @@ public class SpiderDTO {
 
     public void setThreadNum(int threadNum) {
         this.threadNum = threadNum;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
+    }
+
+    public String getPipeline() {
+        return pipeline;
+    }
+
+    public void setPipeline(String pipeline) {
+        this.pipeline = pipeline;
+    }
+
+    public String getDownloader() {
+        return downloader;
+    }
+
+    public void setDownloader(String downloader) {
+        this.downloader = downloader;
     }
 
     public String getCreateDate() {

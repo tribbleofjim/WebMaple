@@ -1,6 +1,4 @@
-package com.webmaple.admin.model;
-
-import com.alibaba.fastjson.JSONObject;
+package com.webmaple.common.model;
 
 /**
  * @author lyifee

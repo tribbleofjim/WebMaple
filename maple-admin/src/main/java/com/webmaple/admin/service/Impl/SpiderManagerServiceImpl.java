@@ -1,7 +1,7 @@
 package com.webmaple.admin.service.Impl;
 
 import com.webmaple.admin.enums.SpiderState;
-import com.webmaple.admin.model.SpiderDTO;
+import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.admin.service.SpiderManageService;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
