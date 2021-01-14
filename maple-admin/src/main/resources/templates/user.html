@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>定时任务</title>
+        <title>用户基本资料</title>
         <link rel="stylesheet" href="/layui/css/layui.css">
         <script type="text/javascript" src="/layui/layui.js"></script>
     </head>
 
-    <body class="layui-layout-body">
+    <body class="layui-layout-body layui-bg-gray">
         <!--左边的导航条-->
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
@@ -46,7 +46,7 @@
                             用户中心
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="user">
+                            <dd><a href="javascript:;">
                                 <i class="layui-icon layui-icon-tabs"></i>
                                 基本资料
                             </a></dd>
@@ -65,27 +65,62 @@
         <div class="layui-body">
             <div style="padding: 15px;">
                 <div class="layui-container">
-                    <!--定时任务列表-->
-                    <div class="layui-row">
-                        <fieldset class="layui-elem-field layui-field-title">
-                            <legend>定时任务列表</legend>
-                        </fieldset>
-                        <table class="layui-table" lay-data="{height:450, url:'/timedJobs', page:true,
-                            id:'timedJobs', toolbar: '#headBar'}" lay-filter="timedJobs" >
-                            <thead>
-                            <tr>
-                                <th lay-data="{checkbox:true}"></th>
-                                <th lay-data="{field:'ip', width:150}">ip地址</th>
-                                <th lay-data="{field:'worker', width:150}">worker名称</th>
-                                <th lay-data="{field:'spiderUUID', width:200}">爬虫uuid</th>
-                                <th lay-data="{field:'spiderSite', width:200}">爬取站点</th>
-                                <th lay-data="{field:'type', width:150}">定时任务类型</th>
-                                <th lay-data="{field:'maintain'}">定时方式</th>
-                            </tr>
-                            </thead>
-                        </table>
+                    <div class="padding: 20px; background-color: #F2F2F2;">
+                        <!--用户名-->
+                        <div class="layui-card" style="height: 150px">
+                            <div class="layui-card-body">
+                                <div class="layui-row layui-col-space15">
+                                    <div class="layui-col-md4">
+                                        <i class="layui-icon layui-icon-username" style="font-size: 30px;"></i>
+                                    </div>
+                                    <div class="layui-col-md4">
+                                        <span id="userName">user1</span>
+                                    </div>
+                                    <div class="layui-col-md4">
+                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
+                                            <i class="layui-icon layui-icon-edit"></i> 编辑
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/用户名-->
+
+                        <!--密码-->
+                        <div class="layui-card" style="height: 150px">
+                            <div class="layui-card-body">
+                                <div class="layui-row layui-col-space15">
+                                    <div class="layui-col-md4">
+                                        <i class="layui-icon layui-icon-password" style="font-size: 30px;"></i>
+                                    </div>
+                                    <div class="layui-col-md4">
+                                        <span id="password">******</span>
+                                    </div>
+                                    <div class="layui-col-md4">
+                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
+                                            <i class="layui-icon layui-icon-edit"></i> 修改密码
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/密码-->
+
+                        <!--账号权限-->
+                        <div class="layui-card" style="height: 150px">
+                            <div class="layui-card-body">
+                                <div class="layui-row layui-col-space15">
+                                    <div class="layui-col-md4">
+                                        <i class="layui-icon layui-icon-auz" style="font-size: 30px;"></i>
+                                    </div>
+                                    <div class="layui-col-md4">
+                                        <span id="auth">普通用户</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/账号权限-->
                     </div>
-                    <!--/定时任务列表-->
                 </div>
             </div>
         </div>

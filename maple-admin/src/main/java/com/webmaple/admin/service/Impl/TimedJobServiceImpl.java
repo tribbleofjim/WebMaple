@@ -1,6 +1,6 @@
 package com.webmaple.admin.service.Impl;
 
-import com.webmaple.admin.enums.MaintainType;
+import com.webmaple.common.enums.MaintainType;
 import com.webmaple.common.model.JobDTO;
 import com.webmaple.admin.service.TimedJobService;
 import org.springframework.stereotype.Service;

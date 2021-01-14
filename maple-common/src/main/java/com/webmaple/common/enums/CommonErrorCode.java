@@ -1,4 +1,4 @@
-package com.webmaple.admin.enums;
+package com.webmaple.common.enums;
 
 /**
  * @author lyifee

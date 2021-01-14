@@ -1,6 +1,6 @@
 package com.webmaple.common.model;
 
-import com.webmaple.admin.enums.CommonErrorCode;
+import com.webmaple.common.enums.CommonErrorCode;
 
 /**
  * @author lyifee

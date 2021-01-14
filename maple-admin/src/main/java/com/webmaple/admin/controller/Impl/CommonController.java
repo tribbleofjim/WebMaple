@@ -52,6 +52,11 @@ public class CommonController {
         return "timed";
     }
 
+    @RequestMapping("/user")
+    public String user() {
+        return "user";
+    }
+
     @RequestMapping("/spiderList")
     @ResponseBody
     public DataTableDTO querySpiderList(@RequestParam int page, @RequestParam int limit) {

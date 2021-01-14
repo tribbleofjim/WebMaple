@@ -1,6 +1,6 @@
 package com.webmaple.admin.service.Impl;
 
-import com.webmaple.admin.enums.NodeType;
+import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.NodeDTO;
 import com.webmaple.admin.service.NodeManageService;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.webmaple.admin.controller.Impl;
 
 import com.webmaple.admin.controller.SpiderManageController;
-import com.webmaple.admin.enums.CommonErrorCode;
+import com.webmaple.common.enums.CommonErrorCode;
 import com.webmaple.common.model.Result;
 import com.webmaple.admin.service.SpiderManageService;
 import org.apache.commons.collections.CollectionUtils;
