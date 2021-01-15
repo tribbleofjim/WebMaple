@@ -5,6 +5,7 @@
         <title>用户基本资料</title>
         <link rel="stylesheet" href="/layui/css/layui.css">
         <script type="text/javascript" src="/layui/layui.js"></script>
+        <script src="/echarts/dist/echarts.min.js"></script>
     </head>
 
     <body class="layui-layout-body layui-bg-gray">
@@ -30,7 +31,7 @@
                                 <i class="layui-icon layui-icon-template-1"></i>
                                 节点列表
                             </a></dd>
-                            <dd><a href="javascript:;">
+                            <dd><a href="timed">
                                 <i class="layui-icon layui-icon-time"></i>
                                 定时任务
                             </a></dd>
@@ -66,60 +67,49 @@
             <div style="padding: 15px;">
                 <div class="layui-container">
                     <div class="padding: 20px; background-color: #F2F2F2;">
-                        <!--用户名-->
-                        <div class="layui-card" style="height: 150px">
-                            <div class="layui-card-body">
-                                <div class="layui-row layui-col-space15">
-                                    <div class="layui-col-md4">
+                        <!--数据总览-->
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md4">
+                                <!--用户名-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-username" style="font-size: 30px;"></i>
-                                    </div>
-                                    <div class="layui-col-md4">
                                         <span id="userName">user1</span>
-                                    </div>
-                                    <div class="layui-col-md4">
                                         <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
                                             <i class="layui-icon layui-icon-edit"></i> 编辑
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--/用户名-->
-
-                        <!--密码-->
-                        <div class="layui-card" style="height: 150px">
-                            <div class="layui-card-body">
-                                <div class="layui-row layui-col-space15">
-                                    <div class="layui-col-md4">
+                            <div class="layui-col-md4">
+                                <!--密码-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-password" style="font-size: 30px;"></i>
-                                    </div>
-                                    <div class="layui-col-md4">
                                         <span id="password">******</span>
-                                    </div>
-                                    <div class="layui-col-md4">
                                         <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
                                             <i class="layui-icon layui-icon-edit"></i> 修改密码
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--/密码-->
-
-                        <!--账号权限-->
-                        <div class="layui-card" style="height: 150px">
-                            <div class="layui-card-body">
-                                <div class="layui-row layui-col-space15">
-                                    <div class="layui-col-md4">
+                            <div class="layui-col-md4">
+                                <!--账号权限-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-auz" style="font-size: 30px;"></i>
-                                    </div>
-                                    <div class="layui-col-md4">
                                         <span id="auth">普通用户</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--/账号权限-->
+                        <!--/数据总览-->
+
+                        <!--用户一周内的日访问量-->
+                        <div class="layui-row">
+                            <div id="visits" style="height:600px;"></div>
+                        </div>
+                        <!--/用户一周内的日访问量-->
                     </div>
                 </div>
             </div>
@@ -127,14 +117,33 @@
 
         <script type="text/javascript" src="../js/spider.js"></script>
 
-        <script type="text/html" id="headBar">
-            <button type="button" class="layui-btn">
-                <i class="layui-icon layui-icon-addition"></i> 添加定时任务
-            </button>
-            <button type="button" class="layui-btn">
-                <i class="layui-icon layui-icon-delete"></i> 删除定时任务
-            </button>
-        </script>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('visits', 'dark'));
 
+            // 指定图表的配置项和数据
+            var option = {
+                color: ['#008B8B'],
+                title: {
+                    text: '用户一周内日访问量'
+                },
+                tooltip: {},
+                legend: {
+                    data:['访问次数']
+                },
+                xAxis: {
+                    data: ["Sun","Mon","Tue","Wen","Thu","Fri","Sat"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '访问次数',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20, 16]
+                }]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        </script>
     </body>
 </html>

@@ -13,7 +13,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             'class="form-control layui-input" style="width: 200%;"   >' +
             '</div>' +
             '<div class="layui-input-block" style="margin-left: 610px">' +
-            '<button type="button" class="layui-btn layui-btn-danger layui-btn-sm removeclass"><i class="layui-icon">&#xe67e;</i></button>' +
+            '<button type="button" class="layui-btn layui-btn-normal layui-btn-sm removeclass"><i class="layui-icon">&#xe67e;</i></button>' +
             '</div>' +
             '</div>';
 
