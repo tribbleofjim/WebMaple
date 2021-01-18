@@ -2,7 +2,7 @@ package com.webmaple.worker;
 
 import com.webmaple.worker.dao.SpiderDAO;
 import com.webmaple.worker.dao.model.SpiderDO;
-import com.webmaple.worker.util.ModelUtil;
+import com.webmaple.common.util.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;

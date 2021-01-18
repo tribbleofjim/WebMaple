@@ -10,4 +10,9 @@ import java.util.List;
  */
 public interface NodeManageService {
     List<NodeDTO> queryNodeList();
+
+    void addWorker(NodeDTO worker);
+
+    void removeWorker(String workerName);
+
 }

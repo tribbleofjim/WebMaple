@@ -1,4 +1,4 @@
-package com.webmaple.worker.util;
+package com.webmaple.common.util;
 
 import org.yaml.snakeyaml.Yaml;
 
