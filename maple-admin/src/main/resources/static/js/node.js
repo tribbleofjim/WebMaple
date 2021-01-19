@@ -14,7 +14,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                 addNode();
             break;
             case 'removeNode':
-                removeNode(data);
+                removeNode(checkStatus.data);
             break;
         };
         event.stoppropagation();
@@ -49,7 +49,32 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     }
 
     function removeNode(data) {
-        console.log("removeNode");
+        console.log(data);
+        let node = data[0];
+        // cannot remove admin
+        if (node.type !== 'worker') {
+            return;
+        }
+
+        layer.open({
+            content: '确认要删除吗？',
+            btn: ['确认', '取消']
+                ,btn1: function(index, layero){
+                    // do remove
+                    let xhr = new XMLHttpRequest();
+                    let url = "/removeWorker?name=" + node.name;
+                    xhr.open('GET', url, true);
+                    xhr.onreadystatechange = function() {
+                        if (xhr.status == 200) {
+                            layer.msg('删除节点成功！');
+                        }
+                    }
+                    xhr.send(null);
+                },
+                btn2: function(index, layero){
+                    layer.closeAll();
+                }
+        });
     }
 
 });

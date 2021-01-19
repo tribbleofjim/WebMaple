@@ -101,7 +101,7 @@ public class CommonController {
         return Result.success();
     }
 
-    @RequestMapping("removeWorker")
+    @RequestMapping("/removeWorker")
     @ResponseBody
     public Result removeWorker(@RequestParam String name) {
         assert StringUtils.isNotBlank(name);
