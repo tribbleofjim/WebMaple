@@ -1,14 +1,13 @@
 package com.webmaple.admin.controller.Impl;
 
 import com.alibaba.fastjson.JSON;
-import com.webmaple.common.model.DataTableDTO;
-import com.webmaple.common.model.JobDTO;
-import com.webmaple.common.model.NodeDTO;
-import com.webmaple.common.model.SpiderDTO;
+import com.webmaple.common.enums.NodeType;
+import com.webmaple.common.model.*;
 import com.webmaple.admin.service.NodeManageService;
 import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.admin.service.TimedJobService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,6 +85,29 @@ public class CommonController {
         }
         dataTableDTO.setData(JSON.toJSON(nodeList));
         return dataTableDTO;
+    }
+
+    @RequestMapping("/addWorker")
+    @ResponseBody
+    public Result addWorker(@RequestParam String ip, @RequestParam String name) {
+        assert StringUtils.isNotBlank(ip);
+        assert StringUtils.isNotBlank(name);
+
+        NodeDTO worker = new NodeDTO();
+        worker.setType(NodeType.WORKER.getType());
+        worker.setIp(ip);
+        worker.setName(name);
+        nodeManageService.addWorker(worker);
+        return Result.success();
+    }
+
+    @RequestMapping("removeWorker")
+    @ResponseBody
+    public Result removeWorker(@RequestParam String name) {
+        assert StringUtils.isNotBlank(name);
+
+        nodeManageService.removeWorker(name);
+        return Result.success();
     }
 
     @RequestMapping("/timedJobs")

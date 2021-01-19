@@ -4,4 +4,4 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     let table = layui.table;
     let element = layui.element;
     let $ = layui.jquery;
-}
+});

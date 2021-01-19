@@ -16,7 +16,7 @@ import java.util.List;
 public class NodeManageServiceImpl implements NodeManageService {
     @Override
     public List<NodeDTO> queryNodeList() {
-        return mockNodeList();
+        return WorkerContext.getWorkerList();
     }
 
     @Override

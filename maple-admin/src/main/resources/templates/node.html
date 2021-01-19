@@ -63,34 +63,55 @@
 
         <!--内容主体区域-->
         <div class="layui-body">
-            <div style="padding: 15px;">
-                <div class="layui-container">
-                    <!--节点列表-->
-                    <div class="layui-row">
-                        <fieldset class="layui-elem-field layui-field-title">
-                            <legend>分布式节点列表</legend>
-                        </fieldset>
-                        <table class="layui-table" lay-data="{height:450, url:'/nodeList', page:true,
-                            id:'nodes', toolbar: '#headBar'}" lay-filter="nodes" >
-                            <thead>
-                            <tr>
-                                <th lay-data="{checkbox:true}"></th>
-                                <th lay-data="{field:'ip', width:150}">ip地址</th>
-                                <th lay-data="{field:'type', width:150}">节点类型</th>
-                                <th lay-data="{field:'name', width:150}">节点名称</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <!--/节点列表-->
+            <div class="layui-container" style="padding: 15px;">
+                <!--节点列表-->
+                <div class="layui-row">
+                    <fieldset class="layui-elem-field layui-field-title">
+                        <legend>分布式节点列表</legend>
+                    </fieldset>
+                    <table class="layui-table" lay-data="{height:450, url:'/nodeList', page:true,
+                        id:'nodes', toolbar: '#headBar'}" lay-filter="nodes" >
+                        <thead>
+                        <tr>
+                            <th lay-data="{checkbox:true}"></th>
+                            <th lay-data="{field:'ip', width:150}">ip地址</th>
+                            <th lay-data="{field:'type', width:150}">节点类型</th>
+                            <th lay-data="{field:'name', width:150}">节点名称</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
+                <!--/节点列表-->
+
+                <!--新建节点表单-->
+                <form class="layui-form" id="nodeInfo" style="display:none; padding-top: 50px;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">节点ip</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入ip地址"
+                                   autocomplete="on" class="layui-input" id="ip" style="width:200px">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">节点名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入节点名称"
+                                   autocomplete="on" class="layui-input" id="name" style="width:200px">
+                        </div>
+                    </div>
+                </form>
+                <!--/新建节点表单-->
             </div>
         </div>
 
-        <script type="text/javascript" src="../js/spider.js"></script>
+        <script type="text/javascript" src="../js/node.js"></script>
 
         <script type="text/html" id="headBar">
-            <button type="button" class="layui-btn">
+            <button type="button" class="layui-btn" lay-event="addNode">
+                <i class="layui-icon layui-icon-addition"></i> 添加节点
+            </button>
+            <button type="button" class="layui-btn" lay-event="removeNode">
                 <i class="layui-icon layui-icon-delete"></i> 删除节点
             </button>
         </script>

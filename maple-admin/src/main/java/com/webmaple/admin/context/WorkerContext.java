@@ -7,7 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lyifee
@@ -29,8 +32,16 @@ public class WorkerContext {
         }
     }
 
+    public static List<NodeDTO> getWorkerList() {
+        List<NodeDTO> list = new ArrayList<>();
+        for (Map.Entry<String, NodeDTO> entry : WORKERS_MAP.entrySet()) {
+            list.add(entry.getValue());
+        }
+        return list;
+    }
+
     public static void addWorker(NodeDTO worker) {
-        if (WORKERS_MAP.size() >= MAX_VALUE || !worker.getType().equals(NodeType.WORKER)) {
+        if (WORKERS_MAP.size() >= MAX_VALUE || !worker.getType().equals(NodeType.WORKER.getType())) {
             return;
         }
         WORKERS_MAP.put(worker.getName(), worker);

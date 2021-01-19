@@ -89,7 +89,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         layer.open({
             type:1,
             area:['400px','300px'],
-            title: 'title',
+            title: '修改spider',
             content: $("#update"),
             shade: 0,
             btn: ['提交', '重置']
