@@ -1,9 +1,7 @@
 package com.webmaple.worker;
 
-import com.webmaple.worker.dao.SpiderDAO;
-import com.webmaple.worker.dao.model.SpiderDO;
+import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.common.util.ModelUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.thread.CountableThreadPool;
@@ -20,9 +18,6 @@ import java.util.List;
  */
 @Component
 public class SpiderProcess {
-    @Autowired
-    private SpiderDAO spiderDAO;
-
     protected CountableThreadPool threadPool;
 
     protected int threadNum = 0;
@@ -49,17 +44,24 @@ public class SpiderProcess {
         this.threadNum = threadNum;
     }
 
-    public void run(Spider spider) {
-        SpiderDO spiderDO = ModelUtil.getSpiderDO(spider);
-        spiderDAO.insertSpider(spiderDO);
+    public void startSpider(SpiderDTO spiderDTO) {
+        Spider spider = ModelUtil.getSpiderFromDTO(spiderDTO);
+        if (spider == null) {
+            return;
+        }
+        SpiderContainer.put(spider.getUUID(), spiderDTO);
+        run(spider);
+    }
+
+    private void run(Spider spider) {
         threadPool.execute(spider);
     }
 
-    public List<SpiderDO> getSpiders() {
-        return spiderDAO.querySpiderList();
+    public List<SpiderDTO> getSpiders() {
+        return null;
     }
 
-    public void modifySpider(SpiderDO spiderDO) {
+    public void modifySpider(SpiderDTO spiderDTO) {
 
     }
 }

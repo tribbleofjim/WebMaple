@@ -1,7 +1,9 @@
 package com.webmaple.worker;
 
-import us.codecraft.webmagic.Spider;
-
+import com.webmaple.common.model.SpiderDTO;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -9,17 +11,25 @@ import java.util.concurrent.ConcurrentHashMap;
  * on 2021/1/14
  */
 public class SpiderContainer {
-    private static final ConcurrentHashMap<String, Spider> spiderMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, SpiderDTO> SPIDER_MAP = new ConcurrentHashMap<>();
 
-    public static void put(String uuid, Spider spider) {
-        spiderMap.put(uuid, spider);
+    public static List<SpiderDTO> getSpiderList() {
+        List<SpiderDTO> spiderDTOS = new ArrayList<>();
+        for (Map.Entry<String, SpiderDTO> entry : SPIDER_MAP.entrySet()) {
+            spiderDTOS.add(entry.getValue());
+        }
+        return spiderDTOS;
     }
 
-    public static Spider get(String uuid) {
-        return spiderMap.get(uuid);
+    public static void put(String uuid, SpiderDTO spider) {
+        SPIDER_MAP.put(uuid, spider);
+    }
+
+    public static SpiderDTO get(String uuid) {
+        return SPIDER_MAP.get(uuid);
     }
 
     public static void remove(String uuid) {
-        spiderMap.remove(uuid);
+        SPIDER_MAP.remove(uuid);
     }
 }
