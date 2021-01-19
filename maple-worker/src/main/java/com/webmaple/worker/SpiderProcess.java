@@ -2,6 +2,7 @@ package com.webmaple.worker;
 
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.common.util.ModelUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.thread.CountableThreadPool;
@@ -28,7 +29,7 @@ public class SpiderProcess {
         init();
     }
 
-    public void init() {
+    private void init() {
         if (threadNum <= 0) {
             threadPool = new CountableThreadPool(DEFAULT_THREAD_NUM);
         } else {
@@ -44,12 +45,21 @@ public class SpiderProcess {
         this.threadNum = threadNum;
     }
 
+    public void createSpider(SpiderDTO spiderDTO) {
+        if (spiderDTO == null || StringUtils.isBlank(spiderDTO.getUuid())) {
+            return;
+        }
+        SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
+    }
+
     public void startSpider(SpiderDTO spiderDTO) {
         Spider spider = ModelUtil.getSpiderFromDTO(spiderDTO);
         if (spider == null) {
             return;
         }
-        SpiderContainer.put(spider.getUUID(), spiderDTO);
+        if (SpiderContainer.getSpiderDTO(spiderDTO.getUuid()) == null) {
+            createSpider(spiderDTO);
+        }
         run(spider);
     }
 
@@ -58,10 +68,24 @@ public class SpiderProcess {
     }
 
     public List<SpiderDTO> getSpiders() {
-        return null;
+        return SpiderContainer.getSpiderList();
     }
 
     public void modifySpider(SpiderDTO spiderDTO) {
 
+    }
+
+    public void removeSpider(String uuid) {
+        if (StringUtils.isBlank(uuid)) {
+            return;
+        }
+        SpiderContainer.removeSpiderDTO(uuid);
+    }
+
+    public void stopSpider(String uuid) {
+        if (StringUtils.isBlank(uuid)) {
+            return;
+        }
+        SpiderContainer.stopSpider(uuid);
     }
 }
