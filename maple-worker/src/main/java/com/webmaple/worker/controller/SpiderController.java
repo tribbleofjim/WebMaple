@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * @author lyifee
  * on 2021/1/19
@@ -39,10 +41,17 @@ public class SpiderController {
         return Result.success();
     }
 
-    @RequestMapping("/removeSpider")
+    @RequestMapping("/stopSpider")
     @ResponseBody
     public Result stopSpider(@RequestParam String uuid) {
         spiderProcess.stopSpider(uuid);
         return Result.success();
+    }
+
+    @RequestMapping("/spiderList")
+    @ResponseBody
+    public Result spiderList() {
+        List<SpiderDTO> spiders = spiderProcess.getSpiders();
+        return Result.success(spiders);
     }
 }

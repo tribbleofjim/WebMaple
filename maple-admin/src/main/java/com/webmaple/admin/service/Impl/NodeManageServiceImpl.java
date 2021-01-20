@@ -1,6 +1,6 @@
 package com.webmaple.admin.service.Impl;
 
-import com.webmaple.admin.context.WorkerContext;
+import com.webmaple.admin.container.WorkerContainer;
 import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.NodeDTO;
 import com.webmaple.admin.service.NodeManageService;
@@ -16,17 +16,17 @@ import java.util.List;
 public class NodeManageServiceImpl implements NodeManageService {
     @Override
     public List<NodeDTO> queryNodeList() {
-        return WorkerContext.getWorkerList();
+        return WorkerContainer.getWorkerList();
     }
 
     @Override
     public void addWorker(NodeDTO worker) {
-        WorkerContext.addWorker(worker);
+        WorkerContainer.addWorker(worker);
     }
 
     @Override
     public void removeWorker(String workerName) {
-        WorkerContext.remove(workerName);
+        WorkerContainer.remove(workerName);
     }
 
     List<NodeDTO> mockNodeList() {

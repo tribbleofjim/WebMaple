@@ -1,4 +1,4 @@
-package com.webmaple.admin.context;
+package com.webmaple.admin.container;
 
 import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.NodeDTO;
@@ -17,14 +17,14 @@ import java.util.Map;
  * on 2021/1/18
  */
 @Component
-public class WorkerContext {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WorkerContext.class);
+public class WorkerContainer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WorkerContainer.class);
 
     private static final HashMap<String, NodeDTO> WORKERS_MAP = new HashMap<>();
 
     private static int MAX_VALUE = 10;
 
-    public WorkerContext() {
+    public WorkerContainer() {
         try {
             MAX_VALUE = Integer.parseInt(ConfigUtil.getValueToString("application.yml", "props.workers.max-value"));
         } catch (Exception e) {

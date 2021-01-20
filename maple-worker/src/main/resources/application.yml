@@ -1,6 +1,11 @@
 spring:
-  datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.37.89.200:3306/webmaple?useSSL=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Beijing
-    username: root
-    password: Pass*6
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    block-when-exhausted: true
+    # password: Pass*4
+    jedis:
+      pool:
+        max-idle: 50
+        max-wait: 5000

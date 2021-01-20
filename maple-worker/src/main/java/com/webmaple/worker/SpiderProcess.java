@@ -2,6 +2,7 @@ package com.webmaple.worker;
 
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.common.util.ModelUtil;
+import com.webmaple.worker.container.SpiderContainer;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
