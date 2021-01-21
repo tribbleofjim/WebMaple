@@ -1,6 +1,7 @@
 package com.webmaple.worker;
 
 import com.webmaple.worker.annotation.MapleProcessor;
+import com.webmaple.worker.container.ComponentContainer;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.downloader.Downloader;
 import us.codecraft.webmagic.processor.PageProcessor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -22,6 +25,9 @@ public class ComponentRegister {
     @Autowired
     private ReflectionsConfig reflectionsConfig;
 
+    @Autowired
+    private ComponentContainer container;
+
     public ComponentRegister() {
         register();
     }
@@ -30,26 +36,35 @@ public class ComponentRegister {
         Reflections reflections = reflectionsConfig.getReflections();
 
         Set<Class<?>> processors = reflections.getTypesAnnotatedWith(MapleProcessor.class);
+        List<String> processorList = new ArrayList<>();
         LOGGER.info("start processor register...");
         for (Class<?> clazz : processors) {
             Class<?>[] interfaces = clazz.getInterfaces();
             for (Class<?> inteface : interfaces) {
                 if (inteface == PageProcessor.class) {
-                    MapleProcessor mapleProcessor = clazz.getAnnotation(MapleProcessor.class);
-                    String site = mapleProcessor.site();
-                    // do register
-                    System.out.println("processor class : " + clazz.getName() + ", site : " + site);
+                    try {
+                        MapleProcessor mapleProcessor = clazz.getAnnotation(MapleProcessor.class);
+                        String site = mapleProcessor.site();
+                        processorList.add(clazz.getName());
+                        System.out.println("processor class : " + clazz.getName() + ", site : " + site);
+
+                    } catch (Exception e) {
+                        LOGGER.error("exception_register_processor: {}, {}", clazz.getName(), e.getMessage());
+                    }
                 }
             }
         }
+        container.addProcessors(processorList);
         LOGGER.info("end processor register.");
 
         Set<Class<? extends Downloader>> downloaders = reflections.getSubTypesOf(Downloader.class);
+        List<String> downloaderList = new ArrayList<>();
         LOGGER.info("start downloader register...");
         for (Class<?> clazz : downloaders) {
-            // do register
+            downloaderList.add(clazz.getName());
             System.out.println("downloader class : " + clazz.getName());
         }
+        container.addDownloaders(downloaderList);
         LOGGER.info("end downloader register.");
     }
 }
