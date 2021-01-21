@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * 注册项目中的Processor、Downloader和Pipeline
+ * Processor通过注解注册，其他两个类直接扫描注册
+ *
  * @author lyifee
  * on 2021/1/9
  */

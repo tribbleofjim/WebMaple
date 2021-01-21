@@ -21,4 +21,13 @@ public enum MaintainType {
     public void setType(String type) {
         this.type = type;
     }
+
+    public static MaintainType getType(String type) {
+        for (MaintainType maintainType : MaintainType.values()) {
+            if (maintainType.getType().equals(type)) {
+                return maintainType;
+            }
+        }
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.webmaple.worker.container;
 
+import com.webmaple.worker.util.ModelUtil;
 import com.webmaple.worker.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,16 +19,19 @@ public class ComponentContainer {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private ModelUtil modelUtil;
+
     public void addProcessors(List<String> processorList) {
-        redisUtil.sadd("processors", listToString(processorList));
+        redisUtil.sadd("processors", modelUtil.listToString(processorList));
     }
 
     public void addDownloaders(List<String> downloaderList) {
-        redisUtil.sadd("downloaders", listToString(downloaderList));
+        redisUtil.sadd("downloaders", modelUtil.listToString(downloaderList));
     }
 
     public void addPipelines(List<String> pipelineList) {
-        redisUtil.sadd("pipelines", listToString(pipelineList));
+        redisUtil.sadd("pipelines", modelUtil.listToString(pipelineList));
     }
 
     public List<String> getProcessors() {
@@ -59,20 +63,12 @@ public class ComponentContainer {
 
     public void destroy() {
         List<String> processorList = getProcessors();
-        removeProcessor(listToString((processorList)));
+        removeProcessor(modelUtil.listToString((processorList)));
 
         List<String> downloaderList = getDownloaders();
-        removeDownloader(listToString(downloaderList));
+        removeDownloader(modelUtil.listToString(downloaderList));
 
         List<String> pipelineList = getPipelines();
-        removePipeline(listToString(pipelineList));
-    }
-
-    private String listToString(List<String> list) {
-        StringBuilder builder = new StringBuilder();
-        for (String str : list) {
-            builder.append(",").append(str);
-        }
-        return builder.toString().substring(1);
+        removePipeline(modelUtil.listToString(pipelineList));
     }
 }

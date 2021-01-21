@@ -1,6 +1,11 @@
-package com.webmaple.common.util;
+package com.webmaple.worker.util;
 
+import com.alibaba.fastjson.JSON;
+import com.webmaple.common.enums.MaintainType;
 import com.webmaple.common.model.SpiderDTO;
+import com.webmaple.worker.job.model.QuartzJob;
+import com.webmaple.worker.job.model.SpiderInfo;
+import com.webmaple.worker.job.spider.TimedSpider;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +19,9 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.scheduler.RedisScheduler;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author lyifee
@@ -69,17 +76,65 @@ public class ModelUtil {
         }
         return null;
     }
+    
+    public QuartzJob getQuartzJobForSpider(SpiderDTO spiderDTO, String maintainType, int maintain, String rawCron) {
+        QuartzJob quartzJob = new QuartzJob();
+        int randomPlus = new Random().nextInt(1000);
+
+        quartzJob.setJobName("job" + randomPlus);
+        quartzJob.setJobClazz("com.ecspider.common.job.spider.SpiderJob");
+        String cron = getCron(rawCron);
+        if (StringUtils.isBlank(cron)) {
+            LOGGER.error("invalid_cron");
+            return null;
+        }
+        System.out.println(cron);
+        quartzJob.setCronExpression(cron);
+        quartzJob.setStartTime(new Date());
+
+        SpiderInfo spiderInfo = new SpiderInfo();
+        spiderInfo.setProcessor(spiderDTO.getProcessor());
+        spiderInfo.setPipeline(spiderDTO.getPipeline());
+        spiderInfo.setUrls(listToString(spiderDTO.getUrls()));
+        spiderInfo.setUuid("spider_" + randomPlus);
+        spiderInfo.setDownloader(spiderDTO.getDownloader());
+        spiderInfo.setThreadNum(spiderDTO.getThreadNum());
+        spiderInfo.setMaintainUrlNum(maintain);
+
+        quartzJob.setExtraInfo(JSON.toJSONString(spiderInfo));
+        return quartzJob;
+    }
+
+    public String listToString(List<String> list) {
+        StringBuilder builder = new StringBuilder();
+        for (String str : list) {
+            builder.append(",").append(str);
+        }
+        return builder.toString().substring(1);
+    }
 
     private JedisPool getJedisPool() {
-        // TODO:这里可以做成一个接口供调用
         return jedisPool;
     }
 
-    public SpiderDTO getSpiderDTO(Spider spider) {
-        SpiderDTO spiderDTO = new SpiderDTO();
-        spiderDTO.setUuid(spider.getUUID());
-        spiderDTO.setThreadNum(spider.getThreadAlive());
-        spiderDTO.setState("running");
-        return spiderDTO;
+    private String getCron(String rawCron) {
+        // 5m / 4h
+        if (StringUtils.isBlank(rawCron)) {
+            LOGGER.error("invalid_rawCron : {}", rawCron);
+            return null;
+        }
+        String baseCron = "0 * * * * ?";
+        String num = "0/" + rawCron.substring(0, rawCron.length() - 1);
+        if (rawCron.endsWith("m")) {
+            return baseCron.replaceFirst("\\*", num);
+
+        } else if (rawCron.endsWith("h")){
+            String cron = baseCron.replaceFirst("\\*", "0");
+            cron = cron.replaceFirst("\\*", num);
+            return cron;
+
+        } else {
+            throw new RuntimeException("invalid_rawCron : " + rawCron);
+        }
     }
 }
