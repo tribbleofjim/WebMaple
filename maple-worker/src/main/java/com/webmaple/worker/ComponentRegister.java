@@ -1,7 +1,6 @@
 package com.webmaple.worker;
 
 import com.webmaple.worker.annotation.MapleProcessor;
-import com.webmaple.worker.dao.ComponentDAO;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +21,6 @@ public class ComponentRegister {
 
     @Autowired
     private ReflectionsConfig reflectionsConfig;
-
-    @Autowired
-    private ComponentDAO componentDAO;
 
     public ComponentRegister() {
         register();
