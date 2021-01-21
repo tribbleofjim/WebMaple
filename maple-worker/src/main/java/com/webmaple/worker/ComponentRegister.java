@@ -45,8 +45,7 @@ public class ComponentRegister {
                     try {
                         MapleProcessor mapleProcessor = clazz.getAnnotation(MapleProcessor.class);
                         String site = mapleProcessor.site();
-                        processorList.add(clazz.getName());
-                        System.out.println("processor class : " + clazz.getName() + ", site : " + site);
+                        processorList.add(clazz.getName() + ":" + site);
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_processor: {}, {}", clazz.getName(), e.getMessage());
@@ -62,7 +61,6 @@ public class ComponentRegister {
         LOGGER.info("start downloader register...");
         for (Class<?> clazz : downloaders) {
             downloaderList.add(clazz.getName());
-            System.out.println("downloader class : " + clazz.getName());
         }
         container.addDownloaders(downloaderList);
         LOGGER.info("end downloader register.");
