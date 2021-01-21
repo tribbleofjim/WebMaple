@@ -4,6 +4,7 @@ import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.common.util.ModelUtil;
 import com.webmaple.worker.container.SpiderContainer;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.thread.CountableThreadPool;
@@ -20,6 +21,9 @@ import java.util.List;
  */
 @Component
 public class SpiderProcess {
+    @Autowired
+    private ModelUtil modelUtil;
+
     protected CountableThreadPool threadPool;
 
     protected int threadNum = 0;
@@ -54,7 +58,7 @@ public class SpiderProcess {
     }
 
     public void startSpider(SpiderDTO spiderDTO) {
-        Spider spider = ModelUtil.getSpiderFromDTO(spiderDTO);
+        Spider spider = modelUtil.getSpiderFromDTO(spiderDTO);
         if (spider == null) {
             return;
         }

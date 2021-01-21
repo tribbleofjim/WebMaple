@@ -4,6 +4,8 @@ import com.webmaple.common.model.SpiderDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.downloader.Downloader;
@@ -18,10 +20,14 @@ import java.util.List;
  * @author lyifee
  * on 2021/1/8
  */
+@Component
 public class ModelUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(ModelUtil.class);
 
-    public static Spider getSpiderFromDTO(SpiderDTO spiderDTO) {
+    @Autowired
+    private JedisPool jedisPool;
+
+    public Spider getSpiderFromDTO(SpiderDTO spiderDTO) {
         try {
             String processorClass = spiderDTO.getProcessor();
             String pipelineClass = spiderDTO.getPipeline();
@@ -64,12 +70,12 @@ public class ModelUtil {
         return null;
     }
 
-    private static JedisPool getJedisPool() {
+    private JedisPool getJedisPool() {
         // TODO:这里可以做成一个接口供调用
-        return null;
+        return jedisPool;
     }
 
-    public static SpiderDTO getSpiderDTO(Spider spider) {
+    public SpiderDTO getSpiderDTO(Spider spider) {
         SpiderDTO spiderDTO = new SpiderDTO();
         spiderDTO.setUuid(spider.getUUID());
         spiderDTO.setThreadNum(spider.getThreadAlive());
