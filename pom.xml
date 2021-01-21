@@ -23,6 +23,7 @@
         <thymeleaf.version>2.3.7.RELEASE</thymeleaf.version>
         <spring.boot.plugin.version>2.4.1</spring.boot.plugin.version>
         <reflections.version>0.9.12</reflections.version>
+        <quartz.version>2.4.1</quartz.version>
     </properties>
 
     <dependencies>
