@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.downloader.Downloader;
+import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class ComponentRegister {
     public void register() {
         Reflections reflections = reflectionsConfig.getReflections();
 
+        // processor register
+        // format : com.ecspider.common.processor.JDProcessor#http://jd.Search.com
         Set<Class<?>> processors = reflections.getTypesAnnotatedWith(MapleProcessor.class);
         List<String> processorList = new ArrayList<>();
         LOGGER.info("start processor register...");
@@ -45,7 +48,7 @@ public class ComponentRegister {
                     try {
                         MapleProcessor mapleProcessor = clazz.getAnnotation(MapleProcessor.class);
                         String site = mapleProcessor.site();
-                        processorList.add(clazz.getName() + ":" + site);
+                        processorList.add(clazz.getName() + "#" + site);
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_processor: {}, {}", clazz.getName(), e.getMessage());
@@ -56,6 +59,7 @@ public class ComponentRegister {
         container.addProcessors(processorList);
         LOGGER.info("end processor register.");
 
+        // downloader register
         Set<Class<? extends Downloader>> downloaders = reflections.getSubTypesOf(Downloader.class);
         List<String> downloaderList = new ArrayList<>();
         LOGGER.info("start downloader register...");
@@ -64,5 +68,15 @@ public class ComponentRegister {
         }
         container.addDownloaders(downloaderList);
         LOGGER.info("end downloader register.");
+
+        // pipeline register
+        Set<Class<? extends Pipeline>> pipelines = reflections.getSubTypesOf(Pipeline.class);
+        List<String> pipelineList = new ArrayList<>();
+        LOGGER.info("start pipeline register...");
+        for (Class<?> clazz : pipelines) {
+            pipelineList.add(clazz.getName());
+        }
+        container.addPipelines(pipelineList);
+        LOGGER.info("end pipeline register.");
     }
 }
