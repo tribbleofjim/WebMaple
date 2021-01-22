@@ -80,8 +80,8 @@ public class ModelUtil {
         int randomPlus = new Random().nextInt(1000);
 
         quartzJob.setExecuting(true);
-        quartzJob.setJobName("job" + randomPlus);
-        quartzJob.setJobClazz("com.ecspider.common.job.spider.SpiderJob");
+        quartzJob.setJobName("job_" + randomPlus);
+        quartzJob.setJobClazz("com.webmaple.worker.job.spider.SpiderJob");
         String cron = getCron(rawCron);
         if (StringUtils.isBlank(cron)) {
             LOGGER.error("invalid_cron");
