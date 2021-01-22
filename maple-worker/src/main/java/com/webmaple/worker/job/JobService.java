@@ -57,7 +57,6 @@ public class JobService implements InitializingBean {
     }
 
     public List<QuartzJob> getAllJob() throws SchedulerException {
-        // TODO : 用mysql存储元数据信息
         return null;
     }
 
@@ -79,14 +78,14 @@ public class JobService implements InitializingBean {
     }
 
     //暂停任务
-    public String pauseJob(String jobName, String jobGroup) throws SchedulerException {
+    public void pauseJob(String jobName, String jobGroup) throws SchedulerException {
         JobKey jobKey = new JobKey(jobName, jobGroup);
         JobDetail jobDetail = scheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
-            return "fail";
+            LOGGER.warn("pause_null_job:{}", jobName);
+
         }else {
             scheduler.pauseJob(jobKey);
-            return "success";
         }
 
     }
@@ -97,38 +96,40 @@ public class JobService implements InitializingBean {
     }
 
     // 恢复某个任务
-    public String resumeJob(String jobName, String jobGroup) throws SchedulerException {
+    public void resumeJob(String jobName, String jobGroup) throws SchedulerException {
 
         JobKey jobKey = new JobKey(jobName, jobGroup);
         JobDetail jobDetail = scheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
-            return "fail";
+            LOGGER.warn("resume_null_job:{}", jobName);
+
         }else {
             scheduler.resumeJob(jobKey);
-            return "success";
         }
     }
 
     //删除某个任务
-    public String  deleteJob(QuartzJob quartzJob) throws SchedulerException {
+    public void deleteJob(QuartzJob quartzJob) throws SchedulerException {
         JobKey jobKey = new JobKey(quartzJob.getJobName(), quartzJob.getJobClazz());
         JobDetail jobDetail = scheduler.getJobDetail(jobKey);
         if (jobDetail == null ) {
-            return "jobDetail is null";
+            LOGGER.warn("delete_null_job:{}", quartzJob.getJobName());
+
         }else if(!scheduler.checkExists(jobKey)) {
-            return "jobKey is not exists";
+            LOGGER.warn("job_not_exists:{}", quartzJob.getJobName());
+
         }else {
             scheduler.deleteJob(jobKey);
-            return "success";
         }
-
     }
 
     //修改任务
-    public String  modifyJob(QuartzJob quartzJob) throws SchedulerException {
+    public void modifyJob(QuartzJob quartzJob) throws SchedulerException {
         if (!CronExpression.isValidExpression(quartzJob.getCronExpression())) {
-            return "Illegal cron expression";
+            LOGGER.warn("invalid_cron_expression:{}", quartzJob.getCronExpression());
+            return;
         }
+
         TriggerKey triggerKey = TriggerKey.triggerKey(quartzJob.getJobName(),quartzJob.getJobClazz());
         JobKey jobKey = new JobKey(quartzJob.getJobName(),quartzJob.getJobClazz());
         if (scheduler.checkExists(jobKey) && scheduler.checkExists(triggerKey)) {
@@ -146,11 +147,7 @@ public class JobService implements InitializingBean {
 
             //按新的trigger重新设置job执行
             scheduler.rescheduleJob(triggerKey, trigger);
-            return "success";
-        }else {
-            return "job or trigger not exists";
         }
-
     }
 
     @Override

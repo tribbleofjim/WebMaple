@@ -1,11 +1,9 @@
 package com.webmaple.worker.util;
 
 import com.alibaba.fastjson.JSON;
-import com.webmaple.common.enums.MaintainType;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.worker.job.model.QuartzJob;
 import com.webmaple.worker.job.model.SpiderInfo;
-import com.webmaple.worker.job.spider.TimedSpider;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

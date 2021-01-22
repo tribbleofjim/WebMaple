@@ -4,7 +4,6 @@ import com.webmaple.common.enums.MaintainType;
 import com.webmaple.common.model.Result;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.worker.job.JobService;
-import com.webmaple.worker.job.spider.TimedSpider;
 import com.webmaple.worker.util.ModelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
