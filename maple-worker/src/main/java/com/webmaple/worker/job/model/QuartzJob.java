@@ -7,8 +7,6 @@ import java.util.Date;
  * on 2021/1/11
  */
 public class QuartzJob {
-    private Integer quartzId;
-
     private String jobName;  //任务名称
 
     private String jobClazz;  //QuartzJobBean类型的全限定名
@@ -18,14 +16,6 @@ public class QuartzJob {
     private String cronExpression;  //corn表达式
 
     private String extraInfo;//需要传递的参数
-
-    public Integer getQuartzId() {
-        return quartzId;
-    }
-
-    public void setQuartzId(Integer quartzId) {
-        this.quartzId = quartzId;
-    }
 
     public String getJobName() {
         return jobName;

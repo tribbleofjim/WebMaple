@@ -2,12 +2,15 @@ package com.webmaple.worker.job;
 
 import com.webmaple.worker.job.model.QuartzJob;
 import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,9 +57,31 @@ public class JobService implements InitializingBean {
             jobDetail.getJobDataMap().put(JobMapDataKey.EXTRA_INFO.getKey(), quartzJob.getExtraInfo());
         }
         scheduler.scheduleJob(jobDetail, trigger);
+        QuartzJobContainer.put(quartzJob.getJobName(), quartzJob);
     }
 
-    public List<QuartzJob> getAllJob() throws SchedulerException {
+    public List<QuartzJob> getAllJobs() {
+        List<QuartzJob> jobList = QuartzJobContainer.getJobList();
+        return jobList;
+    }
+
+    public List<QuartzJob> getExecutingJob() throws SchedulerException {
+        List<QuartzJob> jobList = new ArrayList<>();
+        try {
+            for (String groupName : scheduler.getJobGroupNames()) {
+                for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
+                    String jobName = jobKey.getName();
+                    String jobGroup = jobKey.getGroup();
+                    QuartzJob quartzJob = new QuartzJob();
+                    quartzJob.setJobName(jobName);
+                    quartzJob.setJobClazz(jobGroup);
+                    jobList.add(quartzJob);
+                    return jobList;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

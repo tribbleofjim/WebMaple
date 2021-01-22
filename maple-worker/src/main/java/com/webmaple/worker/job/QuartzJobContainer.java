@@ -1,5 +1,12 @@
 package com.webmaple.worker.job;
 
+import com.webmaple.worker.job.model.QuartzJob;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * 为了删除任务，将quartzJob的状态保存在容器中
  *
@@ -7,5 +14,25 @@ package com.webmaple.worker.job;
  * on 2021/1/16
  */
 public class QuartzJobContainer {
+    private static final ConcurrentHashMap<String, QuartzJob> jobMap = new ConcurrentHashMap<>();
 
+    public static List<QuartzJob> getJobList() {
+        List<QuartzJob> list = new ArrayList<>();
+        for (Map.Entry<String, QuartzJob> entry : jobMap.entrySet()) {
+            list.add(entry.getValue());
+        }
+        return list;
+    }
+
+    public static void put(String jobName, QuartzJob job) {
+        jobMap.put(jobName, job);
+    }
+
+    public static QuartzJob get(String jobName) {
+        return jobMap.get(jobName);
+    }
+
+    public static boolean containsKey(String jobName) {
+        return jobMap.containsKey(jobName);
+    }
 }

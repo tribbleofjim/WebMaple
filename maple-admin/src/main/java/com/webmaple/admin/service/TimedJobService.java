@@ -1,6 +1,6 @@
 package com.webmaple.admin.service;
 
-import com.webmaple.common.model.JobDTO;
+import com.webmaple.common.model.SpiderJobDTO;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  * on 2021/1/12
  */
 public interface TimedJobService {
-    List<JobDTO> queryTimedJobList();
+    List<SpiderJobDTO> queryTimedJobList();
 }

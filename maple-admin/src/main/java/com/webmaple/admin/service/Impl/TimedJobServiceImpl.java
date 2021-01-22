@@ -1,7 +1,7 @@
 package com.webmaple.admin.service.Impl;
 
 import com.webmaple.common.enums.MaintainType;
-import com.webmaple.common.model.JobDTO;
+import com.webmaple.common.model.SpiderJobDTO;
 import com.webmaple.admin.service.TimedJobService;
 import org.springframework.stereotype.Service;
 
@@ -15,32 +15,32 @@ import java.util.List;
 @Service
 public class TimedJobServiceImpl implements TimedJobService {
     @Override
-    public List<JobDTO> queryTimedJobList() {
+    public List<SpiderJobDTO> queryTimedJobList() {
         return mock();
     }
 
-    private List<JobDTO> mock() {
-        List<JobDTO> list = new ArrayList<>();
+    private List<SpiderJobDTO> mock() {
+        List<SpiderJobDTO> list = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            JobDTO jobDTO = new JobDTO();
+            SpiderJobDTO spiderJobDTO = new SpiderJobDTO();
             if (i % 2 == 0) {
-                jobDTO.setIp("144.34.188.64");
-                jobDTO.setWorker("myworker1");
-                jobDTO.setSpiderUUID("jd.com");
-                jobDTO.setSpiderSite("jd.com");
-                jobDTO.setType(MaintainType.URL_NUM.getType());
-                jobDTO.setMaintain(1000);
+                spiderJobDTO.setIp("144.34.188.64");
+                spiderJobDTO.setWorker("myworker1");
+                spiderJobDTO.setSpiderUUID("jd.com");
+                spiderJobDTO.setSpiderSite("jd.com");
+                spiderJobDTO.setType(MaintainType.URL_NUM.getType());
+                spiderJobDTO.setMaintain(1000);
 
             } else {
-                jobDTO.setIp("101.37.89.200");
-                jobDTO.setWorker("myworker2");
-                jobDTO.setSpiderUUID("jd.com");
-                jobDTO.setSpiderSite("jd.com");
-                jobDTO.setType(MaintainType.TIME.getType());
-                jobDTO.setMaintain(180);
+                spiderJobDTO.setIp("101.37.89.200");
+                spiderJobDTO.setWorker("myworker2");
+                spiderJobDTO.setSpiderUUID("jd.com");
+                spiderJobDTO.setSpiderSite("jd.com");
+                spiderJobDTO.setType(MaintainType.TIME.getType());
+                spiderJobDTO.setMaintain(180);
 
             }
-            list.add(jobDTO);
+            list.add(spiderJobDTO);
         }
         return list;
     }

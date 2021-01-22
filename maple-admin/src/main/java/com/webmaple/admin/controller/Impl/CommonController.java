@@ -113,7 +113,7 @@ public class CommonController {
     @RequestMapping("/timedJobs")
     @ResponseBody
     public DataTableDTO queryTimedJobsList(@RequestParam int page, @RequestParam int limit) {
-        List<JobDTO> jobList = timedJobService.queryTimedJobList();
+        List<SpiderJobDTO> jobList = timedJobService.queryTimedJobList();
         DataTableDTO dataTableDTO = new DataTableDTO();
         dataTableDTO.setCode(0);
         dataTableDTO.setMsg("");
