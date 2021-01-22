@@ -2,15 +2,11 @@ package com.webmaple.worker.job;
 
 import com.webmaple.worker.job.model.QuartzJob;
 import org.quartz.*;
-import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,28 +57,7 @@ public class JobService implements InitializingBean {
     }
 
     public List<QuartzJob> getAllJobs() {
-        List<QuartzJob> jobList = QuartzJobContainer.getJobList();
-        return jobList;
-    }
-
-    public List<QuartzJob> getExecutingJob() throws SchedulerException {
-        List<QuartzJob> jobList = new ArrayList<>();
-        try {
-            for (String groupName : scheduler.getJobGroupNames()) {
-                for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName))) {
-                    String jobName = jobKey.getName();
-                    String jobGroup = jobKey.getGroup();
-                    QuartzJob quartzJob = new QuartzJob();
-                    quartzJob.setJobName(jobName);
-                    quartzJob.setJobClazz(jobGroup);
-                    jobList.add(quartzJob);
-                    return jobList;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return QuartzJobContainer.getJobList();
     }
 
     /**
@@ -100,6 +75,7 @@ public class JobService implements InitializingBean {
     //暂停所有任务
     public void pauseAllJob() throws SchedulerException {
         scheduler.pauseAll();
+        QuartzJobContainer.pauseAllJob();
     }
 
     //暂停任务
@@ -111,6 +87,7 @@ public class JobService implements InitializingBean {
 
         }else {
             scheduler.pauseJob(jobKey);
+            QuartzJobContainer.pauseJob(jobName);
         }
 
     }
@@ -118,11 +95,11 @@ public class JobService implements InitializingBean {
     //恢复所有任务
     public void resumeAllJob() throws SchedulerException {
         scheduler.resumeAll();
+        QuartzJobContainer.resumeAllJob();
     }
 
     // 恢复某个任务
     public void resumeJob(String jobName, String jobGroup) throws SchedulerException {
-
         JobKey jobKey = new JobKey(jobName, jobGroup);
         JobDetail jobDetail = scheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
@@ -130,6 +107,7 @@ public class JobService implements InitializingBean {
 
         }else {
             scheduler.resumeJob(jobKey);
+            QuartzJobContainer.resumeJob(jobName);
         }
     }
 
@@ -145,6 +123,7 @@ public class JobService implements InitializingBean {
 
         }else {
             scheduler.deleteJob(jobKey);
+            QuartzJobContainer.remove(quartzJob.getJobName());
         }
     }
 

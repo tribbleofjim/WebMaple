@@ -79,6 +79,7 @@ public class ModelUtil {
         QuartzJob quartzJob = new QuartzJob();
         int randomPlus = new Random().nextInt(1000);
 
+        quartzJob.setExecuting(true);
         quartzJob.setJobName("job" + randomPlus);
         quartzJob.setJobClazz("com.ecspider.common.job.spider.SpiderJob");
         String cron = getCron(rawCron);

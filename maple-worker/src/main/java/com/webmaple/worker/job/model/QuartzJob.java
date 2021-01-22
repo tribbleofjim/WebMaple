@@ -17,6 +17,8 @@ public class QuartzJob {
 
     private String extraInfo;//需要传递的参数
 
+    private boolean isExecuting; // 是否在执行中
+
     public String getJobName() {
         return jobName;
     }
@@ -55,5 +57,13 @@ public class QuartzJob {
 
     public void setExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
+    }
+
+    public boolean isExecuting() {
+        return isExecuting;
+    }
+
+    public void setExecuting(boolean executing) {
+        isExecuting = executing;
     }
 }

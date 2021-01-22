@@ -24,6 +24,34 @@ public class QuartzJobContainer {
         return list;
     }
 
+    public static void pauseJob(String jobName) {
+        QuartzJob quartzJob = jobMap.get(jobName);
+        if (quartzJob == null) {
+            return;
+        }
+        quartzJob.setExecuting(false);
+    }
+
+    public static void pauseAllJob() {
+        for (Map.Entry<String, QuartzJob> entry : jobMap.entrySet()) {
+            entry.getValue().setExecuting(false);
+        }
+    }
+
+    public static void resumeJob(String jobName) {
+        QuartzJob quartzJob = jobMap.get(jobName);
+        if (quartzJob == null) {
+            return;
+        }
+        quartzJob.setExecuting(true);
+    }
+
+    public static void resumeAllJob() {
+        for (Map.Entry<String, QuartzJob> entry : jobMap.entrySet()) {
+            entry.getValue().setExecuting(true);
+        }
+    }
+
     public static void put(String jobName, QuartzJob job) {
         jobMap.put(jobName, job);
     }
@@ -34,5 +62,9 @@ public class QuartzJobContainer {
 
     public static boolean containsKey(String jobName) {
         return jobMap.containsKey(jobName);
+    }
+
+    public static void remove(String jobName) {
+        jobMap.remove(jobName);
     }
 }
