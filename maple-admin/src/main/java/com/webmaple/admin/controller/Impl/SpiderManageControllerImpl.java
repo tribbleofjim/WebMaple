@@ -4,6 +4,7 @@ import com.webmaple.admin.controller.SpiderManageController;
 import com.webmaple.common.enums.CommonErrorCode;
 import com.webmaple.common.model.Result;
 import com.webmaple.admin.service.SpiderManageService;
+import com.webmaple.common.model.SpiderDTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -26,60 +27,66 @@ public class SpiderManageControllerImpl implements SpiderManageController {
     @Override
     @RequestMapping("/addSpider")
     @ResponseBody
-    public Result addSpider(@RequestParam List<String> urls,
+    public Result<Void> addSpider(@RequestParam List<String> urls,
                             @RequestParam int threadNum) {
+        Result<Void> result = new Result<>();
+
         if (CollectionUtils.isEmpty(urls)) {
-            return Result.fail(CommonErrorCode.NULL_PARAM);
+            return result.fail(CommonErrorCode.NULL_PARAM);
         }
         spiderManageService.addSpider(urls, threadNum);
-        return Result.success();
+        return result.success();
     }
 
     @Override
     @RequestMapping("/deleteSpider")
     @ResponseBody
-    public Result deleteSpider(@RequestParam String uuid) {
+    public Result<Void> deleteSpider(@RequestParam String uuid) {
+        Result<Void> result = new Result<>();
+
         if (StringUtils.isBlank(uuid)) {
-            return Result.fail(CommonErrorCode.NULL_PARAM);
+            return result.fail(CommonErrorCode.NULL_PARAM);
         }
         spiderManageService.deleteSpider(uuid);
-        return Result.success();
+        return result.success();
     }
 
     @Override
     @RequestMapping("/querySpiderList")
     @ResponseBody
-    public Result querySpiderList() {
-        return Result.success(spiderManageService.querySpiderList());
+    public Result<List<SpiderDTO>> querySpiderList() {
+        Result<List<SpiderDTO>> result = new Result<>();
+        return result.success(spiderManageService.querySpiderList());
     }
 
     @Override
     @RequestMapping("/getSpiderByUUID")
     @ResponseBody
-    public Result getSpiderByUUID(String uuid) {
+    public Result<SpiderDTO> getSpiderByUUID(String uuid) {
+        Result<SpiderDTO> result = new Result<>();
         if (StringUtils.isBlank(uuid)) {
-            return Result.fail(CommonErrorCode.NULL_PARAM);
+            return result.fail(CommonErrorCode.NULL_PARAM);
         }
-        return Result.success(spiderManageService.getSpiderByUUID(uuid));
+        return result.success(spiderManageService.getSpiderByUUID(uuid));
     }
 
     @Override
-    public Result getSpiderBySite(String site) {
+    public Result<SpiderDTO> getSpiderBySite(String site) {
         return null;
     }
 
     @Override
-    public Result modifyThreadNum(int threadNum) {
+    public Result<Void> modifyThreadNum(int threadNum) {
         return null;
     }
 
     @Override
-    public Result addUrls(List<String> urls, String uuid) {
+    public Result<Void> addUrls(List<String> urls, String uuid) {
         return null;
     }
 
     @Override
-    public Result delUrls(List<String> urls, String uuid) {
+    public Result<Void> delUrls(List<String> urls, String uuid) {
         return null;
     }
 }

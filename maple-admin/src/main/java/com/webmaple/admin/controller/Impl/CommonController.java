@@ -89,7 +89,7 @@ public class CommonController {
 
     @RequestMapping("/addWorker")
     @ResponseBody
-    public Result addWorker(@RequestParam String ip, @RequestParam String name) {
+    public Result<Void> addWorker(@RequestParam String ip, @RequestParam String name) {
         assert StringUtils.isNotBlank(ip);
         assert StringUtils.isNotBlank(name);
 
@@ -98,16 +98,18 @@ public class CommonController {
         worker.setIp(ip);
         worker.setName(name);
         nodeManageService.addWorker(worker);
-        return Result.success();
+        Result<Void> result = new Result<>();
+        return result.success();
     }
 
     @RequestMapping("/removeWorker")
     @ResponseBody
-    public Result removeWorker(@RequestParam String name) {
+    public Result<Void> removeWorker(@RequestParam String name) {
         assert StringUtils.isNotBlank(name);
 
         nodeManageService.removeWorker(name);
-        return Result.success();
+        Result<Void> result = new Result<>();
+        return result.success();
     }
 
     @RequestMapping("/timedJobs")

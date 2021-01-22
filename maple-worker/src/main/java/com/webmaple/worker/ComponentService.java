@@ -1,9 +1,9 @@
-package com.webmaple.worker.container;
+package com.webmaple.worker;
 
 import com.webmaple.worker.util.ModelUtil;
 import com.webmaple.worker.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.Set;
  * @author lyifee
  * on 2021/1/20
  */
-@Component
-public class ComponentContainer {
+@Service
+public class ComponentService {
 
     @Autowired
     private RedisUtil redisUtil;
@@ -32,6 +32,14 @@ public class ComponentContainer {
 
     public void addPipelines(List<String> pipelineList) {
         redisUtil.sadd("pipelines", modelUtil.listToString(pipelineList));
+    }
+
+    public List<String> getComponents() {
+        List<String> componentsList = new ArrayList<>();
+        componentsList.addAll(getProcessors());
+        componentsList.addAll(getDownloaders());
+        componentsList.addAll(getPipelines());
+        return componentsList;
     }
 
     public List<String> getProcessors() {

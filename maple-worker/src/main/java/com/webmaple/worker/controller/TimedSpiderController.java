@@ -32,56 +32,62 @@ public class TimedSpiderController {
 
     @RequestMapping("/createTimedSpider")
     @ResponseBody
-    public Result createTimedSpider(@RequestParam SpiderDTO spiderDTO,
+    public Result<Void> createTimedSpider(@RequestParam SpiderDTO spiderDTO,
                                     @RequestParam String maintainType,
                                     @RequestParam int maintain,
                                     @RequestParam String cron) {
+        Result<Void> result = new Result<>();
+
         if (spiderDTO == null) {
-            return Result.fail("spiderDTO_cannot_be_null");
+            return result.fail("spiderDTO_cannot_be_null");
+
         }
         if (MaintainType.getType(maintainType) == null) {
-            return Result.fail("invalid_maintain_type", maintainType);
+            return result.fail("invalid_maintain_type", maintainType);
         }
 
         try {
             jobService.addJob(modelUtil.getQuartzJobForSpider(spiderDTO, maintainType, maintain, cron));
-            return Result.success();
+            return result.success();
 
         } catch (Exception e) {
-            return Result.fail(e.getMessage());
+            return result.fail(e.getMessage());
         }
     }
 
     @RequestMapping("/timedSpiderList")
     @ResponseBody
-    public Result timedSpiderList() {
+    public Result<List<QuartzJob>> timedSpiderList() {
+        Result<List<QuartzJob>> result = new Result<>();
         List<QuartzJob> quartzJobs = jobService.getAllJobs();
-        return Result.success(quartzJobs);
+        return result.success(quartzJobs);
     }
 
     @RequestMapping("/pauseSpider")
     @ResponseBody
-    public Result pauseSpider(@RequestParam String jobName) {
+    public Result<Void> pauseSpider(@RequestParam String jobName) {
+        Result<Void> result = new Result<>();
         try {
             jobService.pauseJob(jobName, "com.webmaple.worker.job.spider.SpiderJob");
-            return Result.success();
+            return result.success();
 
         } catch (Exception e) {
             LOGGER.error("pause_spider_exception:", e);
-            return Result.fail(e.getMessage());
+            return result.fail(e.getMessage());
         }
     }
 
     @RequestMapping("/resumeSpider")
     @ResponseBody
-    public Result resumeSpider(@RequestParam String jobName) {
+    public Result<Void> resumeSpider(@RequestParam String jobName) {
+        Result<Void> result = new Result<>();
         try {
             jobService.resumeJob(jobName, "com.webmaple.worker.job.spider.SpiderJob");
-            return Result.success();
+            return result.success();
 
         } catch (Exception e) {
             LOGGER.error("resume_spider_exception:", e);
-            return Result.fail(e.getMessage());
+            return result.fail(e.getMessage());
         }
     }
 }

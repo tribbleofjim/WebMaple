@@ -1,7 +1,6 @@
 package com.webmaple.worker;
 
 import com.webmaple.worker.annotation.MapleProcessor;
-import com.webmaple.worker.container.ComponentContainer;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public class ComponentRegister {
     private ReflectionsConfig reflectionsConfig;
 
     @Autowired
-    private ComponentContainer container;
+    private ComponentService componentService;
 
     public ComponentRegister() {
         register();
@@ -59,7 +58,7 @@ public class ComponentRegister {
                 }
             }
         }
-        container.addProcessors(processorList);
+        componentService.addProcessors(processorList);
         LOGGER.info("end processor register.");
 
         // downloader register
@@ -69,7 +68,7 @@ public class ComponentRegister {
         for (Class<?> clazz : downloaders) {
             downloaderList.add(clazz.getName());
         }
-        container.addDownloaders(downloaderList);
+        componentService.addDownloaders(downloaderList);
         LOGGER.info("end downloader register.");
 
         // pipeline register
@@ -79,7 +78,7 @@ public class ComponentRegister {
         for (Class<?> clazz : pipelines) {
             pipelineList.add(clazz.getName());
         }
-        container.addPipelines(pipelineList);
+        componentService.addPipelines(pipelineList);
         LOGGER.info("end pipeline register.");
     }
 }

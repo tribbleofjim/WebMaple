@@ -22,36 +22,41 @@ public class SpiderController {
 
     @RequestMapping("/createSpider")
     @ResponseBody
-    public Result createSpider(@RequestParam SpiderDTO spiderDTO) {
+    public Result<Void> createSpider(@RequestParam SpiderDTO spiderDTO) {
         spiderProcess.createSpider(spiderDTO);
-        return Result.success();
+        Result<Void> result = new Result<>();
+        return result.success();
     }
 
     @RequestMapping("/startSpider")
     @ResponseBody
-    public Result startSpider(@RequestParam SpiderDTO spiderDTO) {
+    public Result<Void> startSpider(@RequestParam SpiderDTO spiderDTO) {
         spiderProcess.startSpider(spiderDTO);
-        return Result.success();
+        Result<Void> result = new Result<>();
+        return result.success();
     }
 
     @RequestMapping("/removeSpider")
     @ResponseBody
-    public Result removeSpider(@RequestParam String uuid) {
+    public Result<Void> removeSpider(@RequestParam String uuid) {
         spiderProcess.removeSpider(uuid);
-        return Result.success();
+        Result<Void> result = new Result<>();
+        return result.success();
     }
 
     @RequestMapping("/stopSpider")
     @ResponseBody
-    public Result stopSpider(@RequestParam String uuid) {
+    public Result<Void> stopSpider(@RequestParam String uuid) {
         spiderProcess.stopSpider(uuid);
-        return Result.success();
+        Result<Void> result = new Result<>();
+        return result.success();
     }
 
     @RequestMapping("/spiderList")
     @ResponseBody
-    public Result spiderList() {
+    public Result<List<SpiderDTO>> spiderList() {
         List<SpiderDTO> spiders = spiderProcess.getSpiders();
-        return Result.success(spiders);
+        Result<List<SpiderDTO>> result = new Result<>();
+        return result.success(spiders);
     }
 }
