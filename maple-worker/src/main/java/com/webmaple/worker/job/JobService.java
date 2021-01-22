@@ -112,18 +112,18 @@ public class JobService implements InitializingBean {
     }
 
     //删除某个任务
-    public void deleteJob(QuartzJob quartzJob) throws SchedulerException {
-        JobKey jobKey = new JobKey(quartzJob.getJobName(), quartzJob.getJobClazz());
+    public void deleteJob(String jobName, String jobClazz) throws SchedulerException {
+        JobKey jobKey = new JobKey(jobName, jobClazz);
         JobDetail jobDetail = scheduler.getJobDetail(jobKey);
         if (jobDetail == null ) {
-            LOGGER.warn("delete_null_job:{}", quartzJob.getJobName());
+            LOGGER.warn("delete_null_job:{}", jobName);
 
         }else if(!scheduler.checkExists(jobKey)) {
-            LOGGER.warn("job_not_exists:{}", quartzJob.getJobName());
+            LOGGER.warn("job_not_exists:{}", jobName);
 
         }else {
             scheduler.deleteJob(jobKey);
-            QuartzJobContainer.remove(quartzJob.getJobName());
+            QuartzJobContainer.remove(jobName);
         }
     }
 

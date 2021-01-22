@@ -90,4 +90,18 @@ public class TimedSpiderController {
             return result.fail(e.getMessage());
         }
     }
+
+    @RequestMapping("/deleteSpider")
+    @ResponseBody
+    public Result<Void> deleteSpider(@RequestParam String jobName) {
+        Result<Void> result = new Result<>();
+        try {
+            jobService.deleteJob(jobName, "com.webmaple.worker.job.spider.SpiderJob");
+            return result.success();
+
+        } catch (Exception e) {
+            LOGGER.error("delete_spider_exception:", e);
+            return result.fail(e.getMessage());
+        }
+    }
 }
