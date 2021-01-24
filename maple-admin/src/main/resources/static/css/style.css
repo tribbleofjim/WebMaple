@@ -6,4 +6,5 @@ html,body{background-color: #f2f2f2}
 .layui-card-body .layui-btn+.layui-btn{margin-left: 0px;}
 .code-show{min-height: 454px;}
 .js-show{min-height: 200px;}
-.del-form{line-height: initial;position: absolute;right: 15px;top: 50%;margin-top: -15px;}
+/**.del-form{line-height: initial;position: absolute;right: 15px;top: 50%;margin-top: -15px;}
+.sub-form{line-height: initial;position: absolute;right: 15px;top: 50%;margin-top: -15px;}**/
