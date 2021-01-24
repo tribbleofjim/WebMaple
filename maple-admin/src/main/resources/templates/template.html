@@ -73,7 +73,7 @@
                             <legend>爬虫组件列表</legend>
                         </fieldset>
                         <table class="layui-table" lay-data="{height:450, url:'/componentList', page:true,
-                        id:'components', toolbar: '#headBar'}" lay-filter="components" >
+                        id:'components'" lay-filter="components" >
                             <thead>
                             <tr>
                                 <th lay-data="{field:'type', width:150}">组件类型</th>
@@ -87,6 +87,9 @@
                     <!--定制化-->
                     <div class="layui-fluid" >
                         <div class="layui-row layui-col-space10">
+                            <fieldset class="layui-elem-field layui-field-title">
+                                <legend>定制化生成针对某个网站的爬虫</legend>
+                            </fieldset>
                             <div class="layui-col-md2">
                                 <div class="layui-card nav click-but">
                                     <div class="layui-card-header">长</div>

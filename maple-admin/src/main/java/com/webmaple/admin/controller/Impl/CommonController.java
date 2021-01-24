@@ -1,6 +1,7 @@
 package com.webmaple.admin.controller.Impl;
 
 import com.alibaba.fastjson.JSON;
+import com.webmaple.admin.service.ComponentService;
 import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.*;
 import com.webmaple.admin.service.NodeManageService;
@@ -29,6 +30,9 @@ public class CommonController {
 
     @Resource
     private TimedJobService timedJobService;
+
+    @Resource
+    private ComponentService componentService;
 
     @RequestMapping("/index")
     public String index() {
@@ -136,16 +140,16 @@ public class CommonController {
     @RequestMapping("/componentList")
     @ResponseBody
     public DataTableDTO queryComponentList(@RequestParam int page, @RequestParam int limit) {
-        List<SpiderJobDTO> jobList = timedJobService.queryTimedJobList();
+        List<ComponentDTO> componentList = componentService.queryComponentList();
         DataTableDTO dataTableDTO = new DataTableDTO();
         dataTableDTO.setCode(0);
         dataTableDTO.setMsg("");
-        if (CollectionUtils.isEmpty(jobList)) {
+        if (CollectionUtils.isEmpty(componentList)) {
             dataTableDTO.setCount(0);
         } else {
-            dataTableDTO.setCount(jobList.size());
+            dataTableDTO.setCount(componentList.size());
         }
-        dataTableDTO.setData(JSON.toJSON(jobList));
+        dataTableDTO.setData(JSON.toJSON(componentList));
         return dataTableDTO;
     }
 }
