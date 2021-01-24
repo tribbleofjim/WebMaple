@@ -7,20 +7,44 @@ import java.util.List;
  * on 2021/1/5
  */
 public class SpiderDTO {
+    /**
+     * spider 所在 ip
+     */
     private String ip;
 
+    /**
+     * spider起始URL列表
+     */
     private List<String> urls;
 
+    /**
+     * spider的uuid，也是spider唯一标识
+     */
     private String uuid;
 
+    /**
+     * spider当前状态，启动/暂停/异常
+     */
     private String state;
 
+    /**
+     * spider线程数
+     */
     private int threadNum;
 
+    /**
+     * spider processor 全类名
+     */
     private String processor;
-    
+
+    /**
+     * spider pipeline 全类名
+     */
     private String pipeline;
 
+    /**
+     * spider downloader 全类名
+     */
     private String downloader;
 
     public String getIp() {

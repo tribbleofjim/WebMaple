@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <title>爬虫组件与定制化</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+        <script type="text/javascript" src="/layui/layui.js"></script>
+    </head>
+
+    <body class="layui-layout-body layui-bg-gray">
+        <!--左边的导航条-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree layui-nav-side"  lay-filter="nav">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">WebMaple</a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">
+                            <i class="layui-icon layui-icon-home"></i>
+                            主页
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="spider">
+                                <i class="layui-icon layui-icon-layer"></i>
+                                爬虫列表
+                            </a></dd>
+                            <dd><a href="node">
+                                <i class="layui-icon layui-icon-template-1"></i>
+                                节点列表
+                            </a></dd>
+                            <dd><a href="timed">
+                                <i class="layui-icon layui-icon-time"></i>
+                                定时任务
+                            </a></dd>
+                            <dd><a href="javascript:;">
+                                <i class="layui-icon layui-icon-template"></i>
+                                爬虫组件与定制化
+                            </a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">
+                            <i class="layui-icon layui-icon-username"></i>
+                            用户中心
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="user">
+                                <i class="layui-icon layui-icon-tabs"></i>
+                                基本资料
+                            </a></dd>
+                            <dd><a href="javascript:;">
+                                <i class="layui-icon layui-icon-auz"></i>
+                                资源权限管理
+                            </a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--/左边的导航条-->
+
+        <!--内容主体区域-->
+        <div class="layui-body">
+            <div style="padding: 15px;">
+                <div class="layui-container">
+
+                    <!--组件列表-->
+                    <div class="layui-row">
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>爬虫组件列表</legend>
+                        </fieldset>
+                        <table class="layui-table" lay-data="{height:450, url:'/componentList', page:true,
+                        id:'components', toolbar: '#headBar'}" lay-filter="components" >
+                            <thead>
+                            <tr>
+                                <th lay-data="{field:'type', width:150}">组件类型</th>
+                                <th lay-data="{field:'name'}">组件全类名</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!--/组件列表-->
+
+                    <!--定制化-->
+                    <div class="layui-fluid" >
+                        <div class="layui-row layui-col-space10">
+                            <div class="layui-col-md1">
+                                <div class="layui-card nav click-but">
+                                    <div class="layui-card-header">长</div>
+                                    <div class="layui-card-body">
+                                        <button class="layui-btn" data-size="block" data-type="text">输入框</button>
+                                        <button class="layui-btn" data-size="block" data-type="password">密码框</button>
+                                        <button class="layui-btn" data-size="block" data-type="select">选择框</button>
+                                        <button class="layui-btn" data-size="block" data-type="checkbox_a">复选框</button>
+                                        <button class="layui-btn" data-size="block" data-type="checkbox_b">开关</button>
+                                        <button class="layui-btn" data-size="block" data-type="radio">单选框</button>
+                                        <button class="layui-btn" data-size="block" data-type="textarea">文本域</button>
+                                        <button class="layui-btn" data-size="block" data-type="submit">提交</button>
+                                    </div>
+                                </div>
+                                <div class="layui-card nav">
+                                    <div class="layui-card-header">短</div>
+                                    <div class="layui-card-body">
+                                        <button class="layui-btn" data-size="inline" data-type="text">输入框</button>
+                                        <button class="layui-btn" data-size="inline" data-type="password">密码框</button>
+                                        <button class="layui-btn" data-size="inline" data-type="select">选择框</button>
+                                        <button class="layui-btn" data-size="inline" data-type="checkbox_a">复选框</button>
+                                        <button class="layui-btn" data-size="inline" data-type="checkbox_b">开关</button>
+                                        <button class="layui-btn" data-size="inline" data-type="radio">单选框</button>
+                                        <button class="layui-btn" data-size="inline" data-type="textarea">文本域</button>
+                                        <button class="layui-btn" data-size="block" data-type="submit">提交</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="layui-col-md5">
+                                <div class="layui-card content">
+                                    <div class="layui-card-header">表单生成器-定制化生成爬虫
+                                        <button class="layui-btn layui-btn-sm layui-btn-danger del-form" data-type="del"> <i class="layui-icon">&#xe640;</i></button>
+                                    </div>
+                                    <div class="layui-card-body code"><form class="layui-form" action="" onsubmit="return false">
+                                    </form></div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-card r-code-html">
+                                    <div class="layui-card-header">html</div>
+                                    <div class="layui-card-body">
+                                        <textarea name=""  class="layui-textarea code-show"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-card r-code-js">
+                                    <div class="layui-card-header">JS</div>
+                                    <div class="layui-card-body">
+                                        <textarea name=""  class="layui-textarea js-show"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/定制化-->
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="../js/spider.js"></script>
+
+    </body>
+
+</html>

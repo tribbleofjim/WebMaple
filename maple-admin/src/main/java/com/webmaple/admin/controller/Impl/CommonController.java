@@ -55,6 +55,11 @@ public class CommonController {
         return "user";
     }
 
+    @RequestMapping("/template")
+    public String template() {
+        return "template";
+    }
+
     @RequestMapping("/spiderList")
     @ResponseBody
     public DataTableDTO querySpiderList(@RequestParam int page, @RequestParam int limit) {
@@ -115,6 +120,22 @@ public class CommonController {
     @RequestMapping("/timedJobs")
     @ResponseBody
     public DataTableDTO queryTimedJobsList(@RequestParam int page, @RequestParam int limit) {
+        List<SpiderJobDTO> jobList = timedJobService.queryTimedJobList();
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(0);
+        dataTableDTO.setMsg("");
+        if (CollectionUtils.isEmpty(jobList)) {
+            dataTableDTO.setCount(0);
+        } else {
+            dataTableDTO.setCount(jobList.size());
+        }
+        dataTableDTO.setData(JSON.toJSON(jobList));
+        return dataTableDTO;
+    }
+
+    @RequestMapping("/componentList")
+    @ResponseBody
+    public DataTableDTO queryComponentList(@RequestParam int page, @RequestParam int limit) {
         List<SpiderJobDTO> jobList = timedJobService.queryTimedJobList();
         DataTableDTO dataTableDTO = new DataTableDTO();
         dataTableDTO.setCode(0);

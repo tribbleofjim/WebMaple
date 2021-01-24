@@ -7,27 +7,60 @@ import java.util.Date;
  * on 2021/1/12
  */
 public class SpiderJobDTO {
-    private String ip; // 任务所在机器ip
+    /**
+     * 任务所在机器ip
+     */
+    private String ip;
 
-    private String worker; // 任务所在worker名称
+    /**
+     * 任务所在worker名称
+     */
+    private String worker;
 
-    private String spiderUUID; // 任务开启的spider uuid
+    /**
+     * 任务开启的spider uuid
+     */
+    private String spiderUUID;
 
-    private String spiderSite; // 任务开启的spider site
+    /**
+     * 任务开启的spider site
+     */
+    private String spiderSite;
 
-    private String type; // 任务定时类型
+    /**
+     * 任务定时类型
+     */
+    private String type;
 
-    private int maintain; // 任务定时数
+    /**
+     * 任务定时数
+     */
+    private int maintain;
 
-    private String jobName;  //任务名称
+    /**
+     * 任务名称
+     */
+    private String jobName;
 
-    private String jobClazz;  //QuartzJobBean类型的全限定名
+    /**
+     * QuartzJobBean类型的全限定名
+     */
+    private String jobClazz;
 
-    private Date startTime;  //任务开始时间
+    /**
+     * 任务开始时间
+     */
+    private Date startTime;
 
-    private String cronExpression;  //corn表达式
+    /**
+     * corn表达式
+     */
+    private String cronExpression;
 
-    private String extraInfo;//需要传递的参数
+    /**
+     * 需要传递的参数
+     */
+    private String extraInfo;
 
     public String getIp() {
         return ip;

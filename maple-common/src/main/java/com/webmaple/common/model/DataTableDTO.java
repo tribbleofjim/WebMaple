@@ -1,16 +1,30 @@
 package com.webmaple.common.model;
 
 /**
+ * layui数据网格返回对象
+ *
  * @author lyifee
  * on 2021/1/6
  */
 public class DataTableDTO {
+    /**
+     * 返回http响应码
+     */
     private int code;
 
+    /**
+     * 返回信息
+     */
     private String msg;
 
+    /**
+     * 返回数据总量
+     */
     private int count;
 
+    /**
+     * 返回数据
+     */
     private Object data;
 
     public int getCode() {
