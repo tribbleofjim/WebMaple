@@ -59,6 +59,11 @@ public class CommonController {
         return "user";
     }
 
+    @RequestMapping("/auth")
+    public String auth() {
+        return "auth";
+    }
+
     @RequestMapping("/template")
     public String template() {
         return "template";
