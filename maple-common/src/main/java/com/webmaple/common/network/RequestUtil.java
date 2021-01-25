@@ -50,7 +50,7 @@ public class RequestUtil {
         return charset;
     }
 
-    public HttpUriRequest getHttpUriRequest(Request request) {
+    public static HttpUriRequest getHttpUriRequest(Request request) {
         return RequestUtil.convertHttpUriRequest(request, null, null);
     }
 
