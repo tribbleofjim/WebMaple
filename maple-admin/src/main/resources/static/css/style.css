@@ -1,10 +1,10 @@
 html,body{background-color: #f2f2f2}
 .layui-fluid{margin-top: 15px;}
-.content{min-height: 796px;}
-.nav{text-align: center;}
+.content{height: 500px;}
+.nav{text-align: center;height:500px;}
 .nav button{margin-bottom: 3px;width: 80px;}
 .layui-card-body .layui-btn+.layui-btn{margin-left: 0px;}
-.code-show{min-height: 454px;}
+.code-show{min-height: 200px;}
 .js-show{min-height: 200px;}
 /**.del-form{line-height: initial;position: absolute;right: 15px;top: 50%;margin-top: -15px;}
 .sub-form{line-height: initial;position: absolute;right: 15px;top: 50%;margin-top: -15px;}**/
