@@ -44,7 +44,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     @Override
     public List<SpiderDTO> querySpiderList() {
-
+        // return querySpiderListFromWorkers();
         return mockSpiders();
     }
 
@@ -82,7 +82,6 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             try {
                 CloseableHttpResponse response = requestSender.request(httpUriRequest);
                 String text = RequestUtil.getResponseText(response);
-                System.out.println(text);
                 JSONObject spiderObject = JSON.parseObject(text);
                 List<SpiderDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderDTO.class);
                 spiderList.addAll(spiders);
