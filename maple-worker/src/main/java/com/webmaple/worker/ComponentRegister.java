@@ -1,5 +1,6 @@
 package com.webmaple.worker;
 
+import com.webmaple.worker.annotation.MaplePipeline;
 import com.webmaple.worker.annotation.MapleProcessor;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.downloader.Downloader;
 import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -72,11 +72,23 @@ public class ComponentRegister {
         LOGGER.info("end downloader register.");
 
         // pipeline register
-        Set<Class<? extends Pipeline>> pipelines = reflections.getSubTypesOf(Pipeline.class);
+        Set<Class<?>> pipelines = reflections.getTypesAnnotatedWith(MaplePipeline.class);
         List<String> pipelineList = new ArrayList<>();
-        LOGGER.info("start pipeline register...");
+        LOGGER.info("start processor register...");
         for (Class<?> clazz : pipelines) {
-            pipelineList.add(clazz.getName());
+            Class<?>[] interfaces = clazz.getInterfaces();
+            for (Class<?> inteface : interfaces) {
+                if (inteface == Pipeline.class) {
+                    try {
+                        MaplePipeline maplePipeline = clazz.getAnnotation(MaplePipeline.class);
+                        String site = maplePipeline.site();
+                        processorList.add(clazz.getName() + "#" + site);
+
+                    } catch (Exception e) {
+                        LOGGER.error("exception_register_pipeline: {}, {}", clazz.getName(), e.getMessage());
+                    }
+                }
+            }
         }
         componentService.addPipelines(pipelineList);
         LOGGER.info("end pipeline register.");
