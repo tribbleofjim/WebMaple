@@ -1,11 +1,22 @@
 package com.webmaple.admin.service.Impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.webmaple.admin.container.SpiderProcessContainer;
 import com.webmaple.common.enums.SpiderState;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.admin.service.SpiderManageService;
+import com.webmaple.common.model.SpiderProcessDTO;
 import com.webmaple.common.network.RequestSender;
+import com.webmaple.common.network.RequestUtil;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import us.codecraft.webmagic.Request;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class SpiderManagerServiceImpl implements SpiderManageService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpiderManageService.class);
+
     @Autowired
     private RequestSender requestSender;
 
@@ -58,6 +71,27 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     @Override
     public void delUrls(List<String> urls, String uuid) {
 
+    }
+
+    private List<SpiderDTO> querySpiderListFromWorkers() {
+        List<SpiderProcessDTO> spiderProcesses = SpiderProcessContainer.getSpiderProcesses();
+        List<SpiderDTO> spiderList = new ArrayList<>();
+        for (SpiderProcessDTO spiderProcess : spiderProcesses) {
+            Request request = new Request(RequestUtil.getRequest(spiderProcess.getIp(), spiderProcess.getPort(), "spiderList", null));
+            HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+            try {
+                CloseableHttpResponse response = requestSender.request(httpUriRequest);
+                String text = RequestUtil.getResponseText(response);
+                System.out.println(text);
+                JSONObject spiderObject = JSON.parseObject(text);
+                List<SpiderDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderDTO.class);
+                spiderList.addAll(spiders);
+
+            } catch (Exception e) {
+                LOGGER.error("query_spider_list_exception:", e);
+            }
+        }
+        return spiderList;
     }
 
     private List<SpiderDTO> mockSpiders() {

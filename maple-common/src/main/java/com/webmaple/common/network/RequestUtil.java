@@ -19,6 +19,7 @@ import us.codecraft.webmagic.utils.UrlUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,6 +32,26 @@ import java.util.Map;
 public class RequestUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestUtil.class);
+
+    public static String getRequest(String ip, int port, String mapping, HashMap<String, String> params) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(ip)
+                .append(":")
+                .append(port)
+                .append("/")
+                .append(mapping);
+        if (params != null && params.size() > 0) {
+            builder.append("?");
+            for (Map.Entry<String, String> param : params.entrySet()) {
+                builder.append(param.getKey()).append("=").append(param.getValue()).append("&");
+            }
+        }
+        String requestUrl = builder.toString();
+        if (requestUrl.endsWith("&")) {
+            return requestUrl.substring(0, requestUrl.length() - 1);
+        }
+        return requestUrl;
+    }
 
     public static String getResponseText(CloseableHttpResponse response) throws IOException {
         byte[] bytes = IOUtils.toByteArray(response.getEntity().getContent());
