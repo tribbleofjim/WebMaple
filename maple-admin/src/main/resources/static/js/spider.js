@@ -120,8 +120,12 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                 }
         });
     }
-
 });
+
+function template() {
+    window.location.href="template";
+}
+
 
 
 
