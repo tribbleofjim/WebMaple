@@ -24,6 +24,7 @@ import java.util.Map;
 /**
  * 把webmagic中一些request转化为HttpUriRequest的方法挪了过来
  * 因为原框架中这些是和requestContext绑定在一起的，不太好直接用
+ *
  * @author lyifee
  * on 2021/1/10
  */
@@ -47,6 +48,10 @@ public class RequestUtil {
             LOGGER.warn("Charset autodetect failed, use {} as charset. Please specify charset in Site.setCharset()", Charset.defaultCharset());
         }
         return charset;
+    }
+
+    public HttpUriRequest getHttpUriRequest(Request request) {
+        return RequestUtil.convertHttpUriRequest(request, null, null);
     }
 
     public static HttpUriRequest convertHttpUriRequest(Request request, Site site, Proxy proxy) {

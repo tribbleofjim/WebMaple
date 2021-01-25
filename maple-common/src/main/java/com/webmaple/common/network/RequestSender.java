@@ -21,10 +21,6 @@ public class RequestSender {
 
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    public HttpUriRequest getHttpUriRequest(Request request) {
-        return RequestUtil.convertHttpUriRequest(request, null, null);
-    }
-
     public CloseableHttpResponse request(HttpUriRequest request) throws IOException {
         return httpClient.execute(request);
     }

@@ -3,6 +3,9 @@ package com.webmaple.admin.service.Impl;
 import com.webmaple.common.enums.SpiderState;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.admin.service.SpiderManageService;
+import com.webmaple.common.network.RequestSender;
+import com.webmaple.common.network.RequestUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +17,9 @@ import java.util.List;
  */
 @Service
 public class SpiderManagerServiceImpl implements SpiderManageService {
+    @Autowired
+    private RequestSender requestSender;
+
     @Override
     public void addSpider(List<String> urls, int threadNum) {
 
@@ -26,6 +32,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     @Override
     public List<SpiderDTO> querySpiderList() {
+        RequestUtil.
         return mockSpiders();
     }
 
