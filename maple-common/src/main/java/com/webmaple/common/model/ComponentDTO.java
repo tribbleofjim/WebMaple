@@ -15,6 +15,11 @@ public class ComponentDTO {
      */
     private String name;
 
+    /**
+     * 对应的site
+     */
+    private String site;
+
     public String getType() {
         return type;
     }
@@ -29,5 +34,13 @@ public class ComponentDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
     }
 }
