@@ -1,3 +1,4 @@
+var uuid, processor, downloader, pipeline, threadNum;
 layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     let form = layui.form;
     let layer = layui.layer;
@@ -121,11 +122,6 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         });
     }
 });
-
-function template() {
-    window.location.href="template";
-}
-
 
 
 
