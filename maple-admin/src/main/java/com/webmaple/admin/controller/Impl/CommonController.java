@@ -1,6 +1,7 @@
 package com.webmaple.admin.controller.Impl;
 
 import com.alibaba.fastjson.JSON;
+import com.webmaple.admin.container.WorkerContainer;
 import com.webmaple.admin.service.ComponentService;
 import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,6 +69,17 @@ public class CommonController {
     @RequestMapping("/template")
     public String template() {
         return "template";
+    }
+
+    @RequestMapping("/ips")
+    @ResponseBody
+    public List<String> ips() {
+        List<String> ips = new ArrayList<>();
+        List<NodeDTO> workers = WorkerContainer.getWorkerList();
+        for (NodeDTO worker : workers) {
+            ips.add(worker.getIp());
+        }
+        return ips;
     }
 
     @RequestMapping("/spiderList")

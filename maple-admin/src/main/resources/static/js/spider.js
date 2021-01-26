@@ -1,4 +1,3 @@
-var uuid, processor, downloader, pipeline, threadNum;
 layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     let form = layui.form;
     let layer = layui.layer;
@@ -26,6 +25,18 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         let approvalName = $(this).parent().prev('div.layui-input-inline').children().val();
         let parentEle = $(this).parent().parent();
         parentEle.remove();
+    });
+
+    $.ajax({
+        url: 'ips',
+        dataType: 'json',
+        type: 'get',
+        success: function (data) {
+            $.each(data, function (index, value) {
+                $('#ip').append(new Option(value, index));// 下拉菜单里添加元素
+            });
+            layui.form.render("select");//重新渲染 固定写法
+        }
     });
 
     table.on('tool(spiders)', function(obj) {

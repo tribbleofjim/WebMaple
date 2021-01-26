@@ -25,6 +25,24 @@ public class WorkerContainer {
     private static int MAX_VALUE = 10;
 
     public WorkerContainer() {
+        // mock
+        NodeDTO worker1 = new NodeDTO();
+        worker1.setName("worker1");
+        worker1.setIp("144.34.188.164");
+        worker1.setType(NodeType.WORKER.getType());
+        NodeDTO worker2 = new NodeDTO();
+        worker2.setName("worker2");
+        worker2.setIp("101.37.89.200");
+        worker2.setType(NodeType.WORKER.getType());
+        NodeDTO worker3 = new NodeDTO();
+        worker3.setName("worker3");
+        worker3.setIp("101.33.188.66");
+        worker3.setType(NodeType.WORKER.getType());
+        WORKERS_MAP.put(worker1.getName(), worker1);
+        WORKERS_MAP.put(worker2.getName(), worker2);
+        WORKERS_MAP.put(worker3.getName(), worker3);
+
+        // try to init max_value
         try {
             MAX_VALUE = Integer.parseInt(ConfigUtil.getValueToString("application.yml", "props.workers.max-value"));
         } catch (Exception e) {
