@@ -1,6 +1,7 @@
 package com.webmaple.admin.service.Impl;
 
 import com.webmaple.common.enums.MaintainType;
+import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.common.model.SpiderJobDTO;
 import com.webmaple.admin.service.TimedJobService;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,26 @@ import java.util.List;
  */
 @Service
 public class TimedJobServiceImpl implements TimedJobService {
+    @Override
+    public void createTimedSpider(SpiderDTO spiderDTO, String maintainType, int maintain, String cron) {
+
+    }
+
+    @Override
+    public void pauseSpider(String jobName) {
+
+    }
+
+    @Override
+    public void resumeSpider(String jobName) {
+
+    }
+
+    @Override
+    public void deleteSpider(String jobName) {
+
+    }
+
     @Override
     public List<SpiderJobDTO> queryTimedJobList() {
         return mock();
