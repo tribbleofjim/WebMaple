@@ -5,9 +5,11 @@ import com.webmaple.common.enums.CommonErrorCode;
 import com.webmaple.common.model.Result;
 import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.common.model.SpiderDTO;
+import com.webmaple.common.view.SpiderView;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,16 +27,16 @@ public class SpiderManageControllerImpl implements SpiderManageController {
     private SpiderManageService spiderManageService;
 
     @Override
-    @RequestMapping("/addSpider")
+    @PostMapping("/createSpider")
     @ResponseBody
-    public Result<Void> addSpider(@RequestParam List<String> urls,
-                            @RequestParam int threadNum) {
+    public Result<Void> createSpider(SpiderView spiderView) {
         Result<Void> result = new Result<>();
 
-        if (CollectionUtils.isEmpty(urls)) {
+        if (CollectionUtils.isEmpty(spiderView.getStartUrls())) {
             return result.fail(CommonErrorCode.NULL_PARAM);
         }
-        spiderManageService.addSpider(urls, threadNum);
+        spiderManageService.createSpider(spiderView.getUuid(), spiderView.getProcessor(), spiderView.getDownloader(),
+                spiderView.getPipeline(), spiderView.getStartUrls(), spiderView.getThreadNum());
         return result.success();
     }
 

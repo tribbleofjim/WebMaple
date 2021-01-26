@@ -33,8 +33,8 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     private RequestSender requestSender;
 
     @Override
-    public void addSpider(List<String> urls, int threadNum) {
-
+    public void createSpider(String uuid, String processor, String downloader, String pipeline, List<String> startUrls, int threadNum) {
+        System.out.println("startUrls:" + startUrls);
     }
 
     @Override

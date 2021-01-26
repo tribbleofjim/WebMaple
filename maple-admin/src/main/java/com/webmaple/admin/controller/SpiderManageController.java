@@ -1,6 +1,9 @@
 package com.webmaple.admin.controller;
 
 import com.webmaple.common.model.Result;
+import com.webmaple.common.model.SpiderDTO;
+import com.webmaple.common.view.SpiderView;
+import us.codecraft.webmagic.Spider;
 
 import java.util.List;
 
@@ -11,11 +14,9 @@ import java.util.List;
 public interface SpiderManageController {
     /**
      * add a spider
-     * @param urls urls to start
-     * @param threadNum thread num
      * @return is success
      */
-    Result addSpider(List<String> urls, int threadNum);
+    Result<Void> createSpider(SpiderView spiderView);
 
     /**
      * delete a spider

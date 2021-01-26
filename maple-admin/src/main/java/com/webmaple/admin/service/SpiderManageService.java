@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface SpiderManageService {
     /**
-     * add a spider
-     * @param urls urls to start
+     * create a spider
+     * @param startUrls urls to start
      * @param threadNum thread num
      */
-    void addSpider(List<String> urls, int threadNum);
+    void createSpider(String uuid, String processor, String downloader, String pipeline, List<String> startUrls, int threadNum);
 
     /**
      * delete a spider
