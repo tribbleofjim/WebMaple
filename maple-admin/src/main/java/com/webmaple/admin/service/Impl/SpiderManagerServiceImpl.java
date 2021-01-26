@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,12 +32,22 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     private RequestSender requestSender;
 
     @Override
-    public void createSpider(String uuid, String processor, String downloader, String pipeline, List<String> startUrls, int threadNum) {
-        System.out.println("startUrls:" + startUrls);
+    public void createSpider(SpiderDTO spiderDTO) {
+        System.out.println("startUrls:" + spiderDTO.getUrls());
     }
 
     @Override
-    public void deleteSpider(String uuid) {
+    public void startSpider(SpiderDTO spiderDTO) {
+
+    }
+
+    @Override
+    public void removeSpider(String uuid) {
+
+    }
+
+    @Override
+    public void stopSpider(String uuid) {
 
     }
 
@@ -46,31 +55,6 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     public List<SpiderDTO> querySpiderList() {
         // return querySpiderListFromWorkers();
         return mockSpiders();
-    }
-
-    @Override
-    public SpiderDTO getSpiderByUUID(String uuid) {
-        return null;
-    }
-
-    @Override
-    public SpiderDTO getSpiderBySite(String site) {
-        return null;
-    }
-
-    @Override
-    public void modifyThreadNum(int threadNum) {
-
-    }
-
-    @Override
-    public void addUrls(List<String> urls, String uuid) {
-
-    }
-
-    @Override
-    public void delUrls(List<String> urls, String uuid) {
-
     }
 
     private List<SpiderDTO> querySpiderListFromWorkers() {
