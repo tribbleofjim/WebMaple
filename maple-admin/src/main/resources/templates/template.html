@@ -67,61 +67,56 @@
             <div style="padding: 15px;">
                 <div class="layui-container">
 
-                    <!--组件列表-->
-                    <div class="layui-row">
-                        <fieldset class="layui-elem-field layui-field-title">
-                            <legend>爬虫组件列表</legend>
-                        </fieldset>
-                        <span>提示：在创建爬虫时，请输入组件的全类名，可从表格中直接复制</span>
-                        <table class="layui-table" lay-data="{height:400, url:'/componentList', page:true,
-                        id:'components'}" lay-filter="components" >
-                            <thead>
-                            <tr>
-                                <th lay-data="{field:'type', width:150}">组件类型</th>
-                                <th lay-data="{field:'name'}">组件全类名</th>
-                                <th lay-data="{field:'site', width:150}">对应网站</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <!--/组件列表-->
+                    <!--tab-->
+                    <div class="layui-tab layui-tab-brief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">模板表单生成</li>
+                            <li>查看模板</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <!--定制化-->
+                                <div class="layui-fluid" >
+                                    <div class="layui-row layui-col-space10">
+                                        <fieldset class="layui-elem-field layui-field-title">
+                                            <legend>定制化生成针对某个网站的爬虫</legend>
+                                        </fieldset>
+                                        <div class="layui-col-md2">
+                                            <div class="layui-card nav click-but">
+                                                <div class="layui-card-header">添加表单元素</div>
+                                                <div class="layui-card-body">
+                                                    <button class="layui-btn" data-size="block" data-type="text">输入框</button>
+                                                    <button class="layui-btn" data-size="block" data-type="submit">提交</button>
+                                                </div>
+                                            </div>
 
-                    <!--定制化-->
-                    <div class="layui-fluid" >
-                        <div class="layui-row layui-col-space10">
-                            <fieldset class="layui-elem-field layui-field-title">
-                                <legend>定制化生成针对某个网站的爬虫</legend>
-                            </fieldset>
-                            <div class="layui-col-md2">
-                                <div class="layui-card nav click-but">
-                                    <div class="layui-card-header">添加表单元素</div>
-                                    <div class="layui-card-body">
-                                        <button class="layui-btn" data-size="block" data-type="text">输入框</button>
-                                        <button class="layui-btn" data-size="block" data-type="submit">提交</button>
+                                        </div>
+                                        <div class="layui-col-md10">
+                                            <div class="layui-card content">
+                                                <div class="layui-card-header">
+                                                    表单生成器-定制化生成爬虫
+                                                    <button class="layui-btn layui-btn-sm sub-form" data-type="sub">
+                                                        <i class="layui-icon layui-icon-release"></i>
+                                                    </button>
+                                                    <button class="layui-btn layui-btn-sm layui-btn-normal del-form" data-type="del">
+                                                        <i class="layui-icon layui-icon-delete"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="layui-card-body">
+                                                    <form class="layui-form" action="" onsubmit="return false">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
+                                <!--/定制化-->
                             </div>
-                            <div class="layui-col-md10">
-                                <div class="layui-card content">
-                                    <div class="layui-card-header">
-                                        表单生成器-定制化生成爬虫
-                                        <button class="layui-btn layui-btn-sm sub-form" data-type="sub">
-                                            <i class="layui-icon layui-icon-release"></i>
-                                        </button>
-                                        <button class="layui-btn layui-btn-sm layui-btn-normal del-form" data-type="del">
-                                            <i class="layui-icon layui-icon-delete"></i>
-                                        </button>
-                                    </div>
-                                    <div class="layui-card-body">
-                                        <form class="layui-form" action="" onsubmit="return false">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="layui-tab-item">TODO : 模板表单列表</div>
                         </div>
                     </div>
-                    <!--/定制化-->
+                    <!--/tab-->
+
                 </div>
             </div>
         </div>
