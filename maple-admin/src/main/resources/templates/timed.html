@@ -65,27 +65,103 @@
         <div class="layui-body">
             <div style="padding: 15px;">
                 <div class="layui-container">
-                    <!--定时任务列表-->
-                    <div class="layui-row">
-                        <fieldset class="layui-elem-field layui-field-title">
-                            <legend>定时任务列表</legend>
-                        </fieldset>
-                        <table class="layui-table" lay-data="{height:550, url:'/timedJobs', page:true,
+                    <!--tab-->
+                    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">定时任务列表</li>
+                            <li>添加定时任务</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <!--定时任务列表-->
+                                <div class="layui-row">
+                                    <fieldset class="layui-elem-field layui-field-title">
+                                        <legend>定时任务列表</legend>
+                                    </fieldset>
+                                    <table class="layui-table" lay-data="{height:550, url:'/timedJobs', page:true,
                             id:'timedJobs', toolbar: '#headBar'}" lay-filter="timedJobs" >
-                            <thead>
-                            <tr>
-                                <th lay-data="{checkbox:true}"></th>
-                                <th lay-data="{field:'ip', width:150}">ip地址</th>
-                                <th lay-data="{field:'worker', width:150}">worker名称</th>
-                                <th lay-data="{field:'spiderUUID', width:200}">爬虫uuid</th>
-                                <th lay-data="{field:'spiderSite', width:200}">爬取站点</th>
-                                <th lay-data="{field:'type', width:150}">定时任务类型</th>
-                                <th lay-data="{field:'maintain'}">定时方式</th>
-                            </tr>
-                            </thead>
-                        </table>
+                                        <thead>
+                                        <tr>
+                                            <th lay-data="{checkbox:true}"></th>
+                                            <th lay-data="{field:'ip', width:150}">ip地址</th>
+                                            <th lay-data="{field:'worker', width:150}">worker名称</th>
+                                            <th lay-data="{field:'spiderUUID', width:200}">爬虫uuid</th>
+                                            <th lay-data="{field:'spiderSite', width:200}">爬取站点</th>
+                                            <th lay-data="{field:'type', width:150}">定时任务类型</th>
+                                            <th lay-data="{field:'maintain'}">定时方式</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <!--/定时任务列表-->
+                            </div>
+                            <div class="layui-tab-item">
+                                <fieldset class="layui-elem-field">
+                                    <legend>定时任务使用说明</legend>
+                                    <div class="layui-field-box">
+                                        使用定时爬虫，需要设定爬虫间隔多长时间启动一次，以及每次启动的停止条件。<br>
+                                        定时任务类型：爬虫爬取一定的url数后停止（对应urlNum）；爬虫运行一定时长后停止（对应time）。 <br>
+                                        定时数：如果选择urlNum类型，则为爬取的url数目；如果选择time类型，则为运行的分钟数。 <br>
+                                        定时间隔：爬虫每隔多少时间启动一次。
+                                    </div>
+                                </fieldset>
+                                <!--添加定时任务-->
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>添加定时任务</legend>
+                                </fieldset>
+                                <form class="layui-form" id="addTimedSpider" action="">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">worker名称</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入worker名称"
+                                                   autocomplete="on" class="layui-input" id="worker" style="width:300px">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">爬虫uuid</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入爬虫uuid"
+                                                   autocomplete="on" class="layui-input" id="uuid" style="width:300px">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">定时任务类型</label>
+                                        <div class="layui-input-block" style="width:300px">
+                                            <select name="type" id="type" lay-verify="required">
+                                                <option value="">请选择定时任务类型</option>
+                                                <option value="0">urlNum</option>
+                                                <option value="1">time</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">定时数</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="maintain" required  lay-verify="required" placeholder="请输入定时数"
+                                                   autocomplete="on" class="layui-input" id="maintain" style="width:300px">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">定时间隔</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="cron" required  lay-verify="required" placeholder="请输入定时间隔"
+                                                   autocomplete="on" class="layui-input" id="cron" style="width:300px">
+                                            <input type="radio" name="cronUnit" value="h" title="小时" checked>
+                                            <input type="radio" name="cronUnit" value="m" title="分钟">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!--/添加定时任务-->
+                            </div>
+                        </div>
                     </div>
-                    <!--/定时任务列表-->
+
                 </div>
             </div>
         </div>

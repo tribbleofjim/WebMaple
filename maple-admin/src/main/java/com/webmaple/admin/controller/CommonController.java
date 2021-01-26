@@ -1,4 +1,4 @@
-package com.webmaple.admin.controller.Impl;
+package com.webmaple.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.webmaple.admin.container.WorkerContainer;

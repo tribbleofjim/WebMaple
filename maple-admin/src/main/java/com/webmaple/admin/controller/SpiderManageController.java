@@ -1,70 +1,59 @@
 package com.webmaple.admin.controller;
 
+import com.webmaple.common.enums.CommonErrorCode;
 import com.webmaple.common.model.Result;
+import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.common.model.SpiderDTO;
+import com.webmaple.common.util.ModelConverter;
 import com.webmaple.common.view.SpiderView;
-import us.codecraft.webmagic.Spider;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * @author lyifee
  * on 2021/1/5
  */
-public interface SpiderManageController {
-    /**
-     * add a spider
-     * @return is success
-     */
-    Result<Void> createSpider(SpiderView spiderView);
+@Controller
+public class SpiderManageController {
+    @Resource
+    private SpiderManageService spiderManageService;
 
-    /**
-     * delete a spider
-     * @param uuid uuid of spider
-     * @return is success
-     */
-    Result deleteSpider(String uuid);
+    @PostMapping("/createSpider")
+    @ResponseBody
+    public Result<Void> createSpider(SpiderView spiderView) {
+        Result<Void> result = new Result<>();
 
-    /**
-     * query all spiders
-     * @return spider list
-     */
-    Result querySpiderList();
+        if (spiderView == null || CollectionUtils.isEmpty(spiderView.getStartUrls())) {
+            return result.fail(CommonErrorCode.NULL_PARAM);
+        }
+        spiderManageService.createSpider(ModelConverter.getSpiderDTOFromView(spiderView));
+        return result.success();
+    }
 
-    /**
-     * get a spider by uuid
-     * @param uuid uuid
-     * @return spider
-     */
-    Result getSpiderByUUID(String uuid);
+    @RequestMapping("/deleteSpider")
+    @ResponseBody
+    public Result<Void> deleteSpider(@RequestParam String uuid) {
+        Result<Void> result = new Result<>();
 
-    /**
-     * get a spider by site root
-     * @param site site root , such as http://jd.search.com
-     * @return spider
-     */
-    Result getSpiderBySite(String site);
+        if (StringUtils.isBlank(uuid)) {
+            return result.fail(CommonErrorCode.NULL_PARAM);
+        }
+        spiderManageService.removeSpider(uuid);
+        return result.success();
+    }
 
-    /**
-     * modify thread num of a spider
-     * @param threadNum thread num you want to set
-     * @return is success
-     */
-    Result modifyThreadNum(int threadNum);
-
-    /**
-     * add urls to a spider
-     * @param urls urls you want to set
-     * @param uuid uuid of spider
-     * @return is success
-     */
-    Result addUrls(List<String> urls, String uuid);
-
-    /**
-     * delete urls from a spider
-     * @param urls urls you want to remove
-     * @param uuid uuid of spider
-     * @return is success
-     */
-    Result delUrls(List<String> urls, String uuid);
+    @RequestMapping("/querySpiderList")
+    @ResponseBody
+    public Result<List<SpiderDTO>> querySpiderList() {
+        Result<List<SpiderDTO>> result = new Result<>();
+        return result.success(spiderManageService.querySpiderList());
+    }
 }
