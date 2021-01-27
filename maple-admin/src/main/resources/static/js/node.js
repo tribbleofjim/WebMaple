@@ -7,7 +7,6 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
 
     table.on('toolbar(nodes)', function(obj) {
         let checkStatus = table.checkStatus(obj.config.id);
-        console.log(checkStatus);
         let layEvent = obj.event;//获取该点击事件
         switch(layEvent){
             case 'addNode':

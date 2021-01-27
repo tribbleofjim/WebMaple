@@ -83,7 +83,7 @@
                                         <thead>
                                         <tr>
                                             <th lay-data="{checkbox:true}"></th>
-                                            <th lay-data="{field:'ip', width:150}">ip地址</th>
+                                            <th lay-data="{field:'jobName', width:150}">job名称</th>
                                             <th lay-data="{field:'worker', width:150}">worker名称</th>
                                             <th lay-data="{field:'spiderUUID', width:150}">爬虫uuid</th>
                                             <th lay-data="{field:'spiderSite', width:150}">爬取站点</th>
@@ -170,13 +170,13 @@
         <script type="text/javascript" src="../js/timed.js"></script>
 
         <script type="text/html" id="headBar">
-            <button type="button" class="layui-btn">
+            <button type="button" class="layui-btn" lay-event="resumeJob">
                 <i class="layui-icon layui-icon-play"></i> 启动定时任务
             </button>
-            <button type="button" class="layui-btn layui-btn-normal">
+            <button type="button" class="layui-btn layui-btn-normal" lay-event="pauseJob">
                 <i class="layui-icon layui-icon-pause"></i> 暂停定时任务
             </button>
-            <button type="button" class="layui-btn layui-btn-primary">
+            <button type="button" class="layui-btn layui-btn-primary" lay-event="delJob">
                 <i class="layui-icon layui-icon-delete"></i> 删除定时任务
             </button>
         </script>

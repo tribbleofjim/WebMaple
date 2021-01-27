@@ -46,7 +46,7 @@ public class TimedJobServiceImpl implements TimedJobService {
         for (int i = 0; i < 3; i++) {
             SpiderJobDTO spiderJobDTO = new SpiderJobDTO();
             if (i % 2 == 0) {
-                spiderJobDTO.setIp("144.34.188.64");
+                spiderJobDTO.setJobName("job_24");
                 spiderJobDTO.setWorker("myworker1");
                 spiderJobDTO.setSpiderUUID("jd.com");
                 spiderJobDTO.setSpiderSite("jd.com");
@@ -55,7 +55,7 @@ public class TimedJobServiceImpl implements TimedJobService {
                 spiderJobDTO.setMaintain(1000);
 
             } else {
-                spiderJobDTO.setIp("101.37.89.200");
+                spiderJobDTO.setJobName("job_72");
                 spiderJobDTO.setWorker("myworker2");
                 spiderJobDTO.setSpiderUUID("jd.com");
                 spiderJobDTO.setSpiderSite("jd.com");
