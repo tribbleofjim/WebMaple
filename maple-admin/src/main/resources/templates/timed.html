@@ -85,10 +85,11 @@
                                             <th lay-data="{checkbox:true}"></th>
                                             <th lay-data="{field:'ip', width:150}">ip地址</th>
                                             <th lay-data="{field:'worker', width:150}">worker名称</th>
-                                            <th lay-data="{field:'spiderUUID', width:200}">爬虫uuid</th>
-                                            <th lay-data="{field:'spiderSite', width:200}">爬取站点</th>
+                                            <th lay-data="{field:'spiderUUID', width:150}">爬虫uuid</th>
+                                            <th lay-data="{field:'spiderSite', width:150}">爬取站点</th>
                                             <th lay-data="{field:'type', width:150}">定时任务类型</th>
                                             <th lay-data="{field:'maintain'}">定时方式</th>
+                                            <th lay-data="{field:'state', width:100}">当前状态</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -170,6 +171,12 @@
 
         <script type="text/html" id="headBar">
             <button type="button" class="layui-btn">
+                <i class="layui-icon layui-icon-play"></i> 启动定时任务
+            </button>
+            <button type="button" class="layui-btn layui-btn-normal">
+                <i class="layui-icon layui-icon-pause"></i> 暂停定时任务
+            </button>
+            <button type="button" class="layui-btn layui-btn-primary">
                 <i class="layui-icon layui-icon-delete"></i> 删除定时任务
             </button>
         </script>

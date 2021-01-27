@@ -38,6 +38,11 @@ public class SpiderJobDTO {
     private int maintain;
 
     /**
+     * 任务当前状态
+     */
+    private String state;
+
+    /**
      * 任务名称
      */
     private String jobName;
@@ -108,6 +113,14 @@ public class SpiderJobDTO {
 
     public void setMaintain(int maintain) {
         this.maintain = maintain;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getJobName() {

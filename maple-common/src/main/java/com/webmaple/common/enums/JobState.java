@@ -2,17 +2,15 @@ package com.webmaple.common.enums;
 
 /**
  * @author lyifee
- * on 2021/1/6
+ * on 2021/1/27
  */
-public enum SpiderState {
+public enum JobState {
     RUNNING("执行中"),
-    STOP("暂停中"),
-    TIMED("定时爬虫"),
-    EXCEPTION("异常")
+    STOP("暂停中")
     ;
     private String state;
 
-    SpiderState(String state) {
+    JobState(String state) {
         this.state = state;
     }
 

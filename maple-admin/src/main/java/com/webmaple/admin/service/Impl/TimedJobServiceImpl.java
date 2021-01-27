@@ -1,5 +1,6 @@
 package com.webmaple.admin.service.Impl;
 
+import com.webmaple.common.enums.JobState;
 import com.webmaple.common.enums.MaintainType;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.common.model.SpiderJobDTO;
@@ -50,6 +51,7 @@ public class TimedJobServiceImpl implements TimedJobService {
                 spiderJobDTO.setSpiderUUID("jd.com");
                 spiderJobDTO.setSpiderSite("jd.com");
                 spiderJobDTO.setType(MaintainType.URL_NUM.getType());
+                spiderJobDTO.setState(JobState.RUNNING.getState());
                 spiderJobDTO.setMaintain(1000);
 
             } else {
@@ -58,6 +60,7 @@ public class TimedJobServiceImpl implements TimedJobService {
                 spiderJobDTO.setSpiderUUID("jd.com");
                 spiderJobDTO.setSpiderSite("jd.com");
                 spiderJobDTO.setType(MaintainType.TIME.getType());
+                spiderJobDTO.setState(JobState.STOP.getState());
                 spiderJobDTO.setMaintain(180);
 
             }
