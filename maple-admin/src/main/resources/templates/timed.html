@@ -109,18 +109,18 @@
                                 <fieldset class="layui-elem-field layui-field-title">
                                     <legend>添加定时任务</legend>
                                 </fieldset>
-                                <form class="layui-form" id="addTimedSpider" action="">
+                                <form class="layui-form" id="addTimedSpider" action="createTimedSpider">
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">worker名称</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入worker名称"
+                                            <input type="text" name="worker" required  lay-verify="required" placeholder="请输入worker名称"
                                                    autocomplete="on" class="layui-input" id="worker" style="width:300px">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">爬虫uuid</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入爬虫uuid"
+                                            <input type="text" name="uuid" required  lay-verify="required" placeholder="请输入爬虫uuid"
                                                    autocomplete="on" class="layui-input" id="uuid" style="width:300px">
                                         </div>
                                     </div>
@@ -129,8 +129,8 @@
                                         <div class="layui-input-block" style="width:300px">
                                             <select name="type" id="type" lay-verify="required">
                                                 <option value="">请选择定时任务类型</option>
-                                                <option value="0">urlNum</option>
-                                                <option value="1">time</option>
+                                                <option value="urlNum">urlNum</option>
+                                                <option value="time">time</option>
                                             </select>
                                         </div>
                                     </div>
@@ -144,15 +144,15 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">定时间隔</label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="cron" required  lay-verify="required" placeholder="请输入定时间隔"
-                                                   autocomplete="on" class="layui-input" id="cron" style="width:300px">
+                                            <input type="text" name="cronNum" required  lay-verify="required" placeholder="请输入定时间隔"
+                                                   autocomplete="on" class="layui-input" id="cronNum" style="width:300px">
                                             <input type="radio" name="cronUnit" value="h" title="小时" checked>
                                             <input type="radio" name="cronUnit" value="m" title="分钟">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
-                                            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                            <button class="layui-btn" lay-submit lay-filter="addTimedSpider">立即提交</button>
                                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                         </div>
                                     </div>
@@ -166,12 +166,9 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="../js/spider.js"></script>
+        <script type="text/javascript" src="../js/timed.js"></script>
 
         <script type="text/html" id="headBar">
-            <button type="button" class="layui-btn">
-                <i class="layui-icon layui-icon-addition"></i> 添加定时任务
-            </button>
             <button type="button" class="layui-btn">
                 <i class="layui-icon layui-icon-delete"></i> 删除定时任务
             </button>

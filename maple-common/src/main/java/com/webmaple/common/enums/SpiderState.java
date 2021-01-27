@@ -7,6 +7,7 @@ package com.webmaple.common.enums;
 public enum SpiderState {
     RUNNING("running"),
     STOP("stop"),
+    TIMED("timed"),
     EXCEPTION("exception")
     ;
     private String state;
