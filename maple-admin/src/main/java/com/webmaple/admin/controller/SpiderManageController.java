@@ -35,7 +35,7 @@ public class SpiderManageController {
             return result.fail(CommonErrorCode.NULL_PARAM);
         }
         spiderManageService.createSpider(ModelConverter.getSpiderDTOFromView(spiderView));
-        return result.success();
+        return result.success("创建成功！");
     }
 
     @RequestMapping("/deleteSpider")

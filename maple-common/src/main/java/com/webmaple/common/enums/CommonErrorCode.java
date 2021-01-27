@@ -5,7 +5,7 @@ package com.webmaple.common.enums;
  * on 2021/1/5
  */
 public enum CommonErrorCode {
-    NULL_PARAM("null_param")
+    NULL_PARAM("参数为空")
     ;
     private String code;
 

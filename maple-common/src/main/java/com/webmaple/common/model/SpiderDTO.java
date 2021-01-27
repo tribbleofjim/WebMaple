@@ -47,6 +47,20 @@ public class SpiderDTO {
      */
     private String downloader;
 
+    @Override
+    public String toString() {
+        return "SpiderDTO{" +
+                "ip='" + ip + '\'' +
+                ", urls=" + urls +
+                ", uuid='" + uuid + '\'' +
+                ", state='" + state + '\'' +
+                ", threadNum=" + threadNum +
+                ", processor='" + processor + '\'' +
+                ", pipeline='" + pipeline + '\'' +
+                ", downloader='" + downloader + '\'' +
+                '}';
+    }
+
     public String getIp() {
         return ip;
     }

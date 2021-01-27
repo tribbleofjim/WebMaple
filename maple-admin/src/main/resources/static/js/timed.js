@@ -19,7 +19,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             },
             success: function (res) {
                 if (res.status == 200) {
-                    layer.alert(res.message, {icon: 5}, function () {
+                    layer.alert(res.message, {icon: 6}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame
@@ -29,7 +29,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     });
 
                 } else {
-                    layer.alert(res.message, {icon: 6}, function () {
+                    layer.alert(res.message, {icon: 5}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame

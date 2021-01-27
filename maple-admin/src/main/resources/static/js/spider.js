@@ -39,6 +39,49 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         }
     });
 
+    form.on('submit(createSpider)', function(data) {
+        let urls = new Array();
+        for (i = 0; i < startUrlNum; i++) {
+            urls[i] = data.field["startUrls[" + i + "]"];
+        }
+        $.ajax({
+            type: 'post',
+            url: "createSpider",
+            data: {
+                uuid: data.field.uuid,
+                ip: data.field.ip,
+                processor: data.field.processor,
+                downloader: data.field.downloader,
+                pipeline: data.field.pipeline,
+                threadNum: data.field.threadNum,
+                startUrls: urls
+            },
+            success: function (res) {
+                if (res.status == 200) {
+                    layer.alert(res.message, {icon: 5}, function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                       //刷新页面
+                        parent.location.reload();
+                    });
+
+                } else {
+                    layer.alert(res.message, {icon: 6}, function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        //刷新页面
+                        parent.location.reload();
+                    });
+                }
+            }
+        });
+        return false;
+    });
+
     table.on('tool(spiders)', function(obj) {
         let data = obj.data;//获取该行数据
         let layEvent = obj.event;//获取该点击事件

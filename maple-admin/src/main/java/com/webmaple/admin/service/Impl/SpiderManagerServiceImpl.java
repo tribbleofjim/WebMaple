@@ -33,7 +33,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     @Override
     public void createSpider(SpiderDTO spiderDTO) {
-        System.out.println("startUrls:" + spiderDTO.getUrls());
+        System.out.println("spiderDTO:" + spiderDTO);
     }
 
     @Override
