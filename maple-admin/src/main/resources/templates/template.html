@@ -82,14 +82,25 @@
                                             <legend>定制化生成针对某个网站的爬虫</legend>
                                         </fieldset>
                                         <div class="layui-col-md2">
+                                            <div class="layui-card nav">
+                                                <div class="layui-card-header">输入表单元素名称</div>
+                                                <div class="layui-card-body">
+                                                    <!--输入文字-->
+                                                    <input type="text" name="title" id="title" required  lay-verify="required" placeholder="请输入表单元素文字"
+                                                           autocomplete="on" class="layui-input" style="width:150px">
+                                                    <!--/输入文字-->
+                                                </div>
+                                            </div>
                                             <div class="layui-card nav click-but">
                                                 <div class="layui-card-header">添加表单元素</div>
                                                 <div class="layui-card-body">
-                                                    <button class="layui-btn" data-size="block" data-type="text">输入框</button>
+                                                    <button class="layui-btn" data-size="inline" data-type="text">短输入</button>
+                                                    <button class="layui-btn" data-size="inline" data-type="select">短选择</button>
+                                                    <button class="layui-btn" data-size="block" data-type="text">长输入</button>
+                                                    <button class="layui-btn" data-size="block" data-type="select">长选择</button>
                                                     <button class="layui-btn" data-size="block" data-type="submit">提交</button>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="layui-col-md10">
                                             <div class="layui-card content">
@@ -103,7 +114,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="layui-card-body">
-                                                    <form class="layui-form" action="" onsubmit="return false">
+                                                    <form class="layui-form" id="showForm" action="" onsubmit="return false">
                                                     </form>
                                                 </div>
                                             </div>
@@ -121,7 +132,7 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="../js/spider.js"></script>
+        <script type="text/javascript" src="../js/template.js"></script>
 
     </body>
 
