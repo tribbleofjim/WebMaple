@@ -3,7 +3,6 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
     let layer = layui.layer;
     let element = layui.element;
     let $ = layui.jquery;
-    let key = '';
 
     delHtml();
 
@@ -12,7 +11,6 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
       		 size = _this.data('size'),
       		 type = _this.data('type'),
              html =  '';
-        key = randStrName();
 
       	switch (type) {
             case 'text':
@@ -24,6 +22,9 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
             case 'submit':
                 html = submits(size);
                 break;
+            case 'sub':
+                submitHtml();
+            break;
             case 'del':
                 $('form').html("\n")
                 delHtml()
@@ -56,7 +57,28 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
             key:'html',
             value:_d
         })
-        $('.code-show').text('<form class="layui-form" action="" onsubmit="return false">\n' +_d+ '</form>')
+        // $('.code-show').text('<form class="layui-form" action="" onsubmit="return false">\n' +_d+ '</form>')
+    }
+
+    function submitHtml() {
+        var h = layui.data('form_html');
+        var html = '';
+        var formUrl = getFormUrl();
+        if (h && h.html) {
+            html = h.html;
+            console.log(html);
+            $.ajax({
+                type: 'post',
+                url: 'submitTemplate',
+                data: {
+                    html: html,
+                    formUrl: formUrl
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                }
+            });
+        }
     }
 
     function randStrName() {
@@ -66,6 +88,16 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
     function getTitle() {
         var title = document.getElementById('title').value;
         return title;
+    }
+
+    function getName() {
+        var name = document.getElementById('name').value;
+        return name;
+    }
+
+    function getFormUrl() {
+        var formUrl = document.getElementById('formUrl').value;
+        return formUrl;
     }
 
     function jscode() {
@@ -82,21 +114,23 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
     }
 
     function input(type,size) {
-        var name = getTitle();
+        var title = getTitle();
+        var name = getName();
         var html = '  <div class="layui-form-item">\n' +
-          '    <label class="layui-form-label">'+name+'</label>\n' +
+          '    <label class="layui-form-label">'+title+'</label>\n' +
           '    <div class="layui-input-'+size+'">\n' +
-          '      <input type="'+type+'" name="'+key+'" required  lay-verify="required" placeholder="请输入'+name+'" autocomplete="off" class="layui-input">\n' +
+          '      <input type="'+type+'" name="'+name+'" required  lay-verify="required" placeholder="请输入'+title+'" autocomplete="off" class="layui-input">\n' +
           '    </div>\n' +
           '  </div>\n';
         return html;
     }
     function select(size) {
         var title = getTitle();
+        var name = getName();
         var html = '  <div class="layui-form-item">\n' +
           '    <label class="layui-form-label">' + title + '</label>\n' +
           '    <div class="layui-input-'+size+'">\n' +
-          '      <select name="'+key+'" lay-verify="required" lay-search>\n' +
+          '      <select name="'+name+'" lay-verify="required" lay-search>\n' +
           '        <option value="">请选择' + title + '</option>\n' +
           '      </select>\n' +
           '    </div>\n' +

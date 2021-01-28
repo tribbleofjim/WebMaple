@@ -83,10 +83,17 @@
                                         </fieldset>
                                         <div class="layui-col-md2">
                                             <div class="layui-card nav">
-                                                <div class="layui-card-header">输入表单元素名称</div>
+                                                <div class="layui-card-header">配置表单元素</div>
                                                 <div class="layui-card-body">
                                                     <!--输入文字-->
-                                                    <input type="text" name="title" id="title" required  lay-verify="required" placeholder="请输入表单元素文字"
+                                                    <span>输入表单元素标题</span>
+                                                    <input type="text" name="title" id="title" required  lay-verify="required"
+                                                           autocomplete="on" class="layui-input" style="width:150px">
+                                                    <span>输入表单元素名称</span>
+                                                    <input type="text" name="name" id="name" required  lay-verify="required"
+                                                           autocomplete="on" class="layui-input" style="width:150px">
+                                                    <span>输入表单接口</span>
+                                                    <input type="text" name="formUrl" id="formUrl" required  lay-verify="required"
                                                            autocomplete="on" class="layui-input" style="width:150px">
                                                     <!--/输入文字-->
                                                 </div>
