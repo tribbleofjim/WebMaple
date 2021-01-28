@@ -1,8 +1,9 @@
-layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
+layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
     let form = layui.form;
     let layer = layui.layer;
     let table = layui.table;
     let element = layui.element;
+    let upload = layui.upload;
     let $ = layui.jquery;
 
     table.on('toolbar(nodes)', function(obj) {
@@ -17,6 +18,26 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             break;
         };
         event.stoppropagation();
+    });
+
+    var uploadInst = upload.render({
+        elem: '#upload' //绑定元素
+        ,url: '/upload/' //上传接口
+        ,progress: function(n, elem) {
+            var percent = n + '%' //获取进度百分比
+            element.progress('demo', percent); //可配合 layui 进度条元素使用
+
+            //以下系 layui 2.5.6 新增
+            console.log(elem); //得到当前触发的元素 DOM 对象。可通过该元素定义的属性值匹配到对应的进度条。
+        }
+        ,done: function(res){
+            //上传完毕回调
+            console.log("upload success");
+        }
+        ,error: function(){
+            //请求异常回调
+            console.log("upload error");
+        }
     });
 
     function addNode() {

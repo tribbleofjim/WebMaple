@@ -64,44 +64,113 @@
         <!--内容主体区域-->
         <div class="layui-body">
             <div class="layui-container" style="padding: 15px;">
-                <!--节点列表-->
-                <div class="layui-row">
-                    <fieldset class="layui-elem-field layui-field-title">
-                        <legend>分布式节点列表</legend>
-                    </fieldset>
-                    <table class="layui-table" lay-data="{height:550, url:'/nodeList', page:true,
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">节点列表</li>
+                        <li>添加节点</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <!--节点列表-->
+                            <div class="layui-row">
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>分布式节点列表</legend>
+                                </fieldset>
+                                <table class="layui-table" lay-data="{height:550, url:'/nodeList', page:true,
                         id:'nodes', toolbar: '#headBar'}" lay-filter="nodes" >
-                        <thead>
-                        <tr>
-                            <th lay-data="{checkbox:true}"></th>
-                            <th lay-data="{field:'ip', width:150}">ip地址</th>
-                            <th lay-data="{field:'type', width:150}">节点类型</th>
-                            <th lay-data="{field:'name', width:150}">节点名称</th>
-                        </tr>
-                        </thead>
-                    </table>
+                                    <thead>
+                                    <tr>
+                                        <th lay-data="{checkbox:true}"></th>
+                                        <th lay-data="{field:'ip', width:150}">ip地址</th>
+                                        <th lay-data="{field:'type', width:150}">节点类型</th>
+                                        <th lay-data="{field:'name', width:150}">节点名称</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <!--/节点列表-->
+
+                            <!--新建节点表单-->
+                            <form class="layui-form" id="nodeInfo" style="display:none; padding-top: 50px;">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">节点ip</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入ip地址"
+                                               autocomplete="on" class="layui-input" id="ip" style="width:200px">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">节点名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="title" required  lay-verify="required" placeholder="请输入节点名称"
+                                               autocomplete="on" class="layui-input" id="name" style="width:200px">
+                                    </div>
+                                </div>
+                            </form>
+                            <!--/新建节点表单-->
+                        </div>
+                        <div class="layui-tab-item">
+                            <!--添加节点-->
+                            <div class="layui-row">
+                                <div class="layui-col-md5">
+                                    <form class="layui-form" id="addNode" action="">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">服务器ip</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="newIp" required  lay-verify="required" placeholder="请输入ip"
+                                                       autocomplete="on" class="layui-input" id="newIp" style="width:300px">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">服务器用户名</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="user" required  lay-verify="required" placeholder="请输入user"
+                                                       autocomplete="on" class="layui-input" id="user" style="width:300px">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">服务器密码</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="password" required  lay-verify="required" placeholder="请输入password"
+                                                       autocomplete="on" class="layui-input" id="password" style="width:300px">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">服务器ssh连接端口号</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="port" required  lay-verify="required" placeholder="请输入ssh连接端口号"
+                                                       autocomplete="on" class="layui-input" id="port" style="width:300px">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button type="button" class="layui-btn" id="upload">
+                                                    <i class="layui-icon">&#xe67c;</i>上传jar包
+                                                </button>
+                                                <div class="layui-progress layui-progress-big" lay-filter="demo"
+                                                     lay-showPercent="true" style="margin-top:8px;">
+                                                    <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button class="layui-btn" lay-submit lay-filter="">
+                                                    <i class="layui-icon layui-icon-release"></i>
+                                                    立即提交
+                                                </button>
+                                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!--/添加节点-->
+                        </div>
+                    </div>
                 </div>
-                <!--/节点列表-->
-
-                <!--新建节点表单-->
-                <form class="layui-form" id="nodeInfo" style="display:none; padding-top: 50px;">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">节点ip</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入ip地址"
-                                   autocomplete="on" class="layui-input" id="ip" style="width:200px">
-                        </div>
-                    </div>
-
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">节点名称</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入节点名称"
-                                   autocomplete="on" class="layui-input" id="name" style="width:200px">
-                        </div>
-                    </div>
-                </form>
-                <!--/新建节点表单-->
             </div>
         </div>
 
