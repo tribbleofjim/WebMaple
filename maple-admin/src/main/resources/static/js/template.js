@@ -64,6 +64,7 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
         var h = layui.data('form_html');
         var html = '';
         var formUrl = getFormUrl();
+        var templateName = getTemplateName();
         if (h && h.html) {
             html = h.html;
             console.log(html);
@@ -72,7 +73,8 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
                 url: 'submitTemplate',
                 data: {
                     html: html,
-                    formUrl: formUrl
+                    formUrl: formUrl,
+                    templateName: templateName
                 },
                 success: function (res) {
                     layer.msg(res.message);
@@ -98,6 +100,11 @@ layui.define(['form', 'layer', 'jquery', 'element'], function (exports) {
     function getFormUrl() {
         var formUrl = document.getElementById('formUrl').value;
         return formUrl;
+    }
+
+    function getTemplateName() {
+        var templateName = document.getElementById('templateName').value;
+        return templateName;
     }
 
     function jscode() {

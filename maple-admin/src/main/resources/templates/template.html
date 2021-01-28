@@ -86,6 +86,9 @@
                                                 <div class="layui-card-header">配置表单元素</div>
                                                 <div class="layui-card-body">
                                                     <!--输入文字-->
+                                                    <span>输入模板名称</span>
+                                                    <input type="text" name="templateName" id="templateName" required  lay-verify="required"
+                                                           autocomplete="on" class="layui-input" style="width:150px">
                                                     <span>输入表单元素标题</span>
                                                     <input type="text" name="title" id="title" required  lay-verify="required"
                                                            autocomplete="on" class="layui-input" style="width:150px">
@@ -115,9 +118,11 @@
                                                     表单生成器-定制化生成爬虫
                                                     <button class="layui-btn layui-btn-sm sub-form" data-type="sub">
                                                         <i class="layui-icon layui-icon-release"></i>
+                                                        提交表单模板
                                                     </button>
                                                     <button class="layui-btn layui-btn-sm layui-btn-normal del-form" data-type="del">
                                                         <i class="layui-icon layui-icon-delete"></i>
+                                                        清空表单模板
                                                     </button>
                                                 </div>
                                                 <div class="layui-card-body">

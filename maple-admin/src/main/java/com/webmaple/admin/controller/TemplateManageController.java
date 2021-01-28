@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TemplateManageController {
     @PostMapping("/submitTemplate")
     @ResponseBody
-    public Result<Void> submitTemplate(@RequestParam String html, @RequestParam String formUrl) {
+    public Result<Void> submitTemplate(@RequestParam String html,
+                                       @RequestParam String formUrl,
+                                       @RequestParam String templateName) {
         // 这里的html值应该存储到mysql中
         System.out.println(formUrl);
+        System.out.println(templateName);
         Result<Void> result = new Result<>();
         return result.success("提交成功！");
     }
