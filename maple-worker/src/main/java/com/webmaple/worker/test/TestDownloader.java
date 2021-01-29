@@ -1,4 +1,4 @@
-package com.webmaple.worker;
+package com.webmaple.worker.test;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
@@ -12,6 +12,7 @@ import us.codecraft.webmagic.downloader.Downloader;
 public class TestDownloader implements Downloader {
     @Override
     public Page download(Request request, Task task) {
+        System.out.println("test_download_success");
         return null;
     }
 

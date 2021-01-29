@@ -1,4 +1,4 @@
-package com.webmaple.worker;
+package com.webmaple.worker.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

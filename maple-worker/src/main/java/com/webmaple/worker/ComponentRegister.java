@@ -2,9 +2,11 @@ package com.webmaple.worker;
 
 import com.webmaple.worker.annotation.MaplePipeline;
 import com.webmaple.worker.annotation.MapleProcessor;
+import com.webmaple.worker.config.ReflectionsConfig;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.downloader.Downloader;
@@ -22,7 +24,7 @@ import java.util.Set;
  * on 2021/1/9
  */
 @Component
-public class ComponentRegister {
+public class ComponentRegister implements InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(ComponentRegister.class);
 
     @Autowired
@@ -30,10 +32,6 @@ public class ComponentRegister {
 
     @Autowired
     private ComponentService componentService;
-
-    public ComponentRegister() {
-        register();
-    }
 
     public void register() {
         Reflections reflections = reflectionsConfig.getReflections();
@@ -92,5 +90,10 @@ public class ComponentRegister {
         }
         componentService.addPipelines(pipelineList);
         LOGGER.info("end pipeline register.");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        register();
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.worker.job.model.QuartzJob;
 import com.webmaple.worker.job.model.SpiderInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.scheduler.RedisScheduler;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -105,6 +107,9 @@ public class ModelUtil {
     }
 
     public String listToString(List<String> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return "";
+        }
         StringBuilder builder = new StringBuilder();
         for (String str : list) {
             builder.append(",").append(str);

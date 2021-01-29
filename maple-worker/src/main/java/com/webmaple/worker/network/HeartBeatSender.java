@@ -1,6 +1,7 @@
 package com.webmaple.worker.network;
 
 import com.webmaple.common.network.RequestSender;
+import com.webmaple.common.network.RequestUtil;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,7 @@ public class HeartBeatSender {
 
     public void sendHeartBeat() {
         Request request = new Request("http://101.37.89.200:8080/heartbeat");
-        HttpUriRequest httpUriRequest = requestSender.getHttpUriRequest(request);
+        HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
             requestSender.request(httpUriRequest);
         } catch (Exception e) {
