@@ -112,8 +112,19 @@
                         </div>
                         <div class="layui-tab-item">
                             <!--添加节点-->
+                            <fieldset class="layui-elem-field">
+                                <legend>添加节点说明</legend>
+                                <div class="layui-field-box">
+                                    目前只支持WebMagic+ springboot项目打成jar包上传服务器；<br>
+                                    请确保自己输入的服务器ip、用户名以及密码正确。<br>
+                                    其余情况，目前只能手动访问服务器部署节点。 <br>
+                                </div>
+                            </fieldset>
                             <div class="layui-row">
                                 <div class="layui-col-md5">
+                                    <fieldset class="layui-elem-field layui-field-title">
+                                        <legend>添加节点</legend>
+                                    </fieldset>
                                     <form class="layui-form" id="addNode" action="">
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">服务器ip</label>
@@ -166,7 +177,6 @@
                                     </form>
                                 </div>
                             </div>
-
                             <!--/添加节点-->
                         </div>
                     </div>
