@@ -25,12 +25,12 @@ public class SpiderTest {
 
     public SpiderTest () {
         spiderDTO = new SpiderDTO();
-        spiderDTO.setDownloader("com.webmaple.worker.test.TestDownloader");
-        spiderDTO.setProcessor("com.webmaple.worker.test.TestProcessor");
+        spiderDTO.setDownloader("us.codecraft.webmagic.downloader.HttpClientDownloader");
+        spiderDTO.setProcessor("us.codecraft.webmagic.processor.example.BaiduBaikePageProcessor");
         spiderDTO.setPipeline("com.webmaple.worker.test.TestPipeline");
         spiderDTO.setThreadNum(1);
         List<String> urls = new ArrayList<>();
-        urls.add("http://www.baidu.com");
+        urls.add("http://baike.baidu.com/search/word?word=%太阳能&pic=1&sug=1&enc=utf8");
         spiderDTO.setUrls(urls);
         spiderDTO.setUuid("baidu_test");
     }

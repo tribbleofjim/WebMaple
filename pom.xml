@@ -24,6 +24,7 @@
         <spring.boot.plugin.version>2.4.1</spring.boot.plugin.version>
         <reflections.version>0.9.12</reflections.version>
         <quartz.version>2.4.1</quartz.version>
+        <selenium.version>3.141.59</selenium.version>
     </properties>
 
     <dependencies>
@@ -99,6 +100,14 @@
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-extension</artifactId>
             <version>${webmagic.version}</version>
+        </dependency>
+
+        <!-- ===================== selenium =================== -->
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
         </dependency>
 
         <!-- ===================== thymeleaf =================== -->

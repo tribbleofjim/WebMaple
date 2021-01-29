@@ -11,6 +11,6 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 public class TestPipeline implements Pipeline {
     @Override
     public void process(ResultItems resultItems, Task task) {
-        System.out.println("test_pipeline_success");
+        System.out.println("pipeline_test");
     }
 }
