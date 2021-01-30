@@ -98,3 +98,64 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
     }
 
 });
+
+var myChart = echarts.init(document.getElementById('chart'));
+var option = {
+    color: ['#008B8B'],
+    title: {
+        text: '节点展示'
+    },
+    tooltip: {},
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    series: [
+        {
+            type: 'graph',
+            layout: 'none',
+            symbolSize: 50,
+            roam: true,
+            label: {
+                show: true
+            },
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 10],
+            edgeLabel: {
+                fontSize: 20
+            },
+            data: [{
+                name: 'admin',
+                x: 550,
+                y: 300
+            }, {
+                name: 'worker1',
+                x: 300,
+                y: 300
+            }, {
+                name: 'worker2',
+                x: 300,
+                y: 100
+            }, {
+                name: 'worker3',
+                x: 300,
+                y: 800
+            }],
+            links: [{
+                source: 'worker1',
+                target: 'admin'
+            }, {
+                source: 'worker2',
+                target: 'admin'
+            }, {
+                source: 'worker3',
+                target: 'admin'
+            }],
+            lineStyle: {
+                opacity: 0.9,
+                width: 2,
+                curveness: 0
+            }
+        }
+    ]
+};
+
+option && myChart.setOption(option);

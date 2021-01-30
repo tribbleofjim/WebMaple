@@ -5,6 +5,7 @@
         <title>节点列表</title>
         <link rel="stylesheet" href="/layui/css/layui.css">
         <script type="text/javascript" src="/layui/layui.js"></script>
+        <script src="/echarts/dist/echarts.min.js"></script>
     </head>
 
     <body class="layui-layout-body">
@@ -120,11 +121,11 @@
                                     其余情况，目前只能手动访问服务器部署节点。 <br>
                                 </div>
                             </fieldset>
+                            <fieldset class="layui-elem-field layui-field-title">
+                                <legend>添加节点</legend>
+                            </fieldset>
                             <div class="layui-row">
                                 <div class="layui-col-md5">
-                                    <fieldset class="layui-elem-field layui-field-title">
-                                        <legend>添加节点</legend>
-                                    </fieldset>
                                     <form class="layui-form" id="addNode" action="">
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">服务器ip</label>
@@ -175,6 +176,9 @@
                                             </div>
                                         </div>
                                     </form>
+                                </div>
+                                <div class="layui-col-md7">
+                                    <div id="chart" style="width: 500px;height:500px;"></div>
                                 </div>
                             </div>
                             <!--/添加节点-->
