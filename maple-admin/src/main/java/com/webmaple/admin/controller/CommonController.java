@@ -82,6 +82,24 @@ public class CommonController {
         return ips;
     }
 
+    @RequestMapping("/heartbeat")
+    @ResponseBody
+    public void heartbeat(@RequestParam String workerProcess) {
+        if (StringUtils.isBlank(workerProcess)) {
+            return;
+        }
+        String[] workerInfo = workerProcess.split(":");
+        if (workerInfo.length < 3) {
+            return;
+        }
+        NodeDTO nodeDTO = new NodeDTO();
+        nodeDTO.setType(NodeType.WORKER.getType());
+        nodeDTO.setIp(workerInfo[0]);
+        nodeDTO.setPort(Integer.parseInt(workerInfo[1]));
+        nodeDTO.setName(workerInfo[3]);
+        WorkerContainer.addWorker(nodeDTO);
+    }
+
     @RequestMapping("/spiderList")
     @ResponseBody
     public DataTableDTO querySpiderList(@RequestParam int page, @RequestParam int limit) {

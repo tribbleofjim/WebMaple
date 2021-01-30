@@ -23,6 +23,11 @@ public class NodeDTO {
      */
     private String name;
 
+    /**
+     * 端口号，用于识别worker上不同spiderProcess
+     */
+    private int port;
+
     public String getType() {
         return type;
     }
@@ -45,5 +50,13 @@ public class NodeDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 }
