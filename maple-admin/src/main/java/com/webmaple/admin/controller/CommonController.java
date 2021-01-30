@@ -96,7 +96,7 @@ public class CommonController {
         nodeDTO.setType(NodeType.WORKER.getType());
         nodeDTO.setIp(workerInfo[0]);
         nodeDTO.setPort(Integer.parseInt(workerInfo[1]));
-        nodeDTO.setName(workerInfo[3]);
+        nodeDTO.setName(workerInfo[2]);
         WorkerContainer.addWorker(nodeDTO);
     }
 
