@@ -54,20 +54,18 @@ public class ConfigUtil {
             Object value = ymlInfo.get(keys[i]);
             if (i < keys.length - 1){
                 ymlInfo = (Map) value;
-            }else if (value == null){
-                throw new RuntimeException("key不存在");
-            }else {
+            } else if (value != null) {
                 String g;
                 String keyChild;
-                String v1 = (String)value;
-                for(Matcher m = p1.matcher(v1); m.find(); value = v1.replace(g, (String)getValue(keyChild))) {
+                String v1 = String.valueOf(value);
+                for(Matcher m = p1.matcher(v1); m.find(); value = v1.replace(g, String.valueOf(getValue(keyChild)))) {
                     g = m.group();
                     keyChild = g.replaceAll("\\$\\{", "").replaceAll("\\}", "");
                 }
                 return value;
             }
         }
-        return "";
+        return null;
     }
 
     /**
@@ -88,7 +86,11 @@ public class ConfigUtil {
      * @return String
      */
     public static String getValueToString(String fileName , String key){
-        return (String)getValue(fileName , key);
+        Object value = getValue(fileName, key);
+        if (value == null) {
+            return null;
+        }
+        return String.valueOf(getValue(fileName, key));
     }
 
 }

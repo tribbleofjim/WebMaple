@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.webmaple.common.util.ConfigUtil;
 import com.webmaple.worker.job.JobMapDataKey;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -16,6 +17,9 @@ import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.pipeline.Pipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.scheduler.RedisScheduler;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 执行定时spider的任务
@@ -105,11 +109,18 @@ public class SpiderJob implements Job {
 
             Spider spider = Spider.create(processor)
                     .setUUID(uuid)
-                    .addUrl(String.valueOf(urlString))
                     .addPipeline(pipeline)
                     .addPipeline(new ConsolePipeline())
                     .setScheduler(new RedisScheduler(getJedisPool()))
                     .thread(threadNum);
+
+            List<String> urls = stringToList(urlString);
+            if (CollectionUtils.isEmpty(urls)) {
+                throw new RuntimeException("no_urls_creating_spider:" + uuid);
+            }
+            for (String url : urls) {
+                spider.addUrl(url);
+            }
 
             if (downloader != null) {
                 spider.setDownloader(downloader);
@@ -136,10 +147,24 @@ public class SpiderJob implements Job {
     private JedisPool getJedisPool() {
         String host = ConfigUtil.getValueToString("application.yml", "spring.redis.host");
         int port = 6379;
+        String rawTimeout;
+        int timeout = (rawTimeout = ConfigUtil.getValueToString("application.yml", "spring.redis.timeout")) == null ?
+                5000 : Integer.parseInt(rawTimeout);
         String password = ConfigUtil.getValueToString("application.yml", "spring.redis.password");
-        int timeout = Integer.parseInt(ConfigUtil.getValueToString("application.yml", "spring.redis.timeout"));
+
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        if (password == null) {
+            return new JedisPool(jedisPoolConfig, host, port, timeout);
+        }
         return new JedisPool(jedisPoolConfig, host, port, timeout, password);
+    }
+
+    private List<String> stringToList(String listString) {
+        if (StringUtils.isBlank(listString)) {
+            return null;
+        }
+        String[] strs = listString.split(",");
+        return Arrays.asList(strs);
     }
 
     public String getExtraInfo() {
