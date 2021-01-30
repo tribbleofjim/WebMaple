@@ -29,6 +29,10 @@ public class JobService implements InitializingBean {
      *
      */
     public void addJob(QuartzJob quartzJob) throws Exception  {
+        if (quartzJob == null) {
+            LOGGER.error("null_quartz_job_create");
+            return;
+        }
         if (!CronExpression.isValidExpression(quartzJob.getCronExpression())) {
             LOGGER.error("Illegal cron expression : {}", quartzJob.getCronExpression());
             return;
@@ -85,7 +89,7 @@ public class JobService implements InitializingBean {
         if (jobDetail == null) {
             LOGGER.warn("pause_null_job:{}", jobName);
 
-        }else {
+        } else {
             scheduler.pauseJob(jobKey);
             QuartzJobContainer.pauseJob(jobName);
         }
