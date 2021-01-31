@@ -37,7 +37,7 @@ public class HeartBeatSender {
     @Value("${props.admin.heartbeat}")
     private String heartbeat;
 
-    // @Scheduled(cron = "0 20/0 * * * ?")
+    // @Scheduled(cron = "0 0/20 * * * ?")
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
         params.put("")

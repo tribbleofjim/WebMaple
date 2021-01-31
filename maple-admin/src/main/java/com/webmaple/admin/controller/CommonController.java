@@ -42,6 +42,9 @@ public class CommonController {
     @Resource
     private ComponentService componentService;
 
+    @Resource
+    private WorkerContainer workerContainer;
+
     @RequestMapping("/index")
     public String index() {
         return "index";
@@ -81,7 +84,7 @@ public class CommonController {
     @ResponseBody
     public List<String> ips() {
         List<String> ips = new ArrayList<>();
-        List<NodeDTO> workers = WorkerContainer.getWorkerList();
+        List<NodeDTO> workers = workerContainer.getWorkerList();
         for (NodeDTO worker : workers) {
             ips.add(worker.getIp());
         }
@@ -90,16 +93,16 @@ public class CommonController {
 
     @RequestMapping("/heartbeat")
     @ResponseBody
-    public void heartbeat(@RequestParam String workerName, @RequestParam(required = false) String port, HttpServletRequest request) {
-        if (StringUtils.isBlank(workerName)) {
-            LOGGER.error("null_workerName_heartbeat");
-            return;
-        }
+    public Result<String> heartbeat(@RequestParam(required = false) String workerName,
+                                    @RequestParam(required = false) String port,
+                                    HttpServletRequest request) {
+        Result<String> result = new Result<>();
+
         if (request == null) {
-            LOGGER.error("null_request_heartbeat");
-            return;
+           return result.fail("null_httpServletRequest");
         }
         String ip = RequestUtil.getIpAddr(request);
+
         if (StringUtils.isNotBlank(port)) {
             // first heartbeat
             NodeDTO nodeDTO = new NodeDTO();
@@ -107,8 +110,18 @@ public class CommonController {
             nodeDTO.setIp(ip);
             nodeDTO.setPort(Integer.parseInt(port));
             nodeDTO.setName(workerName);
-            WorkerContainer.addWorker(nodeDTO);
+            String name = workerContainer.addWorker(nodeDTO);
+            if (name == null) {
+                return result.fail("worker_num_out_of_max_value");
+            }
+            return result.success("", name);
         }
+
+        // not first heartbeat
+        if (StringUtils.isBlank(workerName)) {
+            return result.fail("null_workerName_heartbeat");
+        }
+        workerContainer.
 
     }
 

@@ -1,5 +1,7 @@
 package com.webmaple.common.model;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * @author lyifee
  * on 2021/1/7
@@ -32,6 +34,29 @@ public class NodeDTO {
      * 端口号，用于识别worker上不同spiderProcess
      */
     private int port;
+
+    @Override
+    public String toString() {
+        return "NodeDTO{" +
+                "type='" + type + '\'' +
+                ", ip='" + ip + '\'' +
+                ", name='" + name + '\'' +
+                ", idx=" + idx +
+                ", port=" + port +
+                '}';
+    }
+
+    public static NodeDTO fromString(String node) {
+        node = node.replaceFirst("NodeDTO", "");
+        JSONObject jsonObject = JSONObject.parseObject(node);
+        NodeDTO nodeDTO = new NodeDTO();
+        nodeDTO.setName(jsonObject.getString("name"));
+        nodeDTO.setIp(jsonObject.getString("ip"));
+        nodeDTO.setPort(jsonObject.getInteger("port"));
+        nodeDTO.setType(jsonObject.getString("type"));
+        nodeDTO.setIdx(jsonObject.getInteger("idx"));
+        return nodeDTO;
+    }
 
     public String getType() {
         return type;
