@@ -6,8 +6,13 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Request;
+
+import java.util.HashMap;
 
 /**
  * 定时向admin节点发送心跳
@@ -15,6 +20,7 @@ import us.codecraft.webmagic.Request;
  * @author lyifee
  * on 2021/1/14
  */
+@Configuration
 @Component
 public class HeartBeatSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartBeatSender.class);
@@ -22,7 +28,20 @@ public class HeartBeatSender {
     @Autowired
     private RequestSender requestSender;
 
+    @Value("${props.admin.host}")
+    private String adminHost;
+
+    @Value("${props.admin.port}")
+    private Integer adminPort;
+
+    @Value("${props.admin.heartbeat}")
+    private String heartbeat;
+
+    // @Scheduled(cron = "0 20/0 * * * ?")
     public void sendHeartBeat() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("")
+        RequestUtil.getRequest()
         Request request = new Request("http://101.37.89.200:8080/heartbeat");
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {

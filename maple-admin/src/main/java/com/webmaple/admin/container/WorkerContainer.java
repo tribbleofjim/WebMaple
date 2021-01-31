@@ -7,10 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author lyifee
@@ -22,9 +20,20 @@ public class WorkerContainer {
 
     private static final HashMap<String, NodeDTO> WORKERS_MAP = new HashMap<>();
 
+    private static boolean[] IDX_SET;
+
     private static int MAX_VALUE = 10;
 
     public WorkerContainer() {
+        // try to init max_value
+        try {
+            MAX_VALUE = Integer.parseInt(ConfigUtil.getValueToString("application.yml", "props.workers.max-value"));
+        } catch (Exception e) {
+            LOGGER.error("worker_context_init_error:{}", e.getMessage());
+        }
+        IDX_SET = new boolean[MAX_VALUE];
+        Arrays.fill(IDX_SET, false);
+
         // mock
         NodeDTO worker1 = new NodeDTO();
         worker1.setName("worker1");
@@ -38,16 +47,19 @@ public class WorkerContainer {
         worker3.setName("worker3");
         worker3.setIp("101.33.188.66");
         worker3.setType(NodeType.WORKER.getType());
-        WORKERS_MAP.put(worker1.getName(), worker1);
-        WORKERS_MAP.put(worker2.getName(), worker2);
-        WORKERS_MAP.put(worker3.getName(), worker3);
+        addWorker(worker1);
+        addWorker(worker2);
+        addWorker(worker3);
+    }
 
-        // try to init max_value
-        try {
-            MAX_VALUE = Integer.parseInt(ConfigUtil.getValueToString("application.yml", "props.workers.max-value"));
-        } catch (Exception e) {
-            LOGGER.error("worker_context_init_error:{}", e.getMessage());
+    private static void setWorkerIdxAndName(NodeDTO worker) {
+        for (int i = 0; i < MAX_VALUE; i++) {
+            if (!IDX_SET[i]) {
+                worker.setIdx(i);
+                worker.setName("worker" + i);
+            }
         }
+        throw new RuntimeException("worker_num_out_of_max_value");
     }
 
     public static List<NodeDTO> getWorkerList() {
@@ -62,6 +74,7 @@ public class WorkerContainer {
         if (WORKERS_MAP.size() >= MAX_VALUE || !worker.getType().equals(NodeType.WORKER.getType())) {
             return;
         }
+        setWorkerIdxAndName(worker);
         WORKERS_MAP.put(worker.getName(), worker);
     }
 
@@ -70,7 +83,12 @@ public class WorkerContainer {
     }
 
     public static void remove(String workerName) {
+        NodeDTO worker = WORKERS_MAP.get(workerName);
+        if (worker == null) {
+            return;
+        }
         WORKERS_MAP.remove(workerName);
+        IDX_SET[worker.getIdx()] = false;
     }
 
     public static int size() {

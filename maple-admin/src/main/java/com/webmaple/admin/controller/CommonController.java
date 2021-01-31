@@ -8,13 +8,17 @@ import com.webmaple.common.model.*;
 import com.webmaple.admin.service.NodeManageService;
 import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.admin.service.TimedJobService;
+import com.webmaple.common.network.RequestUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,8 @@ import java.util.List;
  */
 @Controller
 public class CommonController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
+
     @Resource
     private SpiderManageService spiderManageService;
 
@@ -84,20 +90,26 @@ public class CommonController {
 
     @RequestMapping("/heartbeat")
     @ResponseBody
-    public void heartbeat(@RequestParam String workerProcess) {
-        if (StringUtils.isBlank(workerProcess)) {
+    public void heartbeat(@RequestParam String workerName, @RequestParam(required = false) String port, HttpServletRequest request) {
+        if (StringUtils.isBlank(workerName)) {
+            LOGGER.error("null_workerName_heartbeat");
             return;
         }
-        String[] workerInfo = workerProcess.split(":");
-        if (workerInfo.length < 3) {
+        if (request == null) {
+            LOGGER.error("null_request_heartbeat");
             return;
         }
-        NodeDTO nodeDTO = new NodeDTO();
-        nodeDTO.setType(NodeType.WORKER.getType());
-        nodeDTO.setIp(workerInfo[0]);
-        nodeDTO.setPort(Integer.parseInt(workerInfo[1]));
-        nodeDTO.setName(workerInfo[2]);
-        WorkerContainer.addWorker(nodeDTO);
+        String ip = RequestUtil.getIpAddr(request);
+        if (StringUtils.isNotBlank(port)) {
+            // first heartbeat
+            NodeDTO nodeDTO = new NodeDTO();
+            nodeDTO.setType(NodeType.WORKER.getType());
+            nodeDTO.setIp(ip);
+            nodeDTO.setPort(Integer.parseInt(port));
+            nodeDTO.setName(workerName);
+            WorkerContainer.addWorker(nodeDTO);
+        }
+
     }
 
     @RequestMapping("/spiderList")
