@@ -121,8 +121,8 @@ public class CommonController {
         if (StringUtils.isBlank(workerName)) {
             return result.fail("null_workerName_heartbeat");
         }
-        workerContainer.
-
+        workerContainer.aliveWorker(workerName);
+        return result.success();
     }
 
     @RequestMapping("/spiderList")

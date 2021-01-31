@@ -25,6 +25,8 @@ import java.util.HashMap;
 public class HeartBeatSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartBeatSender.class);
 
+    private String workerName = null;
+
     @Autowired
     private RequestSender requestSender;
 
@@ -40,9 +42,12 @@ public class HeartBeatSender {
     // @Scheduled(cron = "0 0/20 * * * ?")
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("")
-        RequestUtil.getRequest()
-        Request request = new Request("http://101.37.89.200:8080/heartbeat");
+        if (workerName == null) {
+            params.put("port", String.valueOf(8080));
+        } else {
+            params.put("workerName", workerName);
+        }
+        Request request = new Request(RequestUtil.getRequest(adminHost, adminPort, heartbeat, params));
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
             requestSender.request(httpUriRequest);
