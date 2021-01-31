@@ -6,6 +6,7 @@ import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.util.ConfigUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.*;
@@ -15,7 +16,7 @@ import java.util.*;
  * on 2021/1/18
  */
 @Component
-public class WorkerContainer {
+public class WorkerContainer implements InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkerContainer.class);
 
     @Autowired
@@ -44,23 +45,6 @@ public class WorkerContainer {
         }
         IDX_SET = new boolean[MAX_VALUE];
         Arrays.fill(IDX_SET, false);
-
-        // mock
-        NodeDTO worker1 = new NodeDTO();
-        worker1.setName("worker1");
-        worker1.setIp("144.34.188.164");
-        worker1.setType(NodeType.WORKER.getType());
-        NodeDTO worker2 = new NodeDTO();
-        worker2.setName("worker2");
-        worker2.setIp("101.37.89.200");
-        worker2.setType(NodeType.WORKER.getType());
-        NodeDTO worker3 = new NodeDTO();
-        worker3.setName("worker3");
-        worker3.setIp("101.33.188.66");
-        worker3.setType(NodeType.WORKER.getType());
-        addWorker(worker1);
-        addWorker(worker2);
-        addWorker(worker3);
     }
 
     public List<NodeDTO> getWorkerList() {
@@ -82,6 +66,7 @@ public class WorkerContainer {
         }
         setWorkerIdxAndName(worker);
         redisUtil.set(worker.getName(), worker.toString(), EXPIRE_TIME, INDEX_DB);
+        IDX_SET[worker.getIdx()] = true;
         return worker.getName();
     }
 
@@ -119,6 +104,7 @@ public class WorkerContainer {
             if (!IDX_SET[i]) {
                 worker.setIdx(i);
                 worker.setName(WORKER_PREFIX + i);
+                return;
             }
         }
         throw new RuntimeException("worker_num_out_of_max_value");
@@ -132,5 +118,25 @@ public class WorkerContainer {
             }
         }
         return res;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        // mock
+        NodeDTO worker1 = new NodeDTO();
+        worker1.setName("worker1");
+        worker1.setIp("144.34.188.164");
+        worker1.setType(NodeType.WORKER.getType());
+        NodeDTO worker2 = new NodeDTO();
+        worker2.setName("worker2");
+        worker2.setIp("101.37.89.200");
+        worker2.setType(NodeType.WORKER.getType());
+        NodeDTO worker3 = new NodeDTO();
+        worker3.setName("worker3");
+        worker3.setIp("101.33.188.66");
+        worker3.setType(NodeType.WORKER.getType());
+        addWorker(worker1);
+        addWorker(worker2);
+        addWorker(worker3);
     }
 }

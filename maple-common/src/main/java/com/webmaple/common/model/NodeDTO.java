@@ -1,7 +1,5 @@
 package com.webmaple.common.model;
 
-import com.alibaba.fastjson.JSONObject;
-
 /**
  * @author lyifee
  * on 2021/1/7
@@ -47,14 +45,15 @@ public class NodeDTO {
     }
 
     public static NodeDTO fromString(String node) {
-        node = node.replaceFirst("NodeDTO", "");
-        JSONObject jsonObject = JSONObject.parseObject(node);
+        node = node.replaceFirst("NodeDTO", "").replace("{", "").replace("}", "");
+        String[] params = node.split(",");
+
         NodeDTO nodeDTO = new NodeDTO();
-        nodeDTO.setName(jsonObject.getString("name"));
-        nodeDTO.setIp(jsonObject.getString("ip"));
-        nodeDTO.setPort(jsonObject.getInteger("port"));
-        nodeDTO.setType(jsonObject.getString("type"));
-        nodeDTO.setIdx(jsonObject.getInteger("idx"));
+        nodeDTO.setType(params[0].split("=")[1].replace("'", ""));
+        nodeDTO.setIp(params[1].split("=")[1].replace("'", ""));
+        nodeDTO.setName(params[2].split("=")[1].replace("'", ""));
+        nodeDTO.setIdx(Integer.parseInt(params[3].split("=")[1]));
+        nodeDTO.setPort(Integer.parseInt(params[4].split("=")[1]));
         return nodeDTO;
     }
 
