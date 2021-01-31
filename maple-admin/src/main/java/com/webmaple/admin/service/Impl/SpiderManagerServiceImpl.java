@@ -2,11 +2,11 @@ package com.webmaple.admin.service.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.webmaple.admin.container.SpiderProcessContainer;
+import com.webmaple.admin.container.WorkerContainer;
 import com.webmaple.common.enums.SpiderState;
+import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.admin.service.SpiderManageService;
-import com.webmaple.common.model.SpiderProcessDTO;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,9 @@ import java.util.List;
 @Service
 public class SpiderManagerServiceImpl implements SpiderManageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpiderManageService.class);
+
+    @Autowired
+    private WorkerContainer workerContainer;
 
     @Autowired
     private RequestSender requestSender;
@@ -58,10 +62,10 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     }
 
     private List<SpiderDTO> querySpiderListFromWorkers() {
-        List<SpiderProcessDTO> spiderProcesses = SpiderProcessContainer.getSpiderProcesses();
+        List<NodeDTO> workers = workerContainer.getWorkerList();
         List<SpiderDTO> spiderList = new ArrayList<>();
-        for (SpiderProcessDTO spiderProcess : spiderProcesses) {
-            Request request = new Request(RequestUtil.getRequest(spiderProcess.getIp(), spiderProcess.getPort(), "spiderList", null));
+        for (NodeDTO worker : workers) {
+            Request request = new Request(RequestUtil.getRequest(worker.getIp(), worker.getPort(), "spiderList", null));
             HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
             try {
                 CloseableHttpResponse response = requestSender.request(httpUriRequest);
