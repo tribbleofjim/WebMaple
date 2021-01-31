@@ -5,6 +5,7 @@
         <title>首页</title>
         <link rel="stylesheet" href="/layui/css/layui.css">
         <script type="text/javascript" src="/layui/layui.js"></script>
+        <script src="/echarts/dist/echarts.min.js"></script>
     </head>
 
     <body class="layui-layout-body layui-bg-gray">
@@ -113,23 +114,8 @@
                         </div>
                         <!--/数据总览-->
 
-
                         <div class="layui-row layui-col-space15">
                             <div class="layui-col-md6">
-                                <!--爬取网站列表-->
-                                <div class="layui-card" style="height: 300px">
-                                    <div class="layui-card-header">
-                                        <i class="layui-icon layui-icon-align-center" style="font-size: 30px;"></i>
-                                        爬取网站列表
-                                    </div>
-                                    <div class="layui-card-body">
-                                        https://www.baidu.com<br>
-                                        https://jd.search.com<br>
-                                        https://wefghukwe.com<br>
-                                    </div>
-                                </div>
-                                <!--/爬取网站列表-->
-
                                 <!--爬取进度-->
                                 <div class="layui-card" style="height: 300px">
                                     <div class="layui-card-header">
@@ -162,11 +148,23 @@
                                     </div>
                                 </div>
                                 <!--/爬取进度-->
+
+                                <!--周访问量-->
+                                <div class="layui-card" style="height: 300px">
+                                    <div class="layui-card-header">
+                                        <i class="layui-icon layui-icon-survey" style="font-size: 30px;"></i>
+                                        周访问量
+                                    </div>
+                                    <div class="layui-card-body">
+                                        <div id="visits" style="width: 500px;height:250px;"></div>
+                                    </div>
+                                </div>
+                                <!--/周访问量-->
                             </div>
 
                             <!--时间线-->
                             <div class="layui-col-md6">
-                                <div class="layui-card" style="height: 600px">
+                                <div class="layui-card" style="height: 620px">
                                     <div class="layui-card-header">
                                         <i class="layui-icon layui-icon-date" style="font-size: 30px;"></i>
                                         WebMaple时间线
@@ -224,7 +222,7 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="../js/spider.js"></script>
+        <script type="text/javascript" src="../js/index.js"></script>
 
     </body>
 </html>
