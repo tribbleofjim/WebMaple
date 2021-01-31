@@ -22,7 +22,9 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
 
     var uploadInst = upload.render({
         elem: '#upload' //绑定元素
-        ,url: '/upload/' //上传接口
+        ,url: '/upload' //上传接口
+        ,accept: 'file'
+        ,drag: true
         ,progress: function(n, elem) {
             var percent = n + '%' //获取进度百分比
             element.progress('demo', percent); //可配合 layui 进度条元素使用

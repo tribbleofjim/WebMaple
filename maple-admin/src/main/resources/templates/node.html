@@ -157,9 +157,14 @@
                                         </div>
                                         <div class="layui-form-item">
                                             <div class="layui-input-block">
-                                                <button type="button" class="layui-btn" id="upload">
-                                                    <i class="layui-icon">&#xe67c;</i>上传jar包
-                                                </button>
+                                                <div class="layui-upload-drag" id="upload">
+                                                    <i class="layui-icon">&#xe67c;</i>
+                                                    <p>点击上传jar包，或将文件拖拽到此处</p>
+                                                    <div class="layui-hide" id="uploadDemoView">
+                                                        <hr>
+                                                        <img src="" alt="上传成功后渲染" style="max-width: 196px">
+                                                    </div>
+                                                </div>
                                                 <div class="layui-progress layui-progress-big" lay-filter="demo"
                                                      lay-showPercent="true" style="margin-top:8px;">
                                                     <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>

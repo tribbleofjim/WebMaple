@@ -10,6 +10,7 @@ import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.admin.service.TimedJobService;
 import com.webmaple.common.network.RequestUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +84,36 @@ public class CommonController {
     @RequestMapping("/template")
     public String template() {
         return "template";
+    }
+
+    @RequestMapping("/upload")
+    @ResponseBody
+    public DataTableDTO upload(@RequestParam MultipartFile file) {
+        String targetFilePath = "src/main/resources";
+        String fileName = file.getOriginalFilename();
+        File targetFile = new File(targetFilePath + File.separator + fileName);
+
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(targetFile);
+            IOUtils.copy(file.getInputStream(), fileOutputStream);
+            LOGGER.info("------>>>>>>uploaded a file successfully!<<<<<<------");
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+
+        } finally {
+            try {
+                fileOutputStream.close();
+            } catch (Exception e) {
+                LOGGER.error("", e);
+            }
+        }
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(200);
+        dataTableDTO.setMsg("success");
+        dataTableDTO.setData("upload file");
+        return dataTableDTO;
     }
 
     @RequestMapping("/ips")

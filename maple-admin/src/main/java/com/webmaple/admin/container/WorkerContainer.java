@@ -22,8 +22,6 @@ public class WorkerContainer implements InitializingBean {
     @Autowired
     private RedisUtil redisUtil;
 
-    // private static final HashMap<String, NodeDTO> WORKERS_MAP = new HashMap<>();
-
     private static boolean[] IDX_SET;
 
     private static int MAX_VALUE = 10;
