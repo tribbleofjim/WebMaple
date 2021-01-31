@@ -86,6 +86,11 @@ public class CommonController {
         return "template";
     }
 
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @RequestMapping("/upload")
     @ResponseBody
     public DataTableDTO upload(@RequestParam MultipartFile file) {
