@@ -36,7 +36,6 @@ public class RedisUtil {
             jedis = jedisPool.getResource();
             jedis.select(indexdb);
             value = jedis.get(key);
-            LOGGER.info(value);
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
