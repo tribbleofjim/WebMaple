@@ -89,7 +89,7 @@ public class CommonController {
     @RequestMapping("/upload")
     @ResponseBody
     public DataTableDTO upload(@RequestParam MultipartFile file) {
-        String targetFilePath = "src/main/resources";
+        String targetFilePath = "/Users/lyifee/TriSources";
         String fileName = file.getOriginalFilename();
         File targetFile = new File(targetFilePath + File.separator + fileName);
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author lyifee
@@ -23,6 +24,8 @@ public class WorkerContainer implements InitializingBean {
     private RedisUtil redisUtil;
 
     private static boolean[] IDX_SET;
+
+    private static ReentrantLock IDX_LOCK = new ReentrantLock();
 
     private static int MAX_VALUE = 10;
 
@@ -98,14 +101,20 @@ public class WorkerContainer implements InitializingBean {
     }
 
     private void setWorkerIdxAndName(NodeDTO worker) {
-        for (int i = 0; i < MAX_VALUE; i++) {
-            if (!IDX_SET[i]) {
-                worker.setIdx(i);
-                worker.setName(WORKER_PREFIX + i);
-                return;
+        IDX_LOCK.lock();
+        try {
+            for (int i = 0; i < MAX_VALUE; i++) {
+                if (!IDX_SET[i]) {
+                    worker.setIdx(i);
+                    worker.setName(WORKER_PREFIX + i);
+                    return;
+                }
             }
+            throw new RuntimeException("worker_num_out_of_max_value");
+
+        } finally {
+            IDX_LOCK.unlock();
         }
-        throw new RuntimeException("worker_num_out_of_max_value");
     }
 
     private int tempSize() {
