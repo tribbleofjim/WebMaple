@@ -35,8 +35,6 @@ public class WorkerContainer implements InitializingBean {
 
     private static String WORKER_PREFIX = "worker";
 
-    private static String WORKER_VALUE = "1";
-
     public WorkerContainer() {
         // try to init max_value
         try {
