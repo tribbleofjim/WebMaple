@@ -4,6 +4,7 @@ import com.webmaple.admin.container.WorkerContainer;
 import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.NodeDTO;
 import com.webmaple.admin.service.NodeManageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +15,22 @@ import java.util.List;
  */
 @Service
 public class NodeManageServiceImpl implements NodeManageService {
+    @Autowired
+    private WorkerContainer workerContainer;
+
     @Override
     public List<NodeDTO> queryNodeList() {
-        return WorkerContainer.getWorkerList();
+        return workerContainer.getWorkerList();
     }
 
     @Override
     public void addWorker(NodeDTO worker) {
-        WorkerContainer.addWorker(worker);
+        workerContainer.addWorker(worker);
     }
 
     @Override
     public void removeWorker(String workerName) {
-        WorkerContainer.remove(workerName);
+        workerContainer.remove(workerName);
     }
 
     List<NodeDTO> mockNodeList() {
