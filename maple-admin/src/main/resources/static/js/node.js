@@ -6,20 +6,6 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
     let upload = layui.upload;
     let $ = layui.jquery;
 
-    table.on('toolbar(nodes)', function(obj) {
-        let checkStatus = table.checkStatus(obj.config.id);
-        let layEvent = obj.event;//获取该点击事件
-        switch(layEvent){
-            case 'addNode':
-                addNode();
-            break;
-            case 'removeNode':
-                removeNode(checkStatus.data);
-            break;
-        };
-        event.stoppropagation();
-    });
-
     var uploadInst = upload.render({
         elem: '#upload' //绑定元素
         ,url: '/upload' //上传接口
@@ -40,6 +26,20 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
             //请求异常回调
             console.log("upload error");
         }
+    });
+
+    table.on('toolbar(nodes)', function(obj) {
+        let checkStatus = table.checkStatus(obj.config.id);
+        let layEvent = obj.event;//获取该点击事件
+        switch(layEvent){
+            case 'addNode':
+                addNode();
+            break;
+            case 'removeNode':
+                removeNode(checkStatus.data);
+            break;
+        };
+        event.stoppropagation();
     });
 
     function addNode() {
