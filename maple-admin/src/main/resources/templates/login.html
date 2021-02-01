@@ -1,18 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>login</title>
-        <style>
-            #J_dotLine {
-                display: block;
-                margin: 0 auto;
-            }
-        </style>
+        <title>登录</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+        <script type="text/javascript" src="/layui/layui.js"></script>
     </head>
 
-    <body>
+    <body class="layui-layout-body">
+        <div class="layui-body">
+            <div class="layui-container">
+                <!--登录-->
+                <div class="layui-row">
+                    <div class="layui-col-md5 layui-col-md-offset2" style="margin-top: 15%">
+                        <div style="text-align: center">
+                            <div >
+                                <form class="layui-form" action="login">
+                                    <div class="layui-form-item">
+                                        <lable style="
+                                      margin-left: 100px;
+                                      font-family: Dubai;
+                                      font-size: xx-large;">WebMaple Login</lable>
+                                    </div>
+                                    <!--用户名-->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">
+                                            <i class="layui-icon layui-icon-username"></i>
+                                        </label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="username" required lay-verify="required"
+                                                   placeholder="用户名或手机号" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
 
+                                    <!--密码-->
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">
+                                            <i class="layui-icon layui-icon-password"></i>
+                                        </label>
+                                        <div class="layui-input-block">
+                                            <input type="password" name="password" required  lay-verify="required"
+                                                   placeholder="密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit lay-filter="">提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                            <a class="layui-btn" lay-submit lay-filter="formDemo" href="showregiste">注册</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <a href="#" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">忘记密码？</a>
+                                            <a class="layui-btn-sm" lay-submit lay-filter="formDemo" href="showfindpassword">找回密码</a>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/登录-->
+            </div>
+        </div>
     </body>
 
     <script type="text/javascript" src="../js/login.js"></script>
