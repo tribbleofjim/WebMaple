@@ -1,7 +1,41 @@
-layui.use(['form', 'layer'], function () {
-    let form = layui.form;
-    let layer = layui.layer;
+var form, layer, $;
+layui.use(['form', 'layer','jquery'], function () {
+    form = layui.form;
+    layer = layui.layer;
+    $ = layui.jquery;
 });
+
+function register() {
+    layer.open({
+        type:1,
+        area:['400px','300px'],
+        title: '注册',
+        content: $("#registForm"),
+        shade: 0,
+        btn: '提交'
+        ,yes: function(index, layero){
+            let phone = document.getElementById('phone').value;
+            let nickname = document.getElementById('nickname').value;
+            let password = document.getElementById('pass').value;
+            $.ajax({
+                type: 'post',
+                url: "register",
+                data: {
+                    phone: phone,
+                    nickname: nickname,
+                    password: password
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                }
+            });
+            return true;
+        },
+        cancel: function(layero,index){
+            layer.closeAll();
+        }
+    });
+}
 
 !function(){
 
