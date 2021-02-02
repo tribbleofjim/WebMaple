@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         if (!mapleUser.getPassword().equals(user.getPassword())) {
             return result.fail("用户名或密码不正确");
         }
-        return result.success();
+        return result.success("登录成功！");
     }
 
     @Override
@@ -52,6 +52,6 @@ public class UserServiceImpl implements UserService {
             LOGGER.error("error_register", e);
             return result.fail("创建用户失败");
         }
-        return result.success();
+        return result.success("注册成功！");
     }
 }
