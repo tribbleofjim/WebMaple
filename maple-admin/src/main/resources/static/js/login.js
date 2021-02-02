@@ -5,6 +5,22 @@ layui.use(['form', 'layer','jquery'], function () {
     $ = layui.jquery;
 });
 
+function doLogin() {
+    let phone = document.getElementById('userphone').value;
+    let password = document.getElementById('password').value;
+    $.ajax({
+        type: 'post',
+        url: "doLogin",
+        data: {
+            phone: phone,
+            password: password
+        },
+        success: function (res) {
+            layer.msg(res.message);
+        }
+    });
+}
+
 function register() {
     layer.open({
         type:1,

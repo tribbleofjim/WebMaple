@@ -28,8 +28,8 @@
                                             <i class="layui-icon layui-icon-username"></i>
                                         </label>
                                         <div class="layui-input-block">
-                                            <input type="text" name="username" required lay-verify="required"
-                                                   placeholder="用户名或手机号" autocomplete="off" class="layui-input">
+                                            <input type="text" name="userphone" id="userphone" required lay-verify="required"
+                                                   placeholder="手机号" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
 
@@ -39,14 +39,14 @@
                                             <i class="layui-icon layui-icon-password"></i>
                                         </label>
                                         <div class="layui-input-block">
-                                            <input type="password" name="password" required  lay-verify="required"
+                                            <input type="password" name="password" id="password" required  lay-verify="required"
                                                    placeholder="密码" autocomplete="off" class="layui-input">
                                         </div>
                                     </div>
                                 </form>
 
                                 <div class="layui-input-block">
-                                    <button class="layui-btn" lay-filter="">提交</button>
+                                    <button class="layui-btn" onclick="doLogin()">提交</button>
                                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                     <button class="layui-btn" lay-filter="register" onclick="register()">注册</button>
                                 </div>

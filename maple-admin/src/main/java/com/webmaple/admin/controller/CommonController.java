@@ -2,12 +2,10 @@ package com.webmaple.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.webmaple.admin.container.WorkerContainer;
-import com.webmaple.admin.service.ComponentService;
+import com.webmaple.admin.model.User;
+import com.webmaple.admin.service.*;
 import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.*;
-import com.webmaple.admin.service.NodeManageService;
-import com.webmaple.admin.service.SpiderManageService;
-import com.webmaple.admin.service.TimedJobService;
 import com.webmaple.common.network.RequestUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -15,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,6 +46,9 @@ public class CommonController {
 
     @Resource
     private ComponentService componentService;
+
+    @Resource
+    private UserService userService;
 
     @Resource
     private WorkerContainer workerContainer;
@@ -89,6 +91,42 @@ public class CommonController {
     @RequestMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @PostMapping("/doLogin")
+    @ResponseBody
+    public Result<Void> doLogin(@RequestParam String phone, @RequestParam String password) {
+        Result<Void> result = new Result<>();
+        if (StringUtils.isBlank(phone)) {
+            return result.fail("手机号不能为空");
+        }
+        if (StringUtils.isBlank(password)) {
+            return result.fail("密码不能为空");
+        }
+        User user = new User();
+        user.setPhone(phone);
+        user.setPassword(password);
+        return userService.login(user);
+    }
+
+    @PostMapping("/register")
+    @ResponseBody
+    public Result<Void> register(@RequestParam String phone, @RequestParam String nickname, @RequestParam String password) {
+        Result<Void> result = new Result<>();
+        if (StringUtils.isBlank(phone)) {
+            return result.fail("手机号不能为空");
+        }
+        if (StringUtils.isBlank(nickname)) {
+            return result.fail("用户昵称不能为空");
+        }
+        if (StringUtils.isBlank(password)) {
+            return result.fail("密码不能为空");
+        }
+        User user = new User();
+        user.setPhone(phone);
+        user.setPassword(password);
+        user.setNickname(nickname);
+        return userService.register(user);
     }
 
     @RequestMapping("/upload")
