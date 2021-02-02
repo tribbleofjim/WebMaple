@@ -7,7 +7,7 @@ spring:
       max-request-size: 10000MB
   datasource:
     username: root
-    password: pass&&1024
+    password: 123456
     url: jdbc:mysql://101.37.89.200:3306/webmaple?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:

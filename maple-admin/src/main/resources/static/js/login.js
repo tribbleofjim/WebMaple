@@ -17,6 +17,7 @@ function doLogin() {
         },
         success: function (res) {
             layer.msg(res.message);
+            window.href.location = "index";
         }
     });
 }
