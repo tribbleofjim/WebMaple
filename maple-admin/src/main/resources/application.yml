@@ -9,14 +9,7 @@ spring:
     username: root
     password:
     url: jdbc:mysql://101.37.89.200:3306/webmaple?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      initialSize: 3
-      minIdle: 3
-      maxActive: 8
-      maxWait: 100000
-      timeBetweenEvictionRunsMillis: 60000
+    driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     host: 127.0.0.1
     port: 6379
