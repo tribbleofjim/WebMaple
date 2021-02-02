@@ -19,6 +19,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring.boot.version>2.4.0</spring.boot.version>
         <mysql.connector.version>8.0.20</mysql.connector.version>
+        <mybatis.version>2.1.3</mybatis.version>
+        <druid.version>1.2.3</druid.version>
         <webmagic.version>0.7.3</webmagic.version>
         <thymeleaf.version>2.3.7.RELEASE</thymeleaf.version>
         <spring.boot.plugin.version>2.4.1</spring.boot.plugin.version>
@@ -73,22 +75,6 @@
             <version>${spring.boot.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- ===================== mysql/jdbc =================== -->
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
-<!--            <version>${spring.boot.version}</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/mysql/mysql-connector-java &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--            <version>${mysql.connector.version}</version>-->
-<!--        </dependency>-->
-
 
         <!-- ===================== WebMagic =================== -->
         <dependency>
