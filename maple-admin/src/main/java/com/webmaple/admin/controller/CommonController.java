@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -95,7 +97,7 @@ public class CommonController {
 
     @PostMapping("/doLogin")
     @ResponseBody
-    public Result<Void> doLogin(@RequestParam String phone, @RequestParam String password) {
+    public Result<Void> doLogin(@RequestParam String phone, @RequestParam String password, HttpServletResponse response) {
         Result<Void> result = new Result<>();
         if (StringUtils.isBlank(phone)) {
             return result.fail("手机号不能为空");
@@ -106,7 +108,11 @@ public class CommonController {
         User user = new User();
         user.setPhone(phone);
         user.setPassword(password);
-        return userService.login(user);
+        result = userService.login(user);
+        if (result.getSuccess()) {
+            response.addCookie(new Cookie("user", phone));
+        }
+        return result;
     }
 
     @PostMapping("/register")
