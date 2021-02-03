@@ -72,18 +72,62 @@
                 <!--管理操作-->
                 <div class="layui-row">
                     <div class="layui-col-md2">
-                        <button type="button" class="layui-btn layui-btn-primary">
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="addSource()">
                             <i class="layui-icon layui-icon-addition"></i>
                             添加资源
                         </button>
                     </div>
                     <div class="layui-col-md2">
-                        <button type="button" class="layui-btn layui-btn-primary">
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="editSource()">
                             <i class="layui-icon layui-icon-edit"></i>
                             删除或修改资源
                         </button>
                     </div>
                 </div>
+                <!--添加资源表单-->
+                <form class="layui-form" id="addForm" style="display:none; padding-top: 50px;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">资源名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sourceName" required  lay-verify="required" placeholder="请输入资源名称"
+                                   autocomplete="on" class="layui-input" id="sourceName" style="width:200px">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">资源类型</label>
+                            <div class="layui-input-inline" style="width: 300px;">
+                                <select name="ip" id="ip" lay-verify="required" style="width: 200%;">
+                                    <option value="">请选择资源类型</option>
+                                    <option value="server">服务器</option>
+                                    <option value="mysql">mysql</option>
+                                    <option value="mongodb">mongodb</option>
+                                    <option value="redis">redis</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">资源ip</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="sourceIp" required  lay-verify="required" placeholder="请输入资源ip"
+                                   autocomplete="on" class="layui-input" id="sourceIp" style="width:200px">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">资源访问账户</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="account" required  lay-verify="required" placeholder="请输入资源访问账户"
+                                   autocomplete="on" class="layui-input" id="account" style="width:200px">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">访问账户密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="pass" required  lay-verify="required" placeholder="请输入访问账户密码"
+                                   autocomplete="on" class="layui-input" id="pass" style="width:200px">
+                        </div>
+                    </div>
+                </form>
+                <!--/添加资源表单-->
                 <!--/管理操作-->
 
                 <!--资源列表-->
@@ -220,7 +264,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="../js/node.js"></script>
+    <script type="text/javascript" src="../js/auth.js"></script>
 
     </body>
 </html>

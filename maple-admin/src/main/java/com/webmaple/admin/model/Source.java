@@ -18,6 +18,21 @@ public class Source {
      */
     private Character sourceType;
 
+    /**
+     * 资源ip
+     */
+    private String ip;
+
+    /**
+     * 访问资源的账号
+     */
+    private String account;
+
+    /**
+     * 访问资源的账号密码
+     */
+    private String pass;
+
     public String getSourceName() {
         return sourceName;
     }
@@ -32,5 +47,29 @@ public class Source {
 
     public void setSourceType(Character sourceType) {
         this.sourceType = sourceType;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }
