@@ -1,13 +1,15 @@
-layui.use(['layer', 'jquery', 'element'], function () {
-    let layer = layui.layer;
-    let element = layui.element;
-    let $ = layui.jquery;
+var layer,form, element, $;
+layui.use(['layer', 'form', 'jquery', 'element'], function () {
+    layer = layui.layer;
+    element = layui.element;
+    form = layui.form;
+    $ = layui.jquery;
 });
 
 function addSource() {
     layer.open({
         type:1,
-        area:['400px','300px'],
+        area:['700px','500px'],
         title: '添加资源',
         content: $("#addForm"),
         shade: 0,
