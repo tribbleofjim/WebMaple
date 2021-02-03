@@ -65,11 +65,29 @@
     <div class="layui-body">
         <div class="layui-container" style="padding: 15px;">
             <div class="padding: 20px">
-                <!--资源列表-->
+
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>用户：user1</legend>
                 </fieldset>
-                <div class="layui-row layui-col-space15">
+                <!--管理操作-->
+                <div class="layui-row">
+                    <div class="layui-col-md2">
+                        <button type="button" class="layui-btn layui-btn-primary">
+                            <i class="layui-icon layui-icon-addition"></i>
+                            添加资源
+                        </button>
+                    </div>
+                    <div class="layui-col-md2">
+                        <button type="button" class="layui-btn layui-btn-primary">
+                            <i class="layui-icon layui-icon-edit"></i>
+                            删除或修改资源
+                        </button>
+                    </div>
+                </div>
+                <!--/管理操作-->
+
+                <!--资源列表-->
+                <div class="layui-row layui-col-space15" style="margin-top:20px;">
                     <div class="layui-col-md4">
                         <!--服务器-->
                         <div class="layui-card" style="height: 150px">
@@ -159,6 +177,37 @@
                                         <i class="layui-icon layui-icon-close"></i> 您没有权限
                                     </button>
                                     <button type="button" class="layui-btn layui-btn-radius layui-btn-disabled layui-btn-sm">
+                                        <i class="layui-icon layui-icon-key"></i> 查看信息
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md4">
+                        <!--数据库-->
+                        <div class="layui-card" style="height: 150px">
+                            <div class="layui-card-header">
+                                <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>
+                                数据库
+                            </div>
+                            <div class="layui-card-body">
+                                <!--ip地址-->
+                                <div>
+                                    ip地址：
+                                    <span>101.37.89.120</span>
+                                </div>
+                                <!--/ip地址-->
+                                <!--数据库类型-->
+                                <div>
+                                    数据库类型：
+                                    <span>mongodb</span>
+                                </div>
+                                <!--/数据库类型-->
+                                <div>
+                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
+                                        <i class="layui-icon layui-icon-ok"></i> 您有权限
+                                    </button>
+                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">
                                         <i class="layui-icon layui-icon-key"></i> 查看信息
                                     </button>
                                 </div>
