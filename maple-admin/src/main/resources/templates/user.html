@@ -75,7 +75,7 @@
                                     <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-username" style="font-size: 30px;"></i>
                                         <span id="userName">user1</span>
-                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
+                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-sm" onclick="editNickname()">
                                             <i class="layui-icon layui-icon-edit"></i> 编辑
                                         </button>
                                     </div>
@@ -87,7 +87,7 @@
                                     <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-password" style="font-size: 30px;"></i>
                                         <span id="password">******</span>
-                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
+                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-sm" onclick="editPassword()">
                                             <i class="layui-icon layui-icon-edit"></i> 修改密码
                                         </button>
                                     </div>
@@ -115,35 +115,6 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="../js/spider.js"></script>
-
-        <script type="text/javascript">
-            // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('visits', 'dark'));
-
-            // 指定图表的配置项和数据
-            var option = {
-                color: ['#008B8B'],
-                title: {
-                    text: '用户一周内日访问量'
-                },
-                tooltip: {},
-                legend: {
-                    data:['访问次数']
-                },
-                xAxis: {
-                    data: ["Sun","Mon","Tue","Wen","Thu","Fri","Sat"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '访问次数',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20, 16]
-                }]
-            };
-
-            // 使用刚指定的配置项和数据显示图表。
-            myChart.setOption(option);
-        </script>
+        <script type="text/javascript" src="../js/user.js"></script>
     </body>
 </html>
