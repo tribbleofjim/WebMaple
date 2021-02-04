@@ -2,6 +2,7 @@ package com.webmaple.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.webmaple.admin.container.WorkerContainer;
+import com.webmaple.admin.model.Source;
 import com.webmaple.admin.model.User;
 import com.webmaple.admin.service.*;
 import com.webmaple.common.enums.NodeType;
@@ -38,19 +39,16 @@ public class CommonController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
 
     @Resource
-    private SpiderManageService spiderManageService;
-
-    @Resource
     private NodeManageService nodeManageService;
-
-    @Resource
-    private TimedJobService timedJobService;
 
     @Resource
     private ComponentService componentService;
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private SourceService sourceService;
 
     @Resource
     private WorkerContainer workerContainer;
@@ -135,6 +133,25 @@ public class CommonController {
         return userService.register(user);
     }
 
+    @PostMapping("/addSource")
+    @ResponseBody
+    public Result<Void> addSource(@RequestParam String sourceName,
+                                  @RequestParam String sourceType, @RequestParam String sourceIp,
+                                  @RequestParam String account, @RequestParam String pass) {
+        Result<Void> result = new Result<>();
+        if (StringUtils.isBlank(sourceName) || StringUtils.isBlank(sourceType) || StringUtils.isBlank(sourceIp)
+            || StringUtils.isBlank(account) || StringUtils.isBlank(pass) ) {
+            return result.fail("请填写完整资源字段！");
+        }
+        Source source = new Source();
+        source.setSourceName(sourceName);
+        source.setSourceType(sourceType.charAt(0));
+        source.setIp(sourceIp);
+        source.setAccount(account);
+        source.setPass(pass);
+        return sourceService.addSource(source);
+    }
+
     @RequestMapping("/upload")
     @ResponseBody
     public DataTableDTO upload(@RequestParam MultipartFile file) {
@@ -210,22 +227,6 @@ public class CommonController {
         return result.success();
     }
 
-    @RequestMapping("/spiderList")
-    @ResponseBody
-    public DataTableDTO querySpiderList(@RequestParam int page, @RequestParam int limit) {
-        List<SpiderDTO> spiderList = spiderManageService.querySpiderList();
-        DataTableDTO dataTableDTO = new DataTableDTO();
-        dataTableDTO.setCode(0);
-        dataTableDTO.setMsg("");
-        if (CollectionUtils.isEmpty(spiderList)) {
-            dataTableDTO.setCount(0);
-        } else {
-            dataTableDTO.setCount(spiderList.size());
-        }
-        dataTableDTO.setData(JSON.toJSON(spiderList));
-        return dataTableDTO;
-    }
-
     @RequestMapping("/nodeList")
     @ResponseBody
     public DataTableDTO queryNodeList(@RequestParam int page, @RequestParam int limit) {
@@ -265,22 +266,6 @@ public class CommonController {
         nodeManageService.removeWorker(name);
         Result<Void> result = new Result<>();
         return result.success();
-    }
-
-    @RequestMapping("/timedJobs")
-    @ResponseBody
-    public DataTableDTO queryTimedJobsList(@RequestParam int page, @RequestParam int limit) {
-        List<SpiderJobDTO> jobList = timedJobService.queryTimedJobList();
-        DataTableDTO dataTableDTO = new DataTableDTO();
-        dataTableDTO.setCode(0);
-        dataTableDTO.setMsg("");
-        if (CollectionUtils.isEmpty(jobList)) {
-            dataTableDTO.setCount(0);
-        } else {
-            dataTableDTO.setCount(jobList.size());
-        }
-        dataTableDTO.setData(JSON.toJSON(jobList));
-        return dataTableDTO;
     }
 
     @RequestMapping("/componentList")

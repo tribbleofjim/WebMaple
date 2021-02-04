@@ -1,6 +1,8 @@
 package com.webmaple.admin.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.webmaple.common.enums.CommonErrorCode;
+import com.webmaple.common.model.DataTableDTO;
 import com.webmaple.common.model.Result;
 import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.common.model.SpiderDTO;
@@ -50,10 +52,19 @@ public class SpiderManageController {
         return result.success();
     }
 
-    @RequestMapping("/querySpiderList")
+    @RequestMapping("/spiderList")
     @ResponseBody
-    public Result<List<SpiderDTO>> querySpiderList() {
-        Result<List<SpiderDTO>> result = new Result<>();
-        return result.success(spiderManageService.querySpiderList());
+    public DataTableDTO querySpiderList(@RequestParam int page, @RequestParam int limit) {
+        List<SpiderDTO> spiderList = spiderManageService.querySpiderList();
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(0);
+        dataTableDTO.setMsg("");
+        if (CollectionUtils.isEmpty(spiderList)) {
+            dataTableDTO.setCount(0);
+        } else {
+            dataTableDTO.setCount(spiderList.size());
+        }
+        dataTableDTO.setData(JSON.toJSON(spiderList));
+        return dataTableDTO;
     }
 }
