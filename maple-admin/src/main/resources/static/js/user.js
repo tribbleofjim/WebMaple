@@ -7,8 +7,47 @@ layui.use(['form', 'layer',' jquery', 'element'], function () {
 });
 
 function editNickname() {
-    
+    var phone = decodeURIComponent(getCookieByArray('user'));
+    layer.open({
+        type:1,
+        area:['400px','300px'],
+        title: '修改用户昵称',
+        content: $("#nicknameForm"),
+        shade: 0,
+        btn: '提交'
+        ,yes: function(index, layero) {
+
+            $.ajax({
+                type: 'get',
+                url: "modifyNickname",
+                data: {
+                    phone: phone,
+                    nickname: nickname
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                }
+            });
+            return true;
+        },
+        cancel: function(layero,index){
+            layer.closeAll();
+        }
+    });
 }
+
+function getCookieByKey(name){
+var cookies = document.cookie.split(';');
+var c;
+for(var i=0; i<cookies.length ; i++){
+        c = cookies[i].split('=');
+        if (c[0].replace(' ', '') == name) {
+            return c[1];
+        }
+    }
+}
+//var r = decodeURIComponent(getCookieByArray('user'));
+//alert(r);
 
 // 基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('visits', 'dark'));
