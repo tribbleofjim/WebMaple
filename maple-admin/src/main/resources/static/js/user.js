@@ -28,6 +28,7 @@ function editNickname() {
                 },
                 success: function (res) {
                     layer.msg(res.message);
+                    layer.closeAll();
                 }
             });
             return true;
@@ -60,6 +61,7 @@ function editPassword() {
                 },
                 success: function (res) {
                     layer.msg(res.message);
+                    layer.closeAll();
                 }
             });
             return true;
