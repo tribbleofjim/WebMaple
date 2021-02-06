@@ -16,13 +16,15 @@ function editNickname() {
         shade: 0,
         btn: '提交'
         ,yes: function(index, layero) {
-
+            var nickname = document.getElementById("newNick").value;
+            var password = document.getElementById("editNickPass").value;
             $.ajax({
                 type: 'get',
                 url: "modifyNickname",
                 data: {
                     phone: phone,
-                    nickname: nickname
+                    nickname: nickname,
+                    password: password
                 },
                 success: function (res) {
                     layer.msg(res.message);

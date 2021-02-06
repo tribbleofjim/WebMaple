@@ -11,4 +11,8 @@ public interface UserService {
     Result<Void> login(User user);
 
     Result<Void> register(User user);
+
+    Result<Void> modifyNickname(User user);
+
+    Result<Void> modifyPassword(User user);
 }

@@ -14,10 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -150,6 +147,22 @@ public class CommonController {
         source.setAccount(account);
         source.setPass(pass);
         return sourceService.addSource(source);
+    }
+
+    @GetMapping("/modifyNickname")
+    @ResponseBody
+    public Result<Void> modifyNickname(@RequestParam String phone,
+                                       @RequestParam String nickname,
+                                       @RequestParam String password) {
+        Result<Void> result = new Result<>();
+        if (StringUtils.isBlank(phone) || StringUtils.isBlank(nickname) || StringUtils.isBlank(password)) {
+            return result.fail("请填写完整字段！");
+        }
+        User user = new User();
+        user.setNickname(nickname);
+        user.setPhone(phone);
+        user.setPassword(password);
+        return userService.modifyNickname(user);
     }
 
     @RequestMapping("/upload")

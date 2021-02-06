@@ -54,4 +54,32 @@ public class UserServiceImpl implements UserService {
         }
         return result.success("注册成功！");
     }
+
+    @Override
+    public Result<Void> modifyNickname(User user) {
+        Result<Void> result = new Result<>();
+        User oldUser = userMapper.getUserByPhone(user.getPhone());
+        if (oldUser == null) {
+            return result.fail("无法查询到此用户");
+        }
+        if (!oldUser.getPassword().equals(user.getPassword())) {
+            return result.fail("密码错误，修改失败");
+        }
+        userMapper.updateNickname(user);
+        return result.success();
+    }
+
+    @Override
+    public Result<Void> modifyPassword(User user) {
+        Result<Void> result = new Result<>();
+        User oldUser = userMapper.getUserByPhone(user.getPhone());
+        if (oldUser == null) {
+            return result.fail("无法查询到此用户");
+        }
+        if (!oldUser.getPassword().equals(user.getPassword())) {
+            return result.fail("密码错误，修改失败");
+        }
+        userMapper.updatePassword(user);
+        return result.success();
+    }
 }
