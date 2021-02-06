@@ -80,12 +80,13 @@
                             <i class="layui-icon layui-icon-edit"></i>
                             删除或修改资源
                         </button>
-                        <button type="button" class="layui-btn layui-btn-primary" style="margin-left: 15px;" onclick="">
+                        <button type="button" class="layui-btn layui-btn-primary" style="margin-left: 15px;" onclick="editAuth()">
                             <i class="layui-icon layui-icon-group"></i>
                             添加用户权限
                         </button>
                     </div>
                 </div>
+
                 <!--添加资源表单-->
                 <form class="layui-form" id="addForm" style="display:none; padding-top: 50px;">
                     <div class="layui-form-item">
@@ -130,6 +131,25 @@
                     </div>
                 </form>
                 <!--/添加资源表单-->
+
+                <!--添加权限-->
+                <div id="editAuth" style="display:none; padding-top: 15px; padding-left: 30px;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            <i class="layui-icon layui-icon-search"></i>
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="searchUser" id="searchUser" required lay-verify="required"
+                                   placeholder="搜索用户" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <button class="layui-btn">搜索</button>
+                        </div>
+                    </div>
+                    <div id="sourceAuths"></div>
+                </div>
+
+                <!--/添加权限-->
 
                 <!--/管理操作-->
 
