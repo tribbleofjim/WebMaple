@@ -106,9 +106,41 @@
                             <!--/数据总览-->
 
                             <!--修改用户昵称-->
+                            <form class="layui-form" id="nicknameForm" style="display:none; padding-top: 50px;">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="editNickPass" required  lay-verify="required" placeholder="请输入密码"
+                                               autocomplete="on" class="layui-input" id="editNickPass" style="width:200px">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">新昵称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="newNick" required  lay-verify="required" placeholder="请输入新昵称"
+                                               autocomplete="on" class="layui-input" id="newNick" style="width:200px">
+                                    </div>
+                                </div>
+                            </form>
                             <!--/修改用户昵称-->
 
                             <!--修改密码-->
+                            <form class="layui-form" id="passForm" style="display:none; padding-top: 50px;">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">旧密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="oldPass" required  lay-verify="required" placeholder="请输入旧密码"
+                                               autocomplete="on" class="layui-input" id="oldPass" style="width:200px">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">新密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="password" name="newPass" required  lay-verify="required" placeholder="请输入新密码"
+                                               autocomplete="on" class="layui-input" id="newPass" style="width:200px">
+                                    </div>
+                                </div>
+                            </form>
                             <!--/修改密码-->
                         </div>
 

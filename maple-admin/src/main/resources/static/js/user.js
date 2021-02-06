@@ -1,5 +1,5 @@
 var form, layer, element, $;
-layui.use(['form', 'layer',' jquery', 'element'], function () {
+layui.use(['form', 'layer', 'jquery', 'element'], function () {
     form = layui.form;
     layer = layui.layer;
     element = layui.element;
@@ -7,7 +7,7 @@ layui.use(['form', 'layer',' jquery', 'element'], function () {
 });
 
 function editNickname() {
-    var phone = decodeURIComponent(getCookieByArray('user'));
+    var phone = decodeURIComponent(getCookieByKey('user'));
     layer.open({
         type:1,
         area:['400px','300px'],
@@ -23,6 +23,35 @@ function editNickname() {
                 data: {
                     phone: phone,
                     nickname: nickname
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                }
+            });
+            return true;
+        },
+        cancel: function(layero,index){
+            layer.closeAll();
+        }
+    });
+}
+
+function editPassword() {
+    var phone = decodeURIComponent(getCookieByKey('user'));
+    layer.open({
+        type:1,
+        area:['400px','300px'],
+        title: '修改密码',
+        content: $("#passForm"),
+        shade: 0,
+        btn: '提交'
+        ,yes: function(index, layero) {
+            $.ajax({
+                type: 'get',
+                url: "modifyPassword",
+                data: {
+                    phone: phone,
+                    password: password
                 },
                 success: function (res) {
                     layer.msg(res.message);
