@@ -1,3 +1,5 @@
+document.getElementById("username").innerHTML = decodeURIComponent(getCookieByKey("user"));
+
 var form, layer, element, $;
 layui.use(['form', 'layer', 'jquery', 'element'], function () {
     form = layui.form;
@@ -82,8 +84,6 @@ for(var i=0; i<cookies.length ; i++){
         }
     }
 }
-//var r = decodeURIComponent(getCookieByArray('user'));
-//alert(r);
 
 // 基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('visits', 'dark'));
