@@ -20,6 +20,11 @@ public class User {
      */
     private String password;
 
+    /**
+     * 权限
+     */
+    private Character auth;
+
     public String getPhone() {
         return phone;
     }
@@ -42,5 +47,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Character getAuth() {
+        return auth;
+    }
+
+    public void setAuth(Character auth) {
+        this.auth = auth;
     }
 }

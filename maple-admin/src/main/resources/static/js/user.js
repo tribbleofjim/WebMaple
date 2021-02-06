@@ -1,15 +1,24 @@
-document.getElementById("username").innerHTML = decodeURIComponent(getCookieByKey("user"));
-
+var phone = decodeURIComponent(getCookieByKey('user'));
 var form, layer, element, $;
 layui.use(['form', 'layer', 'jquery', 'element'], function () {
     form = layui.form;
     layer = layui.layer;
     element = layui.element;
     $ = layui.jquery;
+
+    $.ajax({
+        type: 'get',
+        url: "getNickname",
+        data: {
+            phone: phone
+        },
+        success: function (res) {
+            document.getElementById("username").innerHTML = res.message;
+        }
+    });
 });
 
 function editNickname() {
-    var phone = decodeURIComponent(getCookieByKey('user'));
     layer.open({
         type:1,
         area:['400px','300px'],
@@ -42,7 +51,6 @@ function editNickname() {
 }
 
 function editPassword() {
-    var phone = decodeURIComponent(getCookieByKey('user'));
     layer.open({
         type:1,
         area:['400px','300px'],

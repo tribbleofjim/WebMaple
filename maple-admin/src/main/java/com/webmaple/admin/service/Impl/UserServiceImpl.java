@@ -3,6 +3,7 @@ package com.webmaple.admin.service.Impl;
 import com.webmaple.admin.mapper.UserMapper;
 import com.webmaple.admin.model.User;
 import com.webmaple.admin.service.UserService;
+import com.webmaple.common.enums.UserAuth;
 import com.webmaple.common.model.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -46,6 +47,8 @@ public class UserServiceImpl implements UserService {
                 || StringUtils.isBlank(user.getPassword())) {
             return result.fail("用户信息不能为空");
         }
+        // 默认注册的全部是普通账号，管理员账号由特殊方法添加
+        user.setAuth(UserAuth.USER.getAuth());
         try {
             userMapper.insertUser(user);
         } catch (Exception e) {
@@ -53,6 +56,12 @@ public class UserServiceImpl implements UserService {
             return result.fail("创建用户失败");
         }
         return result.success("注册成功！");
+    }
+
+    @Override
+    public Result<Void> getNickname(String phone) {
+        Result<Void> result = new Result<>();
+        return result.success(userMapper.getNickname(phone));
     }
 
     @Override
