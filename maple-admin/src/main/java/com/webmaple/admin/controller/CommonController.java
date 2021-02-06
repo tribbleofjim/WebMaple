@@ -165,6 +165,20 @@ public class CommonController {
         return userService.modifyNickname(user);
     }
 
+    @GetMapping("/modifyPassword")
+    @ResponseBody
+    public Result<Void> modifyPassword(@RequestParam String phone,
+                                       @RequestParam String oldPass,
+                                       @RequestParam String newPass) {
+        Result<Void> result = new Result<>();
+        if (StringUtils.isBlank(phone) || StringUtils.isBlank(oldPass) || StringUtils.isBlank(newPass)) {
+            return result.fail("请填写完整字段！");
+        }
+        User user = new User();
+        user.setPhone(phone);
+        return userService.modifyPassword(phone, oldPass, newPass);
+    }
+
     @RequestMapping("/upload")
     @ResponseBody
     public DataTableDTO upload(@RequestParam MultipartFile file) {

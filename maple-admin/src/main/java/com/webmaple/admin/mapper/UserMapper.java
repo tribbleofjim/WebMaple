@@ -24,5 +24,5 @@ public interface UserMapper {
     void updateNickname(User user);
 
     @Update("UPDATE maple_user SET password = #{password} WHERE phone = #{phone}")
-    void updatePassword(User user);
+    void updatePassword(String phone, String password);
 }

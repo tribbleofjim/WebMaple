@@ -48,12 +48,15 @@ function editPassword() {
         shade: 0,
         btn: '提交'
         ,yes: function(index, layero) {
+            var oldPass = document.getElementById("oldPass").value;
+            var newPass = document.getElementById("newPass").value;
             $.ajax({
                 type: 'get',
                 url: "modifyPassword",
                 data: {
                     phone: phone,
-                    password: password
+                    oldPass: oldPass,
+                    newPass: newPass
                 },
                 success: function (res) {
                     layer.msg(res.message);

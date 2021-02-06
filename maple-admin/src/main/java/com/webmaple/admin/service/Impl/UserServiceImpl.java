@@ -70,16 +70,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<Void> modifyPassword(User user) {
+    public Result<Void> modifyPassword(String phone, String oldPass, String newPass) {
         Result<Void> result = new Result<>();
-        User oldUser = userMapper.getUserByPhone(user.getPhone());
+        User oldUser = userMapper.getUserByPhone(phone);
         if (oldUser == null) {
             return result.fail("无法查询到此用户");
         }
-        if (!oldUser.getPassword().equals(user.getPassword())) {
+        if (!oldUser.getPassword().equals(oldPass)) {
             return result.fail("密码错误，修改失败");
         }
-        userMapper.updatePassword(user);
+        userMapper.updatePassword(phone, newPass);
         return result.success();
     }
 }
