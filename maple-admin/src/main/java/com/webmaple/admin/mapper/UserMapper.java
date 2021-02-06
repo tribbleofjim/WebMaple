@@ -1,10 +1,7 @@
 package com.webmaple.admin.mapper;
 
 import com.webmaple.admin.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,5 +21,5 @@ public interface UserMapper {
     void updateNickname(User user);
 
     @Update("UPDATE maple_user SET password = #{password} WHERE phone = #{phone}")
-    void updatePassword(String phone, String password);
+    void updatePassword(@Param("phone") String phone, @Param("password") String password);
 }

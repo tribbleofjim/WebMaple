@@ -174,8 +174,6 @@ public class CommonController {
         if (StringUtils.isBlank(phone) || StringUtils.isBlank(oldPass) || StringUtils.isBlank(newPass)) {
             return result.fail("请填写完整字段！");
         }
-        User user = new User();
-        user.setPhone(phone);
         return userService.modifyPassword(phone, oldPass, newPass);
     }
 
