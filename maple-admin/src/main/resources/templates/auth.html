@@ -154,133 +154,127 @@
                 <!--/管理操作-->
 
                 <!--资源列表-->
-                <div class="layui-row layui-col-space15" style="margin-top:20px;">
-                    <div class="layui-col-md4">
-                        <!--服务器-->
-                        <div class="layui-card" style="height: 150px">
-                            <div class="layui-card-header">
-                                <i class="layui-icon layui-icon-console" style="font-size: 30px;"></i>
-                                服务器
-                            </div>
-                            <div class="layui-card-body">
-                                <!--ip地址-->
-                                <div>
-                                    ip地址：
-                                    <span>101.37.89.120</span>
-                                </div>
-                                <!--/ip地址-->
-                                <!--服务器类型-->
-                                <div>
-                                    服务器类型：
-                                    <span>admin、worker</span>
-                                </div>
-                                <!--/服务器类型-->
-                                <!--权限-->
-                                <div>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
-                                        <i class="layui-icon layui-icon-ok"></i> 您有权限
-                                    </button>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">
-                                        <i class="layui-icon layui-icon-key"></i> 查看信息
-                                    </button>
-                                </div>
-                                <!--/权限-->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-md4">
-                        <!--数据库-->
-                        <div class="layui-card" style="height: 150px">
-                            <div class="layui-card-header">
-                                <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>
-                                数据库
-                            </div>
-                            <div class="layui-card-body">
-                                <!--ip地址-->
-                                <div>
-                                    ip地址：
-                                    <span>101.37.89.120</span>
-                                </div>
-                                <!--/ip地址-->
-                                <!--数据库类型-->
-                                <div>
-                                    数据库类型：
-                                    <span>mongodb</span>
-                                </div>
-                                <!--/数据库类型-->
-                                <div>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
-                                        <i class="layui-icon layui-icon-ok"></i> 您有权限
-                                    </button>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">
-                                        <i class="layui-icon layui-icon-key"></i> 查看信息
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-md4">
-                        <!--服务器-->
-                        <div class="layui-card" style="height: 150px">
-                            <div class="layui-card-header">
-                                <i class="layui-icon layui-icon-console" style="font-size: 30px;"></i>
-                                服务器
-                            </div>
-                            <div class="layui-card-body">
-                                <!--ip地址-->
-                                <div>
-                                    ip地址：
-                                    <span>101.37.89.140</span>
-                                </div>
-                                <!--/ip地址-->
-                                <!--服务器类型-->
-                                <div>
-                                    服务器类型：
-                                    <span>worker</span>
-                                </div>
-                                <!--/服务器类型-->
-                                <div>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-danger layui-btn-sm">
-                                        <i class="layui-icon layui-icon-close"></i> 您没有权限
-                                    </button>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-disabled layui-btn-sm">
-                                        <i class="layui-icon layui-icon-key"></i> 查看信息
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-col-md4">
-                        <!--数据库-->
-                        <div class="layui-card" style="height: 150px">
-                            <div class="layui-card-header">
-                                <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>
-                                数据库
-                            </div>
-                            <div class="layui-card-body">
-                                <!--ip地址-->
-                                <div>
-                                    ip地址：
-                                    <span>101.37.89.120</span>
-                                </div>
-                                <!--/ip地址-->
-                                <!--数据库类型-->
-                                <div>
-                                    数据库类型：
-                                    <span>mongodb</span>
-                                </div>
-                                <!--/数据库类型-->
-                                <div>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">
-                                        <i class="layui-icon layui-icon-ok"></i> 您有权限
-                                    </button>
-                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">
-                                        <i class="layui-icon layui-icon-key"></i> 查看信息
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="layui-row layui-col-space15" style="margin-top:20px;" id="sources">
+<!--                    <div class="layui-col-md4">-->
+<!--                        &lt;!&ndash;服务器&ndash;&gt;-->
+<!--                        <div class="layui-card" style="height: 150px">-->
+<!--                            <div class="layui-card-header">-->
+<!--                                <i class="layui-icon layui-icon-console" style="font-size: 30px;"></i>-->
+<!--                                服务器-->
+<!--                            </div>-->
+<!--                            <div class="layui-card-body">-->
+<!--                                <div>-->
+<!--                                    ip地址：-->
+<!--                                    <span>101.37.89.120</span>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    服务器类型：-->
+<!--                                    <span>admin、worker</span>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-ok"></i> 您有权限-->
+<!--                                    </button>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-key"></i> 查看信息-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="layui-col-md4">-->
+<!--                        &lt;!&ndash;数据库&ndash;&gt;-->
+<!--                        <div class="layui-card" style="height: 150px">-->
+<!--                            <div class="layui-card-header">-->
+<!--                                <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>-->
+<!--                                数据库-->
+<!--                            </div>-->
+<!--                            <div class="layui-card-body">-->
+<!--                                &lt;!&ndash;ip地址&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    ip地址：-->
+<!--                                    <span>101.37.89.120</span>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;/ip地址&ndash;&gt;-->
+<!--                                &lt;!&ndash;数据库类型&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    数据库类型：-->
+<!--                                    <span>mongodb</span>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;/数据库类型&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-ok"></i> 您有权限-->
+<!--                                    </button>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-key"></i> 查看信息-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="layui-col-md4">-->
+<!--                        &lt;!&ndash;服务器&ndash;&gt;-->
+<!--                        <div class="layui-card" style="height: 150px">-->
+<!--                            <div class="layui-card-header">-->
+<!--                                <i class="layui-icon layui-icon-console" style="font-size: 30px;"></i>-->
+<!--                                服务器-->
+<!--                            </div>-->
+<!--                            <div class="layui-card-body">-->
+<!--                                &lt;!&ndash;ip地址&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    ip地址：-->
+<!--                                    <span>101.37.89.140</span>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;/ip地址&ndash;&gt;-->
+<!--                                &lt;!&ndash;服务器类型&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    服务器类型：-->
+<!--                                    <span>worker</span>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;/服务器类型&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-danger layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-close"></i> 您没有权限-->
+<!--                                    </button>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-disabled layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-key"></i> 查看信息-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="layui-col-md4">-->
+<!--                        &lt;!&ndash;数据库&ndash;&gt;-->
+<!--                        <div class="layui-card" style="height: 150px">-->
+<!--                            <div class="layui-card-header">-->
+<!--                                <i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>-->
+<!--                                数据库-->
+<!--                            </div>-->
+<!--                            <div class="layui-card-body">-->
+<!--                                &lt;!&ndash;ip地址&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    ip地址：-->
+<!--                                    <span>101.37.89.120</span>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;/ip地址&ndash;&gt;-->
+<!--                                &lt;!&ndash;数据库类型&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    数据库类型：-->
+<!--                                    <span>mongodb</span>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;/数据库类型&ndash;&gt;-->
+<!--                                <div>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-ok"></i> 您有权限-->
+<!--                                    </button>-->
+<!--                                    <button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">-->
+<!--                                        <i class="layui-icon layui-icon-key"></i> 查看信息-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <!--/资源列表-->
 

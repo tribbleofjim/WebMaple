@@ -1,12 +1,12 @@
 document.getElementById("username").innerHTML = "用户：" + decodeURIComponent(getCookieByKey("user"));
 
 var gotAuths = [
-    {"value": "1", "title": "server1", "disabled": "", "checked": ""}
-    ,{"value": "2", "title": "mysql1", "disabled": "", "checked": ""}
-    ,{"value": "3", "title": "server2", "disabled": "", "checked": ""}
-    ,{"value": "4", "title": "mongo1", "disabled": "", "checked": ""}
-    ,{"value": "5", "title": "redis1", "disabled": "", "checked": ""}
-    ,{"value": "6", "title": "redis2", "disabled": "", "checked": ""}
+    {"value": "1", "title": "server1", "disabled": "", "checked": "", "type": "server"}
+    ,{"value": "2", "title": "mysql1", "disabled": "", "checked": "", "type": "db"}
+    ,{"value": "3", "title": "server2", "disabled": "", "checked": "", "type": "server"}
+    ,{"value": "4", "title": "mongo1", "disabled": "", "checked": "", "type": "db"}
+    ,{"value": "5", "title": "redis1", "disabled": "", "checked": "", "type": "db"}
+    ,{"value": "6", "title": "redis2", "disabled": "", "checked": "", "type": "db"}
 ]
 
 var value = ["4", "5", "6"]
@@ -27,6 +27,59 @@ layui.use(['layer', 'form', 'jquery', 'element', 'transfer'], function () {
         ,id: 'sourceAuths' //定义索引
     });
 });
+
+showSources({
+    target: 'sources'
+    , data: gotAuths
+});
+
+function showSources(param) {
+    var target = document.getElementById(param.target);
+    var data = param.data;
+    for (idx in data) {
+        console.log(data[idx]);
+        target.insertAdjacentHTML("beforeEnd", sourceHTML(data[idx]));
+    }
+}
+
+function sourceHTML(source) {
+    var html;
+    if (source.type === 'server') {
+        html = '<div class="layui-col-md4">\n'+
+                    '<div class="layui-card" style="height: 150px">\n'+
+                    '<div class="layui-card-header">\n'+
+                        '<i class="layui-icon layui-icon-console" style="font-size: 30px;"></i>服务器</div>\n'+
+                    '<div class="layui-card-body">\n'+
+                        '<div>ip地址：<span>101.37.89.120</span></div>\n'+
+                        '<div>服务器类型：<span>admin、worker</span></div>\n'+
+                        '<div>\n'+
+                            '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm">\n'+
+                                '<i class="layui-icon layui-icon-ok"></i> 您有权限\n'+
+                            '</button>\n'+
+                            '<button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">\n'+
+                                '<i class="layui-icon layui-icon-key"></i> 查看信息\n'+
+                            '</button></div></div></div></div>'
+
+    } else if (source.type === 'db') {
+        html = '<div class="layui-col-md4">\n'+
+                '<div class="layui-card" style="height: 150px">\n'+
+                '<div class="layui-card-header">\n'+
+                    '<i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>数据库</div>\n'+
+                '<div class="layui-card-body">\n'+
+                    '<div>ip地址：<span>101.37.89.120</span></div>\n'+
+                    '<div>数据库类型：<span>mongodb</span></div>\n'+
+                    '<div>\n'+
+                        '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm">\n'+
+                            '<i class="layui-icon layui-icon-ok"></i> 您有权限\n'+
+                        '</button>\n'+
+                        '<button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">\n'+
+                            '<i class="layui-icon layui-icon-key"></i> 查看信息\n'+
+                        '</button></div></div></div></div>'
+    } else {
+        console.log("无效的资源类型:" + source.type);
+    }
+    return html;
+}
 
 function addSource() {
     layer.open({
