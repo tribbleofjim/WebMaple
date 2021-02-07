@@ -8,10 +8,12 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.util.EncodingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.model.HttpRequestBody;
 import us.codecraft.webmagic.proxy.Proxy;
 import us.codecraft.webmagic.utils.CharsetUtils;
 import us.codecraft.webmagic.utils.HttpConstant;
@@ -76,7 +78,7 @@ public class RequestUtil {
         return ipAddress;
     }
 
-    public static String getRequest(String ip, int port, String mapping, HashMap<String, String> params) {
+    public static Request getRequest(String ip, int port, String mapping, HashMap<String, String> params) {
         StringBuilder builder = new StringBuilder();
         builder.append(ip)
                 .append(":")
@@ -91,9 +93,21 @@ public class RequestUtil {
         }
         String requestUrl = builder.toString();
         if (requestUrl.endsWith("&")) {
-            return requestUrl.substring(0, requestUrl.length() - 1);
+            String url = requestUrl.substring(0, requestUrl.length() - 1);
+            return new Request(url);
         }
-        return requestUrl;
+        return new Request(requestUrl);
+    }
+
+    public static Request postRequest(String ip, int port, String mapping, HashMap<String, Object> params) {
+        String url = ip + ":" + port + "/" + mapping;
+        HttpRequestBody httpRequestBody;
+        Request request = new Request(url).setMethod(HttpConstant.Method.POST);
+        if (params != null && params.size() > 0) {
+            httpRequestBody = HttpRequestBody.form(params, "utf-8");
+            request.setRequestBody(httpRequestBody);
+        }
+        return request;
     }
 
     public static String getResponseText(CloseableHttpResponse response) throws IOException {

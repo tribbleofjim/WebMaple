@@ -9,6 +9,7 @@ import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
@@ -17,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author lyifee
@@ -62,15 +60,83 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         return mockSpiders();
     }
 
-    private void startSpiderFromWorker(SpiderDTO spiderDTO) {
+    private void createSpiderFromWorker(SpiderDTO spiderDTO) {
+        if (spiderDTO == null) {
+            LOGGER.error("null_spiderDTO_create_spider");
+            return;
+        }
+        NodeDTO worker = workerContainer.getWorker(spiderDTO.getWorker());
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("spiderDTO", spiderDTO);
+        Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createSpider", params);
+        HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+        try {
+            requestSender.request(httpUriRequest);
 
+        } catch (Exception e) {
+            LOGGER.error("create_spider_exception:", e);
+        }
+    }
+
+    private void startSpiderFromWorker(String workerName, String uuid) {
+        if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
+            LOGGER.error("null_param_start_spider");
+            return;
+        }
+        NodeDTO worker = workerContainer.getWorker(workerName);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uuid", uuid);
+        Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "startSpider", params);
+        HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+        try {
+            requestSender.request(httpUriRequest);
+
+        } catch (Exception e) {
+            LOGGER.error("start_spider_exception:", e);
+        }
+    }
+
+    private void removeSpiderFromWorker(String workerName, String uuid) {
+        if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
+            LOGGER.error("null_param_start_spider");
+            return;
+        }
+        NodeDTO worker = workerContainer.getWorker(workerName);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uuid", uuid);
+        Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "removeSpider", params);
+        HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+        try {
+            requestSender.request(httpUriRequest);
+
+        } catch (Exception e) {
+            LOGGER.error("remove_spider_exception:", e);
+        }
+    }
+
+    private void stopSpiderFromWorker(String workerName, String uuid) {
+        if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
+            LOGGER.error("null_param_start_spider");
+            return;
+        }
+        NodeDTO worker = workerContainer.getWorker(workerName);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uuid", uuid);
+        Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "stopSpider", params);
+        HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+        try {
+            requestSender.request(httpUriRequest);
+
+        } catch (Exception e) {
+            LOGGER.error("stop_spider_exception:", e);
+        }
     }
 
     private List<SpiderDTO> querySpiderListFromWorkers() {
         List<NodeDTO> workers = workerContainer.getWorkerList();
         List<SpiderDTO> spiderList = new ArrayList<>();
         for (NodeDTO worker : workers) {
-            Request request = new Request(RequestUtil.getRequest(worker.getIp(), worker.getPort(), "spiderList", null));
+            Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "spiderList", null);
             HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
             try {
                 CloseableHttpResponse response = requestSender.request(httpUriRequest);

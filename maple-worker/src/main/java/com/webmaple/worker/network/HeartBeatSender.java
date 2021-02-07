@@ -47,7 +47,7 @@ public class HeartBeatSender {
         } else {
             params.put("workerName", workerName);
         }
-        Request request = new Request(RequestUtil.getRequest(adminHost, adminPort, heartbeat, params));
+        Request request = RequestUtil.getRequest(adminHost, adminPort, heartbeat, params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
             requestSender.request(httpUriRequest);

@@ -57,7 +57,11 @@ public class SpiderProcess {
         SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
     }
 
-    public void startSpider(SpiderDTO spiderDTO) {
+    public void startSpider(String uuid) {
+        if (StringUtils.isBlank(uuid)) {
+            return;
+        }
+        SpiderDTO spiderDTO = SpiderContainer.getSpiderDTO(uuid);
         Spider spider = modelUtil.getSpiderFromDTO(spiderDTO);
         if (spider == null) {
             return;

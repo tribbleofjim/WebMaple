@@ -5,6 +5,7 @@ import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.worker.SpiderProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +21,7 @@ public class SpiderController {
     @Autowired
     private SpiderProcess spiderProcess;
 
-    @RequestMapping("/createSpider")
+    @PostMapping("/createSpider")
     @ResponseBody
     public Result<Void> createSpider(@RequestParam SpiderDTO spiderDTO) {
         spiderProcess.createSpider(spiderDTO);
@@ -30,8 +31,8 @@ public class SpiderController {
 
     @RequestMapping("/startSpider")
     @ResponseBody
-    public Result<Void> startSpider(@RequestParam SpiderDTO spiderDTO) {
-        spiderProcess.startSpider(spiderDTO);
+    public Result<Void> startSpider(@RequestParam String uuid) {
+        spiderProcess.startSpider(uuid);
         Result<Void> result = new Result<>();
         return result.success();
     }
