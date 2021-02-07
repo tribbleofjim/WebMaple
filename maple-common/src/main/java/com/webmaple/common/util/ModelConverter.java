@@ -11,7 +11,7 @@ public class ModelConverter {
     public static SpiderDTO getSpiderDTOFromView(SpiderView spiderView) {
         SpiderDTO spiderDTO = new SpiderDTO();
         spiderDTO.setUuid(spiderView.getUuid());
-        spiderDTO.setIp(spiderView.getIp());
+        spiderDTO.setWorker(spiderView.getWorker());
         spiderDTO.setProcessor(spiderView.getProcessor());
         spiderDTO.setDownloader(spiderView.getDownloader());
         spiderDTO.setPipeline(spiderView.getPipeline());

@@ -9,7 +9,7 @@ import java.util.List;
 public class SpiderView {
     private String uuid;
 
-    private String ip;
+    private String worker;
 
     private String processor;
 
@@ -29,12 +29,12 @@ public class SpiderView {
         this.uuid = uuid;
     }
 
-    public String getIp() {
-        return ip;
+    public String getWorker() {
+        return worker;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setWorker(String worker) {
+        this.worker = worker;
     }
 
     public String getProcessor() {

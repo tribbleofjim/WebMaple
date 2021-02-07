@@ -205,6 +205,7 @@ public class CommonController {
 
         } finally {
             try {
+                assert fileOutputStream != null;
                 fileOutputStream.close();
             } catch (Exception e) {
                 LOGGER.error("", e);
@@ -217,15 +218,15 @@ public class CommonController {
         return dataTableDTO;
     }
 
-    @RequestMapping("/ips")
+    @RequestMapping("/workers")
     @ResponseBody
-    public List<String> ips() {
-        List<String> ips = new ArrayList<>();
+    public List<String> workers() {
+        List<String> list = new ArrayList<>();
         List<NodeDTO> workers = workerContainer.getWorkerList();
         for (NodeDTO worker : workers) {
-            ips.add(worker.getIp());
+            list.add(worker.getName());
         }
-        return ips;
+        return list;
     }
 
     @RequestMapping("/heartbeat")

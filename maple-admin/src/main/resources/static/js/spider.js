@@ -28,12 +28,12 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     });
 
     $.ajax({
-        url: 'ips',
+        url: 'workers',
         dataType: 'json',
         type: 'get',
         success: function (data) {
             $.each(data, function (index, value) {
-                $('#ip').append(new Option(value, index));// 下拉菜单里添加元素
+                $('#workers').append(new Option(value, index));// 下拉菜单里添加元素
             });
             layui.form.render("select");//重新渲染 固定写法
         }
