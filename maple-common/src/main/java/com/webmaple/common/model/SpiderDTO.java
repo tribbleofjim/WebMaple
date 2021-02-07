@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class SpiderDTO {
     /**
-     * spider 所在 ip
+     * spider 所在 worker
      */
-    private String ip;
+    private String worker;
 
     /**
      * spider起始URL列表
@@ -50,7 +50,7 @@ public class SpiderDTO {
     @Override
     public String toString() {
         return "SpiderDTO{" +
-                "ip='" + ip + '\'' +
+                "worker='" + worker + '\'' +
                 ", urls=" + urls +
                 ", uuid='" + uuid + '\'' +
                 ", state='" + state + '\'' +
@@ -61,12 +61,12 @@ public class SpiderDTO {
                 '}';
     }
 
-    public String getIp() {
-        return ip;
+    public String getWorker() {
+        return worker;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setWorker(String worker) {
+        this.worker = worker;
     }
 
     public List<String> getUrls() {

@@ -20,6 +20,7 @@ import us.codecraft.webmagic.Request;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author lyifee
@@ -61,6 +62,10 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         return mockSpiders();
     }
 
+    private void startSpiderFromWorker(SpiderDTO spiderDTO) {
+
+    }
+
     private List<SpiderDTO> querySpiderListFromWorkers() {
         List<NodeDTO> workers = workerContainer.getWorkerList();
         List<SpiderDTO> spiderList = new ArrayList<>();
@@ -83,25 +88,26 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     private List<SpiderDTO> mockSpiders() {
         List<SpiderDTO> spiderDTOS = new ArrayList<>();
+        Random random = new Random(20);
         for (int i = 0; i < 20; i++) {
             SpiderDTO spiderDTO = new SpiderDTO();
             if (i < 8) {
-                spiderDTO.setIp("101.87.19.29");
-                spiderDTO.setUuid("https://jd.search.com");
+                spiderDTO.setWorker("101.87.19.29");
+                spiderDTO.setUuid("jd.com" + random.nextInt(20));
                 spiderDTO.setUrls(Arrays.asList("https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=5&s=116&click=0",
                         "https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=7&s=176&click=0"));
                 spiderDTO.setState(SpiderState.RUNNING.getState());
                 spiderDTO.setThreadNum(1);
             } else if (i < 16) {
-                spiderDTO.setIp("144.34.288.164");
-                spiderDTO.setUuid("https://jd.search.com");
+                spiderDTO.setWorker("144.34.288.164");
+                spiderDTO.setUuid("jd.com" + random.nextInt(20));
                 spiderDTO.setUrls(Arrays.asList("https://search.jd.com/Search?keyword=家电&suggest=1.def.0.base&wq=家电&page=5&s=116&click=0",
                         "https://search.jd.com/Search?keyword=家电&suggest=1.def.0.base&wq=家电&page=7&s=176&click=0"));
                 spiderDTO.setState(SpiderState.RUNNING.getState());
                 spiderDTO.setThreadNum(4);
             } else {
-                spiderDTO.setIp("101.87.19.29");
-                spiderDTO.setUuid("https://jd.search.com");
+                spiderDTO.setWorker("101.87.19.29");
+                spiderDTO.setUuid("jd.com" + random.nextInt(20));
                 spiderDTO.setUrls(Arrays.asList("https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=5&s=116&click=0",
                         "https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=7&s=176&click=0"));
                 spiderDTO.setState(SpiderState.STOP.getState());
