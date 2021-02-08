@@ -54,24 +54,14 @@ public class SSHUtil {
      * @param filepath local filepath
      */
     public void uploadFile(Connection conn, String filepath) {
-        SFTPv3Client client = null;
+        SCPClient client = null;
         try {
             String filename = "app.jar";
-            client = new SFTPv3Client(conn);
-            SFTPv3FileHandle fileHandle = client.createFile(filename);
-            File file = new File(filepath);
-            byte[] buf = new byte[32768];
-            FileInputStream ins = new FileInputStream(file);
-            while ((ins.read(buf)) != -1) {
-                client.write(fileHandle, 0, buf, 0, buf.length);
-            }
+            client = new SCPClient(conn);
+            client.put(filepath, "/root/");
+
         } catch (Exception e) {
             LOGGER.error("upload_file_exception:", e);
-
-        } finally {
-            if (client != null) {
-                client.close();
-            }
         }
     }
 
