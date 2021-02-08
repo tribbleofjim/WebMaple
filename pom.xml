@@ -27,6 +27,7 @@
         <reflections.version>0.9.12</reflections.version>
         <quartz.version>2.4.1</quartz.version>
         <selenium.version>3.141.59</selenium.version>
+        <ethz.version>262</ethz.version>
     </properties>
 
     <dependencies>
