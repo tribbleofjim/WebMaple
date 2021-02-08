@@ -54,10 +54,11 @@ public class SSHUtil {
      * @param filepath local filepath
      */
     public static void uploadFile(Connection conn, String filepath) {
-        SCPClient client = null;
         try {
-            client = new SCPClient(conn);
+            SCPClient client = new SCPClient(conn);
+            LOGGER.info("begin");
             client.put(filepath, "/root/");
+            LOGGER.info("end");
 
         } catch (Exception e) {
             LOGGER.error("upload_file_exception:", e);

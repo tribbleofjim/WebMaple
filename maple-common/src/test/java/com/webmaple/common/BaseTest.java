@@ -20,8 +20,8 @@ public class BaseTest {
 
     @Test
     public void uploadFileTest() {
-        Connection conn = SSHUtil.getConnection("101.42.89.100", "root", "");
-        SSHUtil.uploadFile(conn, "/Users/lyifee/Projects/WebMaple/README.md");
+        Connection conn = SSHUtil.getConnection("", "root", "#");
+        SSHUtil.uploadFile(conn, "/Users/lyifee/Projects/ECSpider/target/ECSpider-1.0-SNAPSHOT.jar");
         SSHUtil.execCommand(conn, "ls");
         SSHUtil.close(conn);
     }
