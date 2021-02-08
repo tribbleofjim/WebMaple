@@ -56,7 +56,6 @@ public class SSHUtil {
     public static void uploadFile(Connection conn, String filepath) {
         SCPClient client = null;
         try {
-            String filename = "app.jar";
             client = new SCPClient(conn);
             client.put(filepath, "/root/");
 
