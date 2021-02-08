@@ -18,7 +18,7 @@ public class SSHUtil {
      * @param conn ssh connection
      * @param command command to exec
      */
-    public void execCommand(Connection conn, String command) {
+    public static void execCommand(Connection conn, String command) {
         Session sess = null;
         try {
             sess = conn.openSession();
@@ -53,7 +53,7 @@ public class SSHUtil {
      * @param conn connection
      * @param filepath local filepath
      */
-    public void uploadFile(Connection conn, String filepath) {
+    public static void uploadFile(Connection conn, String filepath) {
         SCPClient client = null;
         try {
             String filename = "app.jar";
@@ -72,7 +72,7 @@ public class SSHUtil {
      * @param password password of username
      * @return connection
      */
-    public Connection getConnection(String hostname, String username, String password) {
+    public static Connection getConnection(String hostname, String username, String password) {
         try {
             Connection conn = new Connection(hostname);
             conn.connect();
@@ -86,6 +86,16 @@ public class SSHUtil {
         } catch (IOException e) {
             LOGGER.error("authenticate_exception:", e);
             return null;
+        }
+    }
+
+    /**
+     * close connection
+     * @param conn connection
+     */
+    public static void close(Connection conn) {
+        if (conn != null) {
+            conn.close();
         }
     }
 }
