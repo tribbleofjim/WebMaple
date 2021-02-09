@@ -11,6 +11,11 @@ public class ComponentDTO {
     private String type;
 
     /**
+     * 节点名称
+     */
+    private String worker;
+
+    /**
      * 组件全类名
      */
     private String name;
@@ -42,5 +47,13 @@ public class ComponentDTO {
 
     public void setSite(String site) {
         this.site = site;
+    }
+
+    public String getWorker() {
+        return worker;
+    }
+
+    public void setWorker(String worker) {
+        this.worker = worker;
     }
 }
