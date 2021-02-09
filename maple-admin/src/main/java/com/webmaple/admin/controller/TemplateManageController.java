@@ -6,7 +6,9 @@ import com.webmaple.common.model.DataTableDTO;
 import com.webmaple.common.model.Result;
 import com.webmaple.common.view.TemplateView;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,5 +49,15 @@ public class TemplateManageController {
         dataTableDTO.setCount((CollectionUtils.isEmpty(templateViews)) ? 0 : templateViews.size());
         dataTableDTO.setData(templateViews);
         return dataTableDTO;
+    }
+
+    @GetMapping("/getTemplate")
+    @ResponseBody
+    public Result<Template> getTemplate(@RequestParam String templateName) {
+        Result<Template> result = new Result<>();
+        if (StringUtils.isBlank(templateName)) {
+            return result.fail("模板名称不能为空", null);
+        }
+        return templateService.getTemplate(templateName);
     }
 }

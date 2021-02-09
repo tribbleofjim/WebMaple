@@ -7,6 +7,38 @@ layui.define(['form', 'layer', 'table', 'jquery', 'element'], function (exports)
 
     delHtml();
 
+    table.on('tool(templates)', function(obj) {
+        let data = obj.data;//获取该行数据
+        let layEvent = obj.event;//获取该点击事件
+        if (layEvent === 'seeForm') {
+            $.ajax({
+                type: 'get',
+                url: 'getTemplate',
+                data: {
+                    templateName: data.templateName
+                },
+                success: function (res) {
+                    var showTemplate = document.getElementById('showTemplate');
+                    showTemplate.insertAdjacentHTML("beforeEnd", res.model.html);
+                    layer.open({
+                        type:1,
+                        area:['600px','400px'],
+                        title: '查看模板',
+                        content: $("#showTemplate"),
+                        shade: 0,
+                        cancel: function(layero,index){
+                            $("#showTemplate").html("\n");
+                            layer.closeAll();
+                        }
+                    });
+                }
+            });
+        } else {
+            layer.msg('点击事件错误');
+        }
+    });
+
+
     $('button').on('click',function() {
       	var _this = $(this),
       		 size = _this.data('size'),
