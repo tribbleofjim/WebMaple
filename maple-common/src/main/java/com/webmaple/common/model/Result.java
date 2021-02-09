@@ -11,11 +11,11 @@ public class Result <T> {
 
     private Boolean success;
 
-    private Object model;
+    private T model;
 
     public Result () {}
 
-    private Result(String message, boolean success, Object model) {
+    private Result(String message, boolean success, T model) {
         this.message = message;
         this.success = success;
         this.model = model;
@@ -41,24 +41,24 @@ public class Result <T> {
         return new Result<>(errorCode.getCode(), false, null);
     }
 
-    public Result<T> success(Object model) {
-        return new Result<>(null, true, model);
+    public Result<T> success(T model) {
+        return new Result<T>(null, true, model);
     }
 
-    public Result<T> fail(Object model) {
-        return new Result<>(null, false, model);
+    public Result<T> fail(T model) {
+        return new Result<T>(null, false, model);
     }
 
-    public Result<T> success(String message, Object model) {
-        return new Result<>(message, true, model);
+    public Result<T> success(String message, T model) {
+        return new Result<T>(message, true, model);
     }
 
-    public Result<T> fail(String message, Object model) {
+    public Result<T> fail(String message, T model) {
         return new Result<>(message, false, model);
     }
 
-    public Result<T> fail(CommonErrorCode errorCode, Object model) {
-        return new Result<>(errorCode.getCode(), false, model);
+    public Result<T> fail(CommonErrorCode errorCode, T model) {
+        return new Result<T>(errorCode.getCode(), false, model);
     }
 
     public String getMessage() {
@@ -77,11 +77,11 @@ public class Result <T> {
         this.success = success;
     }
 
-    public Object getModel() {
+    public T getModel() {
         return model;
     }
 
-    public void setModel(Object model) {
+    public void setModel(T model) {
         this.model = model;
     }
 }

@@ -4,6 +4,7 @@ import com.webmaple.admin.mapper.TemplateMapper;
 import com.webmaple.admin.model.Template;
 import com.webmaple.admin.service.TemplateService;
 import com.webmaple.common.model.Result;
+import com.webmaple.common.view.TemplateView;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,13 @@ public class TemplateServiceImpl implements TemplateService {
         }
         Template template = templateMapper.getTemplate(templateName);
         return result.success(template);
+    }
+
+    @Override
+    public Result<List<TemplateView>> queryTemplateViewList() {
+        Result<List<TemplateView>> result = new Result<>();
+        List<TemplateView> templateViews = templateMapper.queryTemplateViewList();
+        return result.success(templateViews);
     }
 
     @Override

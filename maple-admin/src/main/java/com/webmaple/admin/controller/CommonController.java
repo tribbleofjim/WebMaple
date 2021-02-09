@@ -231,10 +231,10 @@ public class CommonController {
 
     @RequestMapping("/heartbeat")
     @ResponseBody
-    public Result<String> heartbeat(@RequestParam(required = false) String workerName,
+    public Result<Void> heartbeat(@RequestParam(required = false) String workerName,
                                     @RequestParam(required = false) String port,
                                     HttpServletRequest request) {
-        Result<String> result = new Result<>();
+        Result<Void> result = new Result<>();
 
         if (request == null) {
            return result.fail("null_httpServletRequest");
@@ -252,7 +252,7 @@ public class CommonController {
             if (name == null) {
                 return result.fail("worker_num_out_of_max_value");
             }
-            return result.success("", name);
+            return result.success(name);
         }
 
         // not first heartbeat

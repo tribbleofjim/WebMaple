@@ -2,13 +2,18 @@ package com.webmaple.admin.controller;
 
 import com.webmaple.admin.model.Template;
 import com.webmaple.admin.service.TemplateService;
+import com.webmaple.common.model.DataTableDTO;
 import com.webmaple.common.model.Result;
+import com.webmaple.common.view.TemplateView;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author lyifee
@@ -29,5 +34,18 @@ public class TemplateManageController {
         template.setHtml(html);
         template.setFormUrl(formUrl);
         return templateService.addTemplate(template);
+    }
+
+    @GetMapping("/templateList")
+    @ResponseBody
+    public DataTableDTO templateList() {
+        Result<List<TemplateView>> result = templateService.queryTemplateViewList();
+        List<TemplateView> templateViews = result.getModel();
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(200);
+        dataTableDTO.setMsg("");
+        dataTableDTO.setCount((CollectionUtils.isEmpty(templateViews)) ? 0 : templateViews.size());
+        dataTableDTO.setData(templateViews);
+        return dataTableDTO;
     }
 }

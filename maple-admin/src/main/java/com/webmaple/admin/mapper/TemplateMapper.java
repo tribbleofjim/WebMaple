@@ -1,6 +1,7 @@
 package com.webmaple.admin.mapper;
 
 import com.webmaple.admin.model.Template;
+import com.webmaple.common.view.TemplateView;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,6 +22,9 @@ public interface TemplateMapper {
 
     @Select("SELECT * FROM maple_template WHERE template_name = #{templateName}")
     Template getTemplate(String templateName);
+
+    @Select("SELECT template_name, form_url FROM maple_template")
+    List<TemplateView> queryTemplateViewList();
 
     @Select("SELECT * FROM maple_template")
     List<Template> queryTemplates();
