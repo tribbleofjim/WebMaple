@@ -1,6 +1,8 @@
 package com.webmaple.common.network;
 
+import com.webmaple.common.enums.WebProtocol;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -9,6 +11,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.util.EncodingUtils;
+import org.apache.tomcat.util.net.openssl.ciphers.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.Request;
@@ -78,8 +81,12 @@ public class RequestUtil {
         return ipAddress;
     }
 
-    public static Request getRequest(String ip, int port, String mapping, HashMap<String, String> params) {
+    public static Request getRequest(String protocol, String ip, int port, String mapping, HashMap<String, String> params) {
         StringBuilder builder = new StringBuilder();
+        if (StringUtils.isBlank(protocol)) {
+            protocol = WebProtocol.http.name();
+        }
+        builder.append(protocol).append("://");
         builder.append(ip)
                 .append(":")
                 .append(port)
@@ -99,12 +106,15 @@ public class RequestUtil {
         return new Request(requestUrl);
     }
 
-    public static Request postRequest(String ip, int port, String mapping, HashMap<String, Object> params) {
-        String url = ip + ":" + port + "/" + mapping;
+    public static Request postRequest(String protocol, String ip, int port, String mapping, HashMap<String, Object> params) {
+        if (StringUtils.isBlank(protocol)) {
+            protocol = WebProtocol.http.name();
+        }
+        String url = protocol + "://" + ip + ":" + port + "/" + mapping;
         HttpRequestBody httpRequestBody;
         Request request = new Request(url).setMethod(HttpConstant.Method.POST);
         if (params != null && params.size() > 0) {
-            httpRequestBody = HttpRequestBody.form(params, "utf-8");
+            httpRequestBody = HttpRequestBody.form(params, "UTF-8");
             request.setRequestBody(httpRequestBody);
         }
         return request;
