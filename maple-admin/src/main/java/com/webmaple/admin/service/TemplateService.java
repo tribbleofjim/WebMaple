@@ -15,7 +15,7 @@ public interface TemplateService {
 
     Result<Template> getTemplate(String templateName);
 
-    Result<List<TemplateView>> queryTemplateViewList();
+    Result<List<Template>> queryTemplateViewList();
 
     Result<List<Template>> queryTemplateList();
 }

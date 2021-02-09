@@ -24,7 +24,7 @@ public interface TemplateMapper {
     Template getTemplate(String templateName);
 
     @Select("SELECT template_name, form_url FROM maple_template")
-    List<TemplateView> queryTemplateViewList();
+    List<Template> queryTemplateViewList();
 
     @Select("SELECT * FROM maple_template")
     List<Template> queryTemplates();

@@ -48,10 +48,10 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
-    public Result<List<TemplateView>> queryTemplateViewList() {
-        Result<List<TemplateView>> result = new Result<>();
-        List<TemplateView> templateViews = templateMapper.queryTemplateViewList();
-        return result.success(templateViews);
+    public Result<List<Template>> queryTemplateViewList() {
+        Result<List<Template>> result = new Result<>();
+        List<Template> templates = templateMapper.queryTemplateViewList();
+        return result.success(templates);
     }
 
     @Override

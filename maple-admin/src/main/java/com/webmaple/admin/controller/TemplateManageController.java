@@ -39,10 +39,10 @@ public class TemplateManageController {
     @GetMapping("/templateList")
     @ResponseBody
     public DataTableDTO templateList() {
-        Result<List<TemplateView>> result = templateService.queryTemplateViewList();
-        List<TemplateView> templateViews = result.getModel();
+        Result<List<Template>> result = templateService.queryTemplateViewList();
+        List<Template> templateViews = result.getModel();
         DataTableDTO dataTableDTO = new DataTableDTO();
-        dataTableDTO.setCode(200);
+        dataTableDTO.setCode(0);
         dataTableDTO.setMsg("");
         dataTableDTO.setCount((CollectionUtils.isEmpty(templateViews)) ? 0 : templateViews.size());
         dataTableDTO.setData(templateViews);

@@ -11,6 +11,15 @@ public class Template {
 
     private String formUrl;
 
+    @Override
+    public String toString() {
+        return "Template{" +
+                "html='" + html + '\'' +
+                ", templateName='" + templateName + '\'' +
+                ", formUrl='" + formUrl + '\'' +
+                '}';
+    }
+
     public String getHtml() {
         return html;
     }
