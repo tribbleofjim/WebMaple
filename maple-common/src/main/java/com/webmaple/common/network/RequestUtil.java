@@ -81,6 +81,14 @@ public class RequestUtil {
         return ipAddress;
     }
 
+    public static Request getRequest(String ip, int port, String mapping, HashMap<String, String> params) {
+        return getRequest(WebProtocol.http.name(), ip, port, mapping, params);
+    }
+
+    public static Request postRequest(String ip, int port, String mapping, HashMap<String, Object> params) {
+        return postRequest(WebProtocol.http.name(), ip, port, mapping, params);
+    }
+
     public static Request getRequest(String protocol, String ip, int port, String mapping, HashMap<String, String> params) {
         StringBuilder builder = new StringBuilder();
         if (StringUtils.isBlank(protocol)) {
