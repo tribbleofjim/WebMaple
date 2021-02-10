@@ -68,6 +68,8 @@
                         <ul class="layui-tab-title">
                             <li class="layui-this">爬虫列表</li>
                             <li>新建爬虫</li>
+                            <li>使用模板新建爬虫</li>
+                            <li>组件列表</li>
                         </ul>
                         <div class="layui-tab-content">
                             <div class="layui-tab-item layui-show">
@@ -116,6 +118,7 @@
                                     <fieldset class="layui-elem-field layui-field-title">
                                         <legend>新建爬虫</legend>
                                     </fieldset>
+
                                     <!--新建爬虫表单-->
                                     <form class="layui-form" id="createSpider" action="">
                                         <label class="layui-form-label" style="width: 90px;">爬虫uuid</label>
@@ -154,7 +157,7 @@
                                                                required lay-verify="required" autocomplete="off">
                                                     </div>
                                                     <div class="layui-input-inline" style="width: 400px;!important;">
-                                                        <div class="layui-form-mid layui-word-aux">网站对应的processor可在下方组件列表中查看</div>
+                                                        <div class="layui-form-mid layui-word-aux">网站对应的processor可在上方组件列表中查看</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,7 +171,7 @@
                                                                class="layui-input" placeholder="请输入downloader类" autocomplete="off">
                                                     </div>
                                                     <div class="layui-input-inline" style="width: 400px;!important;">
-                                                        <div class="layui-form-mid layui-word-aux">downloader可在下方组件列表中查看</div>
+                                                        <div class="layui-form-mid layui-word-aux">downloader可在上方组件列表中查看</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,7 +185,7 @@
                                                                class="layui-input" placeholder="请输入pipeline类" autocomplete="off">
                                                     </div>
                                                     <div class="layui-input-inline" style="width: 400px;!important;">
-                                                        <div class="layui-form-mid layui-word-aux">网站对应的pipeline可在下方组件列表中查看</div>
+                                                        <div class="layui-form-mid layui-word-aux">网站对应的pipeline可在上方组件列表中查看</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -228,7 +231,27 @@
                                     </form>
                                 </div>
                                 <!--/新建爬虫-->
-
+                            </div>
+                            <div class="layui-tab-item">
+                                <!--使用模板-->
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        <i class="layui-icon layui-icon-templeate-1"></i>
+                                    </label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="templateName" id="templateName" required lay-verify="required"
+                                               placeholder="输入模板名称" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                        <button class="layui-btn">
+                                            <i class="layui-icon layui-icon-release"></i>
+                                            使用模板
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--/使用模板-->
+                            </div>
+                            <div class="layui-tab-item">
                                 <!--组件列表-->
                                 <fieldset class="layui-elem-field layui-field-title">
                                     <legend>爬虫组件列表</legend>
