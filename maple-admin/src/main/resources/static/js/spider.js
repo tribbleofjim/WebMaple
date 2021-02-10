@@ -1,9 +1,10 @@
+var form, layer, table, element, $;
 layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
-    let form = layui.form;
-    let layer = layui.layer;
-    let table = layui.table;
-    let element = layui.element;
-    let $ = layui.jquery;
+    form = layui.form;
+    layer = layui.layer;
+    table = layui.table;
+    element = layui.element;
+    $ = layui.jquery;
 
     let startUrlNum = 1;
     $("#addUrl").click(function () {
@@ -176,6 +177,27 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         });
     }
 });
+
+function useTemplate() {
+    var templateName = document.getElementById("templateName").value;
+    console.log(templateName);
+    if (templateName === null || templateName === '') {
+        layer.msg('请填写模板名称，可在左侧导航栏"爬虫定制化"中查看');
+        return;
+    }
+    var template = document.getElementById("template");
+    $.ajax({
+        type: 'get',
+        url: 'getTemplate',
+        data: {
+            templateName: templateName
+        },
+        success: function (res) {
+            $("#template").html("\n");
+            template.insertAdjacentHTML("beforeEnd", res.model.html);
+        }
+    });
+}
 
 
 
