@@ -3,9 +3,11 @@ package com.webmaple.worker.controller;
 import com.webmaple.common.enums.MaintainType;
 import com.webmaple.common.model.Result;
 import com.webmaple.common.model.SpiderDTO;
+import com.webmaple.worker.container.SpiderContainer;
 import com.webmaple.worker.job.JobService;
 import com.webmaple.worker.job.model.QuartzJob;
 import com.webmaple.worker.util.ModelUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +34,22 @@ public class TimedSpiderController {
 
     @RequestMapping("/createTimedSpider")
     @ResponseBody
-    public Result<Void> createTimedSpider(@RequestParam SpiderDTO spiderDTO,
+    public Result<Void> createTimedSpider(@RequestParam String uuid,
                                     @RequestParam String maintainType,
                                     @RequestParam int maintain,
                                     @RequestParam String cron) {
         Result<Void> result = new Result<>();
 
-        if (spiderDTO == null) {
-            return result.fail("spiderDTO_cannot_be_null");
+        if (StringUtils.isBlank(uuid)) {
+            return result.fail("spider_uuid_cannot_be_null");
 
         }
         if (MaintainType.getType(maintainType) == null) {
-            return result.fail("invalid_maintain_type", maintainType);
+            return result.fail("invalid_maintain_type");
+        }
+        SpiderDTO spiderDTO = SpiderContainer.getSpiderDTO(uuid);
+        if (spiderDTO == null) {
+            return result.fail("在该节点上找不到对应的爬虫");
         }
 
         try {
