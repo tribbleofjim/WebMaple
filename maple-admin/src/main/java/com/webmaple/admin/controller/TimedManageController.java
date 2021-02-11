@@ -9,6 +9,7 @@ import com.webmaple.common.model.Result;
 import com.webmaple.common.model.SpiderJobDTO;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
+import com.webmaple.common.util.CommonUtil;
 import com.webmaple.common.view.TimedSpiderView;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -82,7 +83,11 @@ public class TimedManageController {
             return result.fail("无效的节点名称，请更换一个节点");
         }
         HashMap<String, Object> param = new HashMap<>();
-        param.put("spiderDTO", timedSpiderView.getUuid());
+        param.put("uuid", timedSpiderView.getUuid());
+        param.put("maintainType", timedSpiderView.getType());
+        param.put("maintain", timedSpiderView.getMaintain());
+        String rawCron = timedSpiderView.getCronNum() + timedSpiderView.getCronUnit();
+        param.put("cron", CommonUtil.getCron(rawCron));
         Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createTimedSpider", param);
         try {
             CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
