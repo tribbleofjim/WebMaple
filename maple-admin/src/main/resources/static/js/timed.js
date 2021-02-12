@@ -39,7 +39,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                         type: 'get',
                         url: "resumeTimedSpider",
                         data: {
-                            jobName: job.jobName
+                            jobName: job.jobName,
+                            workerName: job.worker
                         },
                         success: function (res) {
                             layer.msg(res.message);
@@ -71,7 +72,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                         type: 'get',
                         url: "pauseTimedSpider",
                         data: {
-                            jobName: job.jobName
+                            jobName: job.jobName,
+                            workerName: job.worker
                         },
                         success: function (res) {
                             layer.msg(res.message);
@@ -102,7 +104,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                         type: 'get',
                         url: "deleteTimedSpider",
                         data: {
-                            jobName: job.jobName
+                            jobName: job.jobName,
+                            workerName: job.worker
                         },
                         success: function (res) {
                             layer.msg(res.message);
