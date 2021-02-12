@@ -11,6 +11,7 @@ import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
 import com.webmaple.common.util.CommonUtil;
+import com.webmaple.common.util.SerializeUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public class ComponentServiceImpl implements ComponentService {
             for (Object o : jsonArray) {
                 try {
                     String componentStr = (String) o;
-                    ComponentDTO component = CommonUtil.getModelFromString(componentStr, ComponentDTO.class);
+                    ComponentDTO component = (ComponentDTO) SerializeUtil.deserialize(componentStr);
                     components.add(component);
                 } catch (Exception e) {
                     LOGGER.error(e.getMessage());

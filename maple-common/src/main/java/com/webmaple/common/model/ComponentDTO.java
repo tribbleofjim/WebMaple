@@ -1,10 +1,14 @@
 package com.webmaple.common.model;
 
+import java.io.Serializable;
+
 /**
  * @author lyifee
  * on 2021/1/24
  */
-public class ComponentDTO {
+public class ComponentDTO implements Serializable {
+    private static final long serialVersionUID = 2556099771141926148L;
+
     /**
      * 组件类型，如downloader/pipeline/processor
      */
@@ -25,6 +29,8 @@ public class ComponentDTO {
      */
     private String site;
 
+    private Integer num;
+
     @Override
     public String toString() {
         return "ComponentDTO{" +
@@ -32,7 +38,16 @@ public class ComponentDTO {
                 ", worker='" + worker + '\'' +
                 ", name='" + name + '\'' +
                 ", site='" + site + '\'' +
+                ", num=" + num +
                 '}';
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public String getType() {

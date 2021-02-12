@@ -8,6 +8,7 @@ import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
 import com.webmaple.common.util.CommonUtil;
 import com.webmaple.common.util.SSHUtil;
+import com.webmaple.common.util.SerializeUtil;
 import com.webmaple.common.view.SpiderView;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -71,15 +72,16 @@ public class BaseTest {
     }
 
     @Test
-    public void stringToModelTest() {
+    public void stringToModelTest() throws IOException, ClassNotFoundException {
         ComponentDTO component = new ComponentDTO();
         component.setName("test111");
         component.setType(ComponentType.PIPELINE.getType());
         component.setSite("test_site");
         component.setWorker("worker0");
-        String str = component.toString();
+        component.setNum(1);
+        String str = SerializeUtil.serialize(component);
         System.out.println(str);
-        ComponentDTO strCompo = CommonUtil.getModelFromString(str, ComponentDTO.class);
+        ComponentDTO strCompo = (ComponentDTO) SerializeUtil.deserialize(str);
         System.out.println(strCompo);
     }
 }

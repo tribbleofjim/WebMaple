@@ -2,6 +2,7 @@ package com.webmaple.worker;
 
 import com.webmaple.common.enums.ComponentType;
 import com.webmaple.common.model.ComponentDTO;
+import com.webmaple.common.util.SerializeUtil;
 import com.webmaple.worker.annotation.MaplePipeline;
 import com.webmaple.worker.annotation.MapleProcessor;
 import com.webmaple.worker.config.ReflectionsConfig;
@@ -53,7 +54,7 @@ public class ComponentRegister implements InitializingBean {
                         component.setName(clazz.getName());
                         component.setSite(site);
                         component.setType(ComponentType.PROCESSOR.getType());
-                        processorList.add(component.toString());
+                        processorList.add(SerializeUtil.serialize(component));
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_processor: {}, {}", clazz.getName(), e.getMessage());
@@ -72,7 +73,12 @@ public class ComponentRegister implements InitializingBean {
             ComponentDTO component = new ComponentDTO();
             component.setName(clazz.getName());
             component.setType(ComponentType.DOWNLOADER.getType());
-            downloaderList.add(component.toString());
+            try {
+                downloaderList.add(SerializeUtil.serialize(component));
+
+            } catch (Exception e) {
+                LOGGER.warn("serialize_component_exception:{}", component);
+            }
         }
         componentService.addDownloaders(downloaderList);
         LOGGER.info("end downloader register.");
@@ -92,7 +98,7 @@ public class ComponentRegister implements InitializingBean {
                         component.setName(clazz.getName());
                         component.setType(ComponentType.PIPELINE.getType());
                         component.setSite(site);
-                        processorList.add(component.toString());
+                        processorList.add(SerializeUtil.serialize(component));
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_pipeline: {}, {}", clazz.getName(), e.getMessage());
