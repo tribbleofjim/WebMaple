@@ -1,14 +1,13 @@
 package com.webmaple.common;
 
 import ch.ethz.ssh2.Connection;
+import com.alibaba.fastjson.JSON;
 import com.webmaple.common.enums.ComponentType;
 import com.webmaple.common.enums.WebProtocol;
 import com.webmaple.common.model.ComponentDTO;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
-import com.webmaple.common.util.CommonUtil;
 import com.webmaple.common.util.SSHUtil;
-import com.webmaple.common.util.SerializeUtil;
 import com.webmaple.common.view.SpiderView;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -79,9 +78,9 @@ public class BaseTest {
         component.setSite("test_site");
         component.setWorker("worker0");
         component.setNum(1);
-        String str = SerializeUtil.serialize(component);
+        String str = JSON.toJSONString(component);
         System.out.println(str);
-        ComponentDTO strCompo = (ComponentDTO) SerializeUtil.deserialize(str);
+        ComponentDTO strCompo = JSON.parseObject(str, ComponentDTO.class);
         System.out.println(strCompo);
     }
 }

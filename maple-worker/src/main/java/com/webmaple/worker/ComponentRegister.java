@@ -1,8 +1,8 @@
 package com.webmaple.worker;
 
+import com.alibaba.fastjson.JSON;
 import com.webmaple.common.enums.ComponentType;
 import com.webmaple.common.model.ComponentDTO;
-import com.webmaple.common.util.SerializeUtil;
 import com.webmaple.worker.annotation.MaplePipeline;
 import com.webmaple.worker.annotation.MapleProcessor;
 import com.webmaple.worker.config.ReflectionsConfig;
@@ -54,7 +54,7 @@ public class ComponentRegister implements InitializingBean {
                         component.setName(clazz.getName());
                         component.setSite(site);
                         component.setType(ComponentType.PROCESSOR.getType());
-                        processorList.add(SerializeUtil.serialize(component));
+                        processorList.add(JSON.toJSONString(component));
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_processor: {}, {}", clazz.getName(), e.getMessage());
@@ -74,7 +74,7 @@ public class ComponentRegister implements InitializingBean {
             component.setName(clazz.getName());
             component.setType(ComponentType.DOWNLOADER.getType());
             try {
-                downloaderList.add(SerializeUtil.serialize(component));
+                downloaderList.add(JSON.toJSONString(component));
 
             } catch (Exception e) {
                 LOGGER.warn("serialize_component_exception:{}", component);
@@ -98,7 +98,7 @@ public class ComponentRegister implements InitializingBean {
                         component.setName(clazz.getName());
                         component.setType(ComponentType.PIPELINE.getType());
                         component.setSite(site);
-                        processorList.add(SerializeUtil.serialize(component));
+                        processorList.add(JSON.toJSONString(component));
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_pipeline: {}, {}", clazz.getName(), e.getMessage());
