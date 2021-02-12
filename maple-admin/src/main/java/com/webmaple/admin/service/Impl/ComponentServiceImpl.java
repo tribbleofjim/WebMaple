@@ -40,6 +40,16 @@ public class ComponentServiceImpl implements ComponentService {
         return mockComponentList();
     }
 
+    private List<ComponentDTO> componentList() {
+        List<NodeDTO> workers = workerContainer.getWorkerList();
+        List<ComponentDTO> res = new ArrayList<>();
+        for (NodeDTO worker : workers) {
+            List<ComponentDTO> list = queryComponentsFromWorker(worker);
+            res.addAll(list);
+        }
+        return res;
+    }
+
     private List<ComponentDTO> queryComponentsFromWorker(NodeDTO worker) {
         if (worker == null) {
             return null;
