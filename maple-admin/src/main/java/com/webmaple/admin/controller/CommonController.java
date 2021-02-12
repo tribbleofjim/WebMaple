@@ -303,20 +303,4 @@ public class CommonController {
         Result<Void> result = new Result<>();
         return result.success();
     }
-
-    @RequestMapping("/componentList")
-    @ResponseBody
-    public DataTableDTO queryComponentList(@RequestParam int page, @RequestParam int limit) {
-        List<ComponentDTO> componentList = componentService.queryComponentList();
-        DataTableDTO dataTableDTO = new DataTableDTO();
-        dataTableDTO.setCode(0);
-        dataTableDTO.setMsg("");
-        if (CollectionUtils.isEmpty(componentList)) {
-            dataTableDTO.setCount(0);
-        } else {
-            dataTableDTO.setCount(componentList.size());
-        }
-        dataTableDTO.setData(JSON.toJSON(componentList));
-        return dataTableDTO;
-    }
 }
