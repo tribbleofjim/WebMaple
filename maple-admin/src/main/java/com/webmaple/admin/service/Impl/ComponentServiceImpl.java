@@ -10,7 +10,10 @@ import com.webmaple.common.model.ComponentDTO;
 import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
+import com.webmaple.common.util.CommonUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
@@ -24,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class ComponentServiceImpl implements ComponentService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentService.class);
+
     @Autowired
     private WorkerContainer workerContainer;
 
@@ -41,14 +46,25 @@ public class ComponentServiceImpl implements ComponentService {
         }
         List<ComponentDTO> components = new ArrayList<>();
         Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "getComponents", null);
-        CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-        String text = RequestUtil.getResponseText(response);
-        JSONArray jsonArray = JSON.parseArray(text);
-        for (Object o : jsonArray) {
-            JSONObject jsonObject = (JSONObject) o;
+        try {
+            CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
+            String text = RequestUtil.getResponseText(response);
+            JSONArray jsonArray = JSON.parseArray(text);
 
+            for (Object o : jsonArray) {
+                try {
+                    String componentStr = (String) o;
+                    ComponentDTO component = CommonUtil.getModelFromString(componentStr, ComponentDTO.class);
+                    components.add(component);
+                } catch (Exception e) {
+                    LOGGER.error(e.getMessage());
+                }
+            }
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
         }
-        return null;
+        return components;
     }
 
     private List<ComponentDTO> mockComponentList() {
