@@ -1,5 +1,7 @@
 package com.webmaple.worker;
 
+import com.webmaple.common.enums.ComponentType;
+import com.webmaple.common.model.ComponentDTO;
 import com.webmaple.worker.annotation.MaplePipeline;
 import com.webmaple.worker.annotation.MapleProcessor;
 import com.webmaple.worker.config.ReflectionsConfig;
@@ -37,7 +39,6 @@ public class ComponentRegister implements InitializingBean {
         Reflections reflections = reflectionsConfig.getReflections();
 
         // processor register
-        // format : com.ecspider.common.processor.JDProcessor#http://jd.Search.com
         Set<Class<?>> processors = reflections.getTypesAnnotatedWith(MapleProcessor.class);
         List<String> processorList = new ArrayList<>();
         LOGGER.info("start processor register...");
@@ -48,7 +49,11 @@ public class ComponentRegister implements InitializingBean {
                     try {
                         MapleProcessor mapleProcessor = clazz.getAnnotation(MapleProcessor.class);
                         String site = mapleProcessor.site();
-                        processorList.add(clazz.getName() + "#" + site);
+                        ComponentDTO component = new ComponentDTO();
+                        component.setName(clazz.getName());
+                        component.setSite(site);
+                        component.setType(ComponentType.PROCESSOR.getType());
+                        processorList.add(component.toString());
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_processor: {}, {}", clazz.getName(), e.getMessage());
@@ -64,7 +69,10 @@ public class ComponentRegister implements InitializingBean {
         List<String> downloaderList = new ArrayList<>();
         LOGGER.info("start downloader register...");
         for (Class<?> clazz : downloaders) {
-            downloaderList.add(clazz.getName());
+            ComponentDTO component = new ComponentDTO();
+            component.setName(clazz.getName());
+            component.setType(ComponentType.DOWNLOADER.getType());
+            downloaderList.add(component.toString());
         }
         componentService.addDownloaders(downloaderList);
         LOGGER.info("end downloader register.");
@@ -80,7 +88,11 @@ public class ComponentRegister implements InitializingBean {
                     try {
                         MaplePipeline maplePipeline = clazz.getAnnotation(MaplePipeline.class);
                         String site = maplePipeline.site();
-                        processorList.add(clazz.getName() + "#" + site);
+                        ComponentDTO component = new ComponentDTO();
+                        component.setName(clazz.getName());
+                        component.setType(ComponentType.PIPELINE.getType());
+                        component.setSite(site);
+                        processorList.add(component.toString());
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_pipeline: {}, {}", clazz.getName(), e.getMessage());

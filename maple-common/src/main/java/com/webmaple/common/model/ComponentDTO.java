@@ -25,6 +25,16 @@ public class ComponentDTO {
      */
     private String site;
 
+    @Override
+    public String toString() {
+        return "ComponentDTO{" +
+                "type='" + type + '\'' +
+                ", worker='" + worker + '\'' +
+                ", name='" + name + '\'' +
+                ", site='" + site + '\'' +
+                '}';
+    }
+
     public String getType() {
         return type;
     }

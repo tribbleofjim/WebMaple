@@ -2,6 +2,7 @@ package com.webmaple.worker.network;
 
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 public class HeartBeatSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartBeatSender.class);
 
-    private String workerName = null;
+    private final String workerName = null;
 
     @Autowired
     private RequestSender requestSender;
@@ -50,7 +51,7 @@ public class HeartBeatSender {
         Request request = RequestUtil.getRequest(adminHost, adminPort, heartbeat, params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
-            requestSender.request(httpUriRequest);
+            CloseableHttpResponse response = requestSender.request(httpUriRequest);
         } catch (Exception e) {
             LOGGER.error("send_heartbeat_exception:", e);
         }

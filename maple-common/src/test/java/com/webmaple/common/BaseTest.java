@@ -1,9 +1,12 @@
 package com.webmaple.common;
 
 import ch.ethz.ssh2.Connection;
+import com.webmaple.common.enums.ComponentType;
 import com.webmaple.common.enums.WebProtocol;
+import com.webmaple.common.model.ComponentDTO;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
+import com.webmaple.common.util.CommonUtil;
 import com.webmaple.common.util.SSHUtil;
 import com.webmaple.common.view.SpiderView;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -65,5 +68,18 @@ public class BaseTest {
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         CloseableHttpResponse response = requestSender.request(httpUriRequest);
         System.out.println(RequestUtil.getResponseText(response));
+    }
+
+    @Test
+    public void stringToModelTest() {
+        ComponentDTO component = new ComponentDTO();
+        component.setName("test111");
+        component.setType(ComponentType.PIPELINE.getType());
+        component.setSite("test_site");
+        component.setWorker("worker0");
+        String str = component.toString();
+        System.out.println(str);
+        ComponentDTO strCompo = CommonUtil.getModelFromString(str, ComponentDTO.class);
+        System.out.println(strCompo);
     }
 }
