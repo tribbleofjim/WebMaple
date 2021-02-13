@@ -1,5 +1,7 @@
 package com.webmaple.worker.network;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.webmaple.common.network.RequestSender;
 import com.webmaple.common.network.RequestUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -26,7 +28,7 @@ import java.util.HashMap;
 public class HeartBeatSender {
     private static final Logger LOGGER = LoggerFactory.getLogger(HeartBeatSender.class);
 
-    private final String workerName = null;
+    private String workerName = null;
 
     @Autowired
     private RequestSender requestSender;
@@ -40,11 +42,15 @@ public class HeartBeatSender {
     @Value("${props.admin.heartbeat}")
     private String heartbeat;
 
+    @Value("${props.worker.port}")
+    private Integer workerPort;
+
     // @Scheduled(cron = "0 0/20 * * * ?")
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
         if (workerName == null) {
-            params.put("port", String.valueOf(8080));
+            params.put("port", String.valueOf(workerPort));
+
         } else {
             params.put("workerName", workerName);
         }
@@ -52,8 +58,23 @@ public class HeartBeatSender {
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
             CloseableHttpResponse response = requestSender.request(httpUriRequest);
+            String text = RequestUtil.getResponseText(response);
+            JSONObject jsonObject = JSON.parseObject(text);
+
+            String returnedWorkerName;
+            if ((returnedWorkerName = jsonObject.getString("workerName")) != null) {
+                setWorkerName(returnedWorkerName);
+            }
         } catch (Exception e) {
             LOGGER.error("send_heartbeat_exception:", e);
         }
+    }
+
+    public String getWorkerName() {
+        return workerName;
+    }
+
+    private void setWorkerName(String workerName) {
+        this.workerName = workerName;
     }
 }

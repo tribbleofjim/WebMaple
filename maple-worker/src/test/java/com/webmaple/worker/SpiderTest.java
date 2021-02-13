@@ -44,7 +44,7 @@ public class SpiderTest {
     @Order(2)
     @Test
     public void startSpiderTest() {
-        spiderProcess.startSpider(spiderDTO);
+        spiderProcess.startSpider("baidu_test");
     }
 
     @Order(3)

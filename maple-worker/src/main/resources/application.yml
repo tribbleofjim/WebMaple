@@ -14,3 +14,5 @@ props:
     host: 101.37.89.200
     port: 8080
     heartbeat: heartbeat
+  worker:
+    port: 8080
