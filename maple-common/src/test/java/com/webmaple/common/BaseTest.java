@@ -6,7 +6,7 @@ import com.webmaple.common.enums.ComponentType;
 import com.webmaple.common.enums.WebProtocol;
 import com.webmaple.common.model.ComponentDTO;
 import com.webmaple.common.network.RequestSender;
-import com.webmaple.common.network.RequestUtil;
+import com.webmaple.common.util.RequestUtil;
 import com.webmaple.common.util.SSHUtil;
 import com.webmaple.common.view.SpiderView;
 import org.apache.http.client.methods.CloseableHttpResponse;

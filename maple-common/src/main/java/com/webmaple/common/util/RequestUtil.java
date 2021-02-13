@@ -1,4 +1,4 @@
-package com.webmaple.common.network;
+package com.webmaple.common.util;
 
 import com.webmaple.common.enums.WebProtocol;
 import org.apache.commons.io.IOUtils;
@@ -10,8 +10,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.util.EncodingUtils;
-import org.apache.tomcat.util.net.openssl.ciphers.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.Request;

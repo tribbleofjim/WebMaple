@@ -8,7 +8,7 @@ import com.webmaple.common.enums.ComponentType;
 import com.webmaple.common.model.ComponentDTO;
 import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.network.RequestSender;
-import com.webmaple.common.network.RequestUtil;
+import com.webmaple.common.util.RequestUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

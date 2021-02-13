@@ -16,3 +16,4 @@ webmaple:
     heartbeat: heartbeat
   worker:
     port: 8080
+    package-path: com.webmaple.worker

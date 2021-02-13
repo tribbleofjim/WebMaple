@@ -1,22 +1,22 @@
 package com.webmaple.worker.config;
 
 import org.reflections.Reflections;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
  * @author lyifee
  * on 2021/1/9
  */
+@Configuration
 @Component
-public class ReflectionsConfig {
-    private final Reflections reflections;
+public class ReflectionsConfig implements InitializingBean {
+    private Reflections reflections;
 
-    private final String packagePath;
-
-    public ReflectionsConfig() {
-        this.packagePath = "com.webmaple.worker";
-        reflections = new Reflections(packagePath);
-    }
+    @Value("${webmaple.worker.package-path}")
+    private String packagePath;
 
     public Reflections getReflections() {
         return reflections;
@@ -24,5 +24,10 @@ public class ReflectionsConfig {
 
     public String getPackagePath() {
         return packagePath;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        reflections = new Reflections(packagePath);
     }
 }

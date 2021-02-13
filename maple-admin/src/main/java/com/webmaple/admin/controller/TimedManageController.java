@@ -8,7 +8,7 @@ import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.model.Result;
 import com.webmaple.common.model.SpiderJobDTO;
 import com.webmaple.common.network.RequestSender;
-import com.webmaple.common.network.RequestUtil;
+import com.webmaple.common.util.RequestUtil;
 import com.webmaple.common.util.CommonUtil;
 import com.webmaple.common.view.TimedSpiderView;
 import org.apache.commons.collections.CollectionUtils;

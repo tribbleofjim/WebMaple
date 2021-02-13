@@ -8,7 +8,7 @@ import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.model.SpiderDTO;
 import com.webmaple.admin.service.SpiderManageService;
 import com.webmaple.common.network.RequestSender;
-import com.webmaple.common.network.RequestUtil;
+import com.webmaple.common.util.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
