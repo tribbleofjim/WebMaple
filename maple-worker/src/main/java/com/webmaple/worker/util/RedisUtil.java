@@ -20,6 +20,7 @@ import java.util.Set;
 public class RedisUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisUtil.class);
 
+    // TODO: user should add a jedispool into this bean
     @Autowired
     private JedisPool jedisPool;
 
