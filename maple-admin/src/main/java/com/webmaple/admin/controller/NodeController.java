@@ -88,6 +88,7 @@ public class NodeController {
             return result.fail("jar包上传出现错误");
         }
 
+        // todo: worker name ?
         Connection conn = SSHUtil.getConnection(ip, user, password);
         SSHUtil.uploadFile(conn, filePath);
         SSHUtil.execCommand(conn, "nohup java -jar " + fileName + " > temp.log 2>&1 &");
