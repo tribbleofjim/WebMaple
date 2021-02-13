@@ -33,16 +33,16 @@ public class HeartBeatSender {
     @Autowired
     private RequestSender requestSender;
 
-    @Value("${props.admin.host}")
+    @Value("${webmaple.admin.host}")
     private String adminHost;
 
-    @Value("${props.admin.port}")
+    @Value("${webmaple.admin.port}")
     private Integer adminPort;
 
-    @Value("${props.admin.heartbeat}")
+    @Value("${webmaple.admin.heartbeat}")
     private String heartbeat;
 
-    @Value("${props.worker.port}")
+    @Value("${webmaple.worker.port}")
     private Integer workerPort;
 
     // @Scheduled(cron = "0 0/20 * * * ?")

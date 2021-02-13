@@ -9,7 +9,7 @@ spring:
       pool:
         max-idle: 50
         max-wait: 5000
-props:
+webmaple:
   admin:
     host: 101.37.89.200
     port: 8080
