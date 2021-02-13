@@ -6,6 +6,10 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
     let upload = layui.upload;
     let $ = layui.jquery;
 
+    form.on('submit(nodeForm)', function(data) {
+        
+    });
+
     var uploadInst = upload.render({
         elem: '#upload' //绑定元素
         ,url: '/upload' //上传接口

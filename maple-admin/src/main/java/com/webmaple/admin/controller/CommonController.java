@@ -36,9 +36,6 @@ public class CommonController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
 
     @Resource
-    private NodeManageService nodeManageService;
-
-    @Resource
     private ComponentService componentService;
 
     @Resource
@@ -187,48 +184,6 @@ public class CommonController {
         return userService.modifyPassword(phone, oldPass, newPass);
     }
 
-    @RequestMapping("/upload")
-    @ResponseBody
-    public DataTableDTO upload(@RequestParam MultipartFile file) {
-        String targetFilePath = "/Users/lyifee/TriSources";
-        String fileName = file.getOriginalFilename();
-        File targetFile = new File(targetFilePath + File.separator + fileName);
-
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(targetFile);
-            IOUtils.copy(file.getInputStream(), fileOutputStream);
-            LOGGER.info("------>>>>>>uploaded a file successfully!<<<<<<------");
-
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-
-        } finally {
-            try {
-                assert fileOutputStream != null;
-                fileOutputStream.close();
-            } catch (Exception e) {
-                LOGGER.error("", e);
-            }
-        }
-        DataTableDTO dataTableDTO = new DataTableDTO();
-        dataTableDTO.setCode(200);
-        dataTableDTO.setMsg("success");
-        dataTableDTO.setData("upload file");
-        return dataTableDTO;
-    }
-
-    @RequestMapping("/workers")
-    @ResponseBody
-    public List<String> workers() {
-        List<String> list = new ArrayList<>();
-        List<NodeDTO> workers = workerContainer.getWorkerList();
-        for (NodeDTO worker : workers) {
-            list.add(worker.getName());
-        }
-        return list;
-    }
-
     @RequestMapping("/heartbeat")
     @ResponseBody
     public Result<Void> heartbeat(@RequestParam(required = false) String workerName,
@@ -260,47 +215,6 @@ public class CommonController {
             return result.fail("null_workerName_heartbeat");
         }
         workerContainer.aliveWorker(workerName);
-        return result.success();
-    }
-
-    @RequestMapping("/nodeList")
-    @ResponseBody
-    public DataTableDTO queryNodeList(@RequestParam int page, @RequestParam int limit) {
-        List<NodeDTO> nodeList = nodeManageService.queryNodeList();
-        DataTableDTO dataTableDTO = new DataTableDTO();
-        dataTableDTO.setCode(0);
-        dataTableDTO.setMsg("");
-        if (CollectionUtils.isEmpty(nodeList)) {
-            dataTableDTO.setCount(0);
-        } else {
-            dataTableDTO.setCount(nodeList.size());
-        }
-        dataTableDTO.setData(JSON.toJSON(nodeList));
-        return dataTableDTO;
-    }
-
-    @RequestMapping("/addWorker")
-    @ResponseBody
-    public Result<Void> addWorker(@RequestParam String ip, @RequestParam String name) {
-        assert StringUtils.isNotBlank(ip);
-        assert StringUtils.isNotBlank(name);
-
-        NodeDTO worker = new NodeDTO();
-        worker.setType(NodeType.WORKER.getType());
-        worker.setIp(ip);
-        worker.setName(name);
-        nodeManageService.addWorker(worker);
-        Result<Void> result = new Result<>();
-        return result.success();
-    }
-
-    @RequestMapping("/removeWorker")
-    @ResponseBody
-    public Result<Void> removeWorker(@RequestParam String name) {
-        assert StringUtils.isNotBlank(name);
-
-        nodeManageService.removeWorker(name);
-        Result<Void> result = new Result<>();
         return result.success();
     }
 }
