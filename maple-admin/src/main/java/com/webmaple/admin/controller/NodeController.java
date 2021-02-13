@@ -1,5 +1,6 @@
 package com.webmaple.admin.controller;
 
+import ch.ethz.ssh2.Connection;
 import com.alibaba.fastjson.JSON;
 import com.webmaple.admin.BeanConfig;
 import com.webmaple.admin.container.WorkerContainer;
@@ -75,12 +76,22 @@ public class NodeController {
     public Result<Void> addWorker(@RequestParam String ip, @RequestParam String user,
                                   @RequestParam String password, @RequestParam Integer port, @RequestParam String fileName) {
         Result<Void> result = new Result<>();
-        if (StringUtils.isBlank(ip) || StringUtils.isBlank(user) || StringUtils.isBlank(password) || port == null) {
+        if (StringUtils.isBlank(ip) || StringUtils.isBlank(user) || StringUtils.isBlank(password)
+                || StringUtils.isBlank(fileName) || port == null) {
             return result.fail("参数为空");
         }
 
         String jarPath = beanConfig.getJarPath();
+        String filePath = getFullFilePath(jarPath, fileName);
+        File targetFile = new File(filePath);
+        if (!targetFile.exists() || !targetFile.isFile() || !fileName.endsWith(".jar")) {
+            return result.fail("jar包上传出现错误");
+        }
 
+        Connection conn = SSHUtil.getConnection(ip, user, password);
+        SSHUtil.uploadFile(conn, filePath);
+        SSHUtil.execCommand(conn, "nohup java -jar " + fileName + " > temp.log 2>&1 &");
+        SSHUtil.close(conn);
 
         NodeDTO worker = new NodeDTO();
         worker.setType(NodeType.WORKER.getType());
@@ -95,7 +106,7 @@ public class NodeController {
     public DataTableDTO upload(@RequestParam MultipartFile file) {
         String targetFilePath = beanConfig.getJarPath();
         String fileName = file.getOriginalFilename();
-        File targetFile = new File(targetFilePath + File.separator + fileName);
+        File targetFile = new File(getFullFilePath(targetFilePath, fileName));
 
         FileOutputStream fileOutputStream = null;
         try {
@@ -128,5 +139,9 @@ public class NodeController {
         nodeManageService.removeWorker(name);
         Result<Void> result = new Result<>();
         return result.success();
+    }
+
+    private String getFullFilePath(String filepath, String filename) {
+        return filepath + File.separator + filename;
     }
 }
