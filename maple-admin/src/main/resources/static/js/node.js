@@ -7,7 +7,22 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
     let $ = layui.jquery;
 
     form.on('submit(nodeForm)', function(data) {
-        
+        var filename = layui.data('filename').filename;
+        if (filename) {
+            $.ajax({
+                type: 'post',
+                url: 'addWorker',
+                data: {
+                    ip: data.field.newIp,
+                    user: data.field.user,
+                    password: data.field.password,
+                    port: data.field.port,
+                    fileName: ;
+                }
+            });
+        } else {
+            layer.msg("请上传jar包");
+        }
     });
 
     var uploadInst = upload.render({
@@ -15,12 +30,19 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
         ,url: '/upload' //上传接口
         ,accept: 'file'
         ,drag: true
+        ,choose: function(obj) {
+            var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+            //读取本地文件
+            obj.preview(function (index, file, result) {
+                layui.data('filename', {
+                    key: 'filename',
+                    value: file.name
+                });
+            });
+        }
         ,progress: function(n, elem) {
             var percent = n + '%' //获取进度百分比
             element.progress('demo', percent); //可配合 layui 进度条元素使用
-
-            //以下系 layui 2.5.6 新增
-            console.log(elem); //得到当前触发的元素 DOM 对象。可通过该元素定义的属性值匹配到对应的进度条。
         }
         ,done: function(res){
             //上传完毕回调
