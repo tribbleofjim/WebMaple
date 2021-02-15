@@ -1,5 +1,7 @@
 package com.webmaple.common.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.webmaple.common.enums.WebProtocol;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -132,6 +134,11 @@ public class RequestUtil {
                 response.getEntity().getContentType().getValue();
         String charset = getHtmlCharset(contentType, bytes);
         return new String(bytes, charset);
+    }
+
+    public static JSONObject getResponseObject(CloseableHttpResponse response) throws IOException {
+        String text = getResponseText(response);
+        return JSON.parseObject(text);
     }
 
     public static String getHtmlCharset(String contentType, byte[] contentBytes) throws IOException {

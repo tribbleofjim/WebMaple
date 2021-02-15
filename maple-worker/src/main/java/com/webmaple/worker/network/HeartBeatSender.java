@@ -73,7 +73,7 @@ public class HeartBeatSender {
         return workerName;
     }
 
-    private void setWorkerName(String workerName) {
+    public void setWorkerName(String workerName) {
         this.workerName = workerName;
     }
 }
