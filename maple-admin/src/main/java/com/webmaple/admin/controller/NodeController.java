@@ -9,6 +9,7 @@ import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.DataTableDTO;
 import com.webmaple.common.model.NodeDTO;
 import com.webmaple.common.model.Result;
+import com.webmaple.common.util.CommonUtil;
 import com.webmaple.common.util.SSHUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -81,16 +82,7 @@ public class NodeController {
             return result.fail("参数为空");
         }
 
-        String jarPath = beanConfig.getJarPath();
-        String filePath = getFullFilePath(jarPath, fileName);
-        File targetFile = new File(filePath);
-        if (!targetFile.exists() || !targetFile.isFile() || !fileName.endsWith(".jar")) {
-            return result.fail("jar包上传出现错误");
-        }
-
-
-
-        return result.success();
+        return nodeManageService.addWorker(ip, user, password, port, fileName);
     }
 
     @RequestMapping("/upload")
@@ -98,7 +90,7 @@ public class NodeController {
     public DataTableDTO upload(@RequestParam MultipartFile file) {
         String targetFilePath = beanConfig.getJarPath();
         String fileName = file.getOriginalFilename();
-        File targetFile = new File(getFullFilePath(targetFilePath, fileName));
+        File targetFile = new File(CommonUtil.getFullFilePath(targetFilePath, fileName));
 
         FileOutputStream fileOutputStream = null;
         try {
@@ -131,9 +123,5 @@ public class NodeController {
         nodeManageService.removeWorker(name);
         Result<Void> result = new Result<>();
         return result.success();
-    }
-
-    private String getFullFilePath(String filepath, String filename) {
-        return filepath + File.separator + filename;
     }
 }

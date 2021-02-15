@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 /**
  * @author lyifee
  * on 2021/2/11
@@ -31,4 +33,9 @@ public class CommonUtil {
             throw new RuntimeException("invalid_rawCron : " + rawCron);
         }
     }
+
+    public static String getFullFilePath(String filepath, String filename) {
+        return filepath + File.separator + filename;
+    }
+
 }

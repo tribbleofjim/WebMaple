@@ -12,7 +12,7 @@ import java.util.List;
 public interface NodeManageService {
     List<NodeDTO> queryNodeList();
 
-    Result<Void> addWorker(String ip, String user, String password, String filePath, String fileName);
+    Result<Void> addWorker(String ip, String user, String password, Integer port, String fileName);
 
     void removeWorker(String workerName);
 

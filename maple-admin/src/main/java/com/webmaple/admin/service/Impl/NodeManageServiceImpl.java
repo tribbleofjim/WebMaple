@@ -2,12 +2,14 @@ package com.webmaple.admin.service.Impl;
 
 import ch.ethz.ssh2.Connection;
 import com.alibaba.fastjson.JSONObject;
+import com.webmaple.admin.BeanConfig;
 import com.webmaple.admin.container.WorkerContainer;
 import com.webmaple.common.enums.NodeType;
 import com.webmaple.common.model.NodeDTO;
 import com.webmaple.admin.service.NodeManageService;
 import com.webmaple.common.model.Result;
 import com.webmaple.common.network.RequestSender;
+import com.webmaple.common.util.CommonUtil;
 import com.webmaple.common.util.RequestUtil;
 import com.webmaple.common.util.SSHUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,18 +35,29 @@ public class NodeManageServiceImpl implements NodeManageService {
     @Autowired
     private RequestSender requestSender;
 
+    @Autowired
+    private BeanConfig beanConfig;
+
     @Override
     public List<NodeDTO> queryNodeList() {
         return workerContainer.getWorkerList();
     }
 
     @Override
-    public Result<Void> addWorker(String ip, String user, String password, String filePath, String fileName) {
+    public Result<Void> addWorker(String ip, String user, String password, Integer port, String fileName) {
         Result<Void> result = new Result<>();
+
+        String jarPath = beanConfig.getJarPath();
+        String filePath = CommonUtil.getFullFilePath(jarPath, fileName);
+        File targetFile = new File(filePath);
+        if (!targetFile.exists() || !targetFile.isFile() || !fileName.endsWith(".jar")) {
+            return result.fail("jar包上传出现错误");
+        }
 
         NodeDTO worker = new NodeDTO();
         worker.setType(NodeType.WORKER.getType());
         worker.setIp(ip);
+        worker.setPort(port);
         String workerName = workerContainer.addWorker(worker);
         if (StringUtils.isBlank(workerName)) {
             return result.fail("节点类型错误或创建节点个数已达到最大上限");
@@ -78,6 +92,7 @@ public class NodeManageServiceImpl implements NodeManageService {
     // TODO: 删除服务器上已经在运行的节点
     private void shutdownWorkerServer(String ip, String user, String password) {
     }
+
 
     @Override
     public void removeWorker(String workerName) {
