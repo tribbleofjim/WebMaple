@@ -12,8 +12,8 @@
     <artifactId>admin</artifactId>
     <dependencies>
         <dependency>
-            <groupId>org.lyifee</groupId>
-            <artifactId>maple-common</artifactId>
+            <groupId>org.webmaple</groupId>
+            <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
