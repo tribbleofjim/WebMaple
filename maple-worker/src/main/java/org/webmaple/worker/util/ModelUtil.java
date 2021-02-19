@@ -2,6 +2,7 @@ package org.webmaple.worker.util;
 
 import com.alibaba.fastjson.JSON;
 import org.webmaple.common.model.SpiderDTO;
+import org.webmaple.worker.config.JedisSPI;
 import org.webmaple.worker.job.model.QuartzJob;
 import org.webmaple.worker.job.model.SpiderInfo;
 import org.apache.commons.collections.CollectionUtils;
@@ -29,7 +30,7 @@ public class ModelUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(ModelUtil.class);
 
     @Autowired
-    private JedisPool jedisPool;
+    private JedisSPI jedisSPI;
 
     public Spider getSpiderFromDTO(SpiderDTO spiderDTO) {
         try {
@@ -60,7 +61,7 @@ public class ModelUtil {
                     .addUrl(urls)
                     .addPipeline(pipeline)
                     .addPipeline(new ConsolePipeline())
-                    .setScheduler(new RedisScheduler(getJedisPool()))
+                    .setScheduler(new RedisScheduler(jedisSPI.getJedisPool()))
                     .thread(threadNum);
 
             if (downloader != null) {
@@ -80,7 +81,7 @@ public class ModelUtil {
 
         quartzJob.setExecuting(true);
         quartzJob.setJobName("job_" + randomPlus);
-        quartzJob.setJobClazz("com.webmaple.worker.job.spider.SpiderJob");
+        quartzJob.setJobClazz("org.webmaple.worker.job.spider.SpiderJob");
         String cron = getCron(rawCron);
         if (StringUtils.isBlank(cron)) {
             LOGGER.error("invalid_cron");
@@ -112,10 +113,6 @@ public class ModelUtil {
             builder.append(",").append(str);
         }
         return builder.toString().substring(1);
-    }
-
-    private JedisPool getJedisPool() {
-        return jedisPool;
     }
 
     private String getCron(String rawCron) {

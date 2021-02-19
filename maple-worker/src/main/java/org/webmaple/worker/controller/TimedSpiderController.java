@@ -74,7 +74,7 @@ public class TimedSpiderController {
     public Result<Void> pauseSpider(@RequestParam String jobName) {
         Result<Void> result = new Result<>();
         try {
-            jobService.pauseJob(jobName, "com.webmaple.worker.job.spider.SpiderJob");
+            jobService.pauseJob(jobName, "org.webmaple.worker.job.spider.SpiderJob");
             return result.success();
 
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class TimedSpiderController {
     public Result<Void> resumeSpider(@RequestParam String jobName) {
         Result<Void> result = new Result<>();
         try {
-            jobService.resumeJob(jobName, "com.webmaple.worker.job.spider.SpiderJob");
+            jobService.resumeJob(jobName, "org.webmaple.worker.job.spider.SpiderJob");
             return result.success();
 
         } catch (Exception e) {
@@ -102,7 +102,7 @@ public class TimedSpiderController {
     public Result<Void> deleteSpider(@RequestParam String jobName) {
         Result<Void> result = new Result<>();
         try {
-            jobService.deleteJob(jobName, "com.webmaple.worker.job.spider.SpiderJob");
+            jobService.deleteJob(jobName, "org.webmaple.worker.job.spider.SpiderJob");
             return result.success();
 
         } catch (Exception e) {

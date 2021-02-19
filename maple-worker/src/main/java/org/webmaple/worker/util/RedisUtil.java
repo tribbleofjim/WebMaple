@@ -2,8 +2,10 @@ package org.webmaple.worker.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.webmaple.worker.config.JedisSPI;
 import redis.clients.jedis.BinaryClient;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -17,12 +19,22 @@ import java.util.Set;
  * on 2021/1/20
  */
 @Component
-public class RedisUtil {
+public class RedisUtil implements InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisUtil.class);
 
-    // TODO: user should add a jedispool into this bean
-    @Autowired
     private JedisPool jedisPool;
+
+    @Autowired
+    private JedisSPI jedisSPI;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (jedisSPI == null) {
+            LOGGER.error("jedisSPI is not implemented!");
+            return;
+        }
+        this.jedisPool = jedisSPI.getJedisPool();
+    }
 
     public static void close(Jedis jedis) {
         if (jedis != null) {
@@ -820,5 +832,4 @@ public class RedisUtil {
         }
         return res;
     }
-    
 }

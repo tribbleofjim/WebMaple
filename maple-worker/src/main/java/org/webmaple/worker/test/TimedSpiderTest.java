@@ -28,7 +28,7 @@ public class TimedSpiderTest implements InitializingBean {
         SpiderDTO spiderDTO = new SpiderDTO();
         spiderDTO.setDownloader("us.codecraft.webmagic.downloader.HttpClientDownloader");
         spiderDTO.setProcessor("us.codecraft.webmagic.processor.example.BaiduBaikePageProcessor");
-        spiderDTO.setPipeline("com.webmaple.worker.test.TestPipeline");
+        spiderDTO.setPipeline("org.webmaple.worker.test.TestPipeline");
         spiderDTO.setThreadNum(1);
         List<String> urls = new ArrayList<>();
         String urlTemplate = "http://baike.baidu.com/search/word?word=%s&pic=1&sug=1&enc=utf8";

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.webmaple.worker.util.RedisUtil;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -36,7 +37,7 @@ public class RedisConfig {
     private boolean  blockWhenExhausted;
 
     @Bean
-    public JedisPool redisPoolFactory()  throws Exception{
+    public JedisPool jedisPool()  throws Exception {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
@@ -46,5 +47,4 @@ public class RedisConfig {
         jedisPoolConfig.setJmxEnabled(true);
         return new JedisPool(jedisPoolConfig, host, port, timeout);
     }
-
 }
