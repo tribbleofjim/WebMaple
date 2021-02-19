@@ -12,7 +12,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="maple-admin" target="1.8" />
+      <module name="maple-common" target="1.8" />
       <module name="maple-network" target="1.8" />
+      <module name="maple-worker" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
