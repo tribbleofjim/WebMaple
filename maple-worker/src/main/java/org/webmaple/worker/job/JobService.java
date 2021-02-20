@@ -1,5 +1,6 @@
 package org.webmaple.worker.job;
 
+import org.apache.commons.lang3.StringUtils;
 import org.webmaple.worker.job.model.QuartzJob;
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class JobService implements InitializingBean {
                 .withSchedule(scheduleBuilder).build();
 
         //传递参数
-        if(quartzJob.getExtraInfo()!=null && !"".equals(quartzJob.getExtraInfo())) {
+        if(StringUtils.isNotBlank(quartzJob.getExtraInfo())) {
             jobDetail.getJobDataMap().put(JobMapDataKey.EXTRA_INFO.getKey(), quartzJob.getExtraInfo());
         }
         scheduler.scheduleJob(jobDetail, trigger);
