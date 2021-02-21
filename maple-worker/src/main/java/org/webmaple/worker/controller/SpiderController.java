@@ -1,14 +1,11 @@
 package org.webmaple.worker.controller;
 
+import org.springframework.web.bind.annotation.*;
 import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.worker.SpiderProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class SpiderController {
 
     @PostMapping("/createSpider")
     @ResponseBody
-    public Result<Void> createSpider(@RequestParam SpiderDTO spiderDTO) {
+    public Result<Void> createSpider(@RequestBody SpiderDTO spiderDTO) {
         spiderProcess.createSpider(spiderDTO);
         Result<Void> result = new Result<>();
         return result.success();

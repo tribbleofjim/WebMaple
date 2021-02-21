@@ -28,6 +28,7 @@ public class ReflectionsConfig implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+
         reflections = new Reflections(packagePath);
     }
 }

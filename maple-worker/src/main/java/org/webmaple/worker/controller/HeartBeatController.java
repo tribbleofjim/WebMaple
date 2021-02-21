@@ -1,5 +1,6 @@
 package org.webmaple.worker.controller;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.webmaple.common.model.Result;
 import org.webmaple.worker.network.HeartBeatSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class HeartBeatController {
 
     @GetMapping("/setWorkerName")
     @ResponseBody
-    public Result<Void> setWorkerName(String workerName) {
+    public Result<Void> setWorkerName(@RequestParam String workerName) {
         Result<Void> result = new Result<>();
         try {
             heartBeatSender.setWorkerName(workerName);

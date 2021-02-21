@@ -37,7 +37,7 @@ public class SpiderDTO {
      */
     private String processor;
 
-    /**
+    /**a
      * spider pipeline 全类名
      */
     private String pipeline;
