@@ -29,9 +29,7 @@ public class SpiderController {
     @RequestMapping("/startSpider")
     @ResponseBody
     public Result<Void> startSpider(@RequestParam String uuid) {
-        spiderProcess.startSpider(uuid);
-        Result<Void> result = new Result<>();
-        return result.success();
+        return spiderProcess.startSpider(uuid);
     }
 
     @RequestMapping("/removeSpider")

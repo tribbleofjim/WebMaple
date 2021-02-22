@@ -44,11 +44,16 @@ public class SpiderContainer {
         return SPIDER_MAP.get(uuid);
     }
 
-    public static void removeSpiderDTO(String uuid) {
+    public static void removeSpider(String uuid) {
+        Spider spider = EXECUTING_SPIDER_MAP.get(uuid);
+        if (spider != null) {
+            spider.stop();
+        }
+        EXECUTING_SPIDER_MAP.remove(uuid);
         SPIDER_MAP.remove(uuid);
     }
 
-    public static void runSpider(Spider spider) {
+    public static void createExecutableSpider(Spider spider) {
         EXECUTING_SPIDER_MAP.put(spider.getUUID(), spider);
     }
 

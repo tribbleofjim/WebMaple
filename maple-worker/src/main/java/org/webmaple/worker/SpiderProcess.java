@@ -89,7 +89,7 @@ public class SpiderProcess {
     }
 
     private void run(Spider spider) {
-        SpiderContainer.runSpider(spider);
+        SpiderContainer.createExecutableSpider(spider);
         threadPool.execute(spider);
     }
 
@@ -108,7 +108,7 @@ public class SpiderProcess {
         if (StringUtils.isBlank(uuid)) {
             return;
         }
-        SpiderContainer.removeSpiderDTO(uuid);
+        SpiderContainer.removeSpider(uuid);
     }
 
     public void stopSpider(String uuid) {
