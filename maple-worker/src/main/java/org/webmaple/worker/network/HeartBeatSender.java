@@ -2,6 +2,7 @@ package org.webmaple.worker.network;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.webmaple.common.network.RequestSender;
 import org.webmaple.common.util.RequestUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -44,7 +45,7 @@ public class HeartBeatSender {
     @Value("${webmaple.worker.port}")
     private Integer workerPort;
 
-    // @Scheduled(cron = "0 0/20 * * * ?")
+    @Scheduled(cron = "0 0/20 * * * ?")
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
         if (workerName == null) {
