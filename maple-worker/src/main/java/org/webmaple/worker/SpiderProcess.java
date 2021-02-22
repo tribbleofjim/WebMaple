@@ -81,7 +81,10 @@ public class SpiderProcess {
     }
 
     public void modifySpider(SpiderDTO spiderDTO) {
-
+        if (spiderDTO == null || StringUtils.isBlank(spiderDTO.getUuid())) {
+            return;
+        }
+        SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
     }
 
     public void removeSpider(String uuid) {

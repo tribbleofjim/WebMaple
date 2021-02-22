@@ -108,21 +108,30 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
 
     function startSpider(data) {
         // do start spider
-        console.log(data);
-        layer.msg('启动成功！');
+        layer.open({
+            content: '确认要启动这个爬虫吗？',
+            btn: ['确认', '取消']
+            ,btn1: function(index, layero){
+                // do restart spider
+                layer.msg('启动成功!');
+            },
+            btn2: function(index, layero){
+                layer.closeAll();
+            }
+        });
     }
 
     function restartSpider(data) {
         layer.open({
             content: '确认要重启这个爬虫吗？',
             btn: ['确认', '取消']
-                ,btn1: function(index, layero){
-                    // do restart spider
-                    layer.msg('重启成功');
-                },
-                btn2: function(index, layero){
-                    layer.closeAll();
-                }
+            ,btn1: function(index, layero){
+                // do restart spider
+                layer.msg('重启成功!');
+            },
+            btn2: function(index, layero){
+                layer.closeAll();
+            }
         });
     }
 
@@ -130,14 +139,14 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         layer.open({
             content: '确认要停止这个爬虫吗？',
             btn: ['确认', '取消']
-                ,btn1: function(index, layero){
-                    // do stop spider
-                    console.log(data);
-                    layer.msg('停止');
-                },
-                btn2: function(index, layero){
-                    layer.closeAll();
-                }
+            ,btn1: function(index, layero){
+                // do stop spider
+                console.log(data);
+                layer.msg('停止');
+            },
+            btn2: function(index, layero){
+                layer.closeAll();
+            }
         });
     }
 
@@ -167,13 +176,13 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         layer.open({
             content: '确认要删除吗？',
             btn: ['确认', '取消']
-                ,btn1: function(index, layero){
-                    // do delete spider
-                    layer.msg('删除成功');
-                },
-                btn2: function(index, layero){
-                    layer.closeAll();
-                }
+            ,btn1: function(index, layero){
+                // do delete spider
+                layer.msg('删除成功');
+            },
+            btn2: function(index, layero){
+                layer.closeAll();
+            }
         });
     }
 });

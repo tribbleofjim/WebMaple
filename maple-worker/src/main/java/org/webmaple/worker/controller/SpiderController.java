@@ -50,6 +50,14 @@ public class SpiderController {
         return result.success();
     }
 
+    @RequestMapping("/modifySpider")
+    @ResponseBody
+    public Result<Void> modifySpider(@RequestBody SpiderDTO spiderDTO) {
+        spiderProcess.modifySpider(spiderDTO);
+        Result<Void> result = new Result<>();
+        return result.success();
+    }
+
     @RequestMapping("/spiderList")
     @ResponseBody
     public Result<List<SpiderDTO>> spiderList() {
