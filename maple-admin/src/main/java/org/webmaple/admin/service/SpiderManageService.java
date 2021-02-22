@@ -1,5 +1,6 @@
 package org.webmaple.admin.service;
 
+import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderDTO;
 
 import java.util.List;
@@ -13,29 +14,29 @@ public interface SpiderManageService {
      * create a spider
      * @param spiderDTO spider
      */
-    void createSpider(SpiderDTO spiderDTO);
+    Result<Void> createSpider(SpiderDTO spiderDTO);
 
     /**
      * start a spider
-     * @param spiderDTO spider
+     * @param uuid uuid
      */
-    void startSpider(SpiderDTO spiderDTO);
+    Result<Void> startSpider(String uuid);
 
     /**
      * remove a spider
      * @param uuid uuid of spider
      */
-    void removeSpider(String uuid);
+    Result<Void> removeSpider(String uuid);
 
     /**
      * stop a spider
      * @param uuid uuid of spider
      */
-    void stopSpider(String uuid);
+    Result<Void> stopSpider(String uuid);
 
     /**
      * query all spiders
      * @return spider list
      */
-    List<SpiderDTO> querySpiderList();
+    Result<List<SpiderDTO>> querySpiderList();
 }

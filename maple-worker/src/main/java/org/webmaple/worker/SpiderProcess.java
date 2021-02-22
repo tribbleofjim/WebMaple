@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.monitor.SpiderStatus;
 import us.codecraft.webmagic.thread.CountableThreadPool;
 import java.util.List;
 

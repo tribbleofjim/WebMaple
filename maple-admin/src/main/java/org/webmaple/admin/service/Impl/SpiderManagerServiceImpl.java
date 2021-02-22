@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.common.enums.SpiderState;
 import org.webmaple.common.model.NodeDTO;
+import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.admin.service.SpiderManageService;
 import org.webmaple.common.network.RequestSender;
@@ -35,35 +36,41 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     private RequestSender requestSender;
 
     @Override
-    public void createSpider(SpiderDTO spiderDTO) {
-        System.out.println("spiderDTO:" + spiderDTO);
+    public Result<Void> createSpider(SpiderDTO spiderDTO) {
+        Result<Void> result = new Result<>();
+        return result.success("创建成功！");
     }
 
     @Override
-    public void startSpider(SpiderDTO spiderDTO) {
-
+    public Result<Void> startSpider(String uuid) {
+        Result<Void> result = new Result<>();
+        return result.success("启动成功！");
     }
 
     @Override
-    public void removeSpider(String uuid) {
-
+    public Result<Void> removeSpider(String uuid) {
+        Result<Void> result = new Result<>();
+        return result.success("删除成功！");
     }
 
     @Override
-    public void stopSpider(String uuid) {
-
+    public Result<Void> stopSpider(String uuid) {
+        Result<Void> result = new Result<>();
+        return result.success("暂停成功！");
     }
 
     @Override
-    public List<SpiderDTO> querySpiderList() {
-        // return querySpiderListFromWorkers();
-        return mockSpiders();
+    public Result<List<SpiderDTO>> querySpiderList() {
+        Result<List<SpiderDTO>> result = new Result<>();
+        return result.success(mockSpiders());
     }
 
-    private void createSpiderFromWorker(SpiderDTO spiderDTO) {
+    private Result<Void> createSpiderFromWorker(SpiderDTO spiderDTO) {
+        Result<Void> result = new Result<>();
+
         if (spiderDTO == null) {
             LOGGER.error("null_spiderDTO_create_spider");
-            return;
+            return result.fail("爬虫实体不能为空");
         }
         NodeDTO worker = workerContainer.getWorker(spiderDTO.getWorker());
         HashMap<String, Object> params = new HashMap<>();
@@ -71,17 +78,25 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createSpider", params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
-            requestSender.request(httpUriRequest);
-
+            CloseableHttpResponse response = requestSender.request(httpUriRequest);
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
         } catch (Exception e) {
             LOGGER.error("create_spider_exception:", e);
+            return result.fail("admin端错误");
         }
     }
 
-    private void startSpiderFromWorker(String workerName, String uuid) {
+    private Result<Void> startSpiderFromWorker(String workerName, String uuid) {
+        Result<Void> result = new Result<>();
+
         if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
             LOGGER.error("null_param_start_spider");
-            return;
+            return result.fail("参数不能为空");
         }
         NodeDTO worker = workerContainer.getWorker(workerName);
         HashMap<String, String> params = new HashMap<>();
@@ -89,17 +104,26 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "startSpider", params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
-            requestSender.request(httpUriRequest);
+            CloseableHttpResponse response = requestSender.request(httpUriRequest);
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
 
         } catch (Exception e) {
             LOGGER.error("start_spider_exception:", e);
+            return result.fail("admin端错误");
         }
     }
 
-    private void removeSpiderFromWorker(String workerName, String uuid) {
+    private Result<Void> removeSpiderFromWorker(String workerName, String uuid) {
+        Result<Void> result = new Result<>();
+
         if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
             LOGGER.error("null_param_start_spider");
-            return;
+            return result.fail("参数不能为空");
         }
         NodeDTO worker = workerContainer.getWorker(workerName);
         HashMap<String, String> params = new HashMap<>();
@@ -107,17 +131,26 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "removeSpider", params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
-            requestSender.request(httpUriRequest);
+            CloseableHttpResponse response = requestSender.request(httpUriRequest);
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
 
         } catch (Exception e) {
             LOGGER.error("remove_spider_exception:", e);
+            return result.fail("admin端错误");
         }
     }
 
-    private void stopSpiderFromWorker(String workerName, String uuid) {
+    private Result<Void> stopSpiderFromWorker(String workerName, String uuid) {
+        Result<Void> result = new Result<>();
+
         if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
             LOGGER.error("null_param_start_spider");
-            return;
+            return result.fail("参数不能为空");
         }
         NodeDTO worker = workerContainer.getWorker(workerName);
         HashMap<String, String> params = new HashMap<>();
@@ -125,10 +158,17 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "stopSpider", params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
-            requestSender.request(httpUriRequest);
+            CloseableHttpResponse response = requestSender.request(httpUriRequest);
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
 
         } catch (Exception e) {
             LOGGER.error("stop_spider_exception:", e);
+            return result.fail("admin端错误");
         }
     }
 
