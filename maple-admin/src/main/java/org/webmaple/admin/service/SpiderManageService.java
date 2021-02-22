@@ -35,6 +35,12 @@ public interface SpiderManageService {
     Result<Void> stopSpider(String uuid);
 
     /**
+     * modify a spider
+     * @param threadNum thread num
+     */
+    Result<Void> modifySpider(Integer threadNum);
+
+    /**
      * query all spiders
      * @return spider list
      */

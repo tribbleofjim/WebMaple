@@ -28,19 +28,19 @@ public class SpiderManageController {
     @PostMapping("/createSpider")
     @ResponseBody
     public Result<Void> createSpider(SpiderView spiderView) {
-        Result<Void> result = new Result<>();
-
-        if (spiderView == null || CollectionUtils.isEmpty(spiderView.getStartUrls())) {
-            return result.fail(CommonErrorCode.NULL_PARAM);
-        }
-        spiderManageService.createSpider(ModelConverter.getSpiderDTOFromView(spiderView));
-        return result.success("创建成功！");
+        return spiderManageService.createSpider(ModelConverter.getSpiderDTOFromView(spiderView));
     }
 
     @GetMapping("/startSpider")
     @ResponseBody
     public Result<Void> startSpider(String uuid) {
         return spiderManageService.startSpider(uuid);
+    }
+
+    @PostMapping("/modifySpider")
+    @ResponseBody
+    public Result<Void> modifySpider(@RequestParam Integer threadNum) {
+        return spiderManageService.modifySpider(threadNum);
     }
 
     @RequestMapping("/deleteSpider")

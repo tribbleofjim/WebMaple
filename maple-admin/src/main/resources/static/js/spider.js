@@ -105,6 +105,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
 
     function startSpider(data) {
         // do start spider
+        var uuid = data.field.uuid;
         layer.open({
             content: '确认要启动这个爬虫吗？',
             btn: ['确认', '取消']
@@ -112,12 +113,12 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                 // do restart spider
                 $.ajax({
                     type: 'get',
-                    url: 'getTemplate',
+                    url: 'startSpider',
                     data: {
-                        templateName: templateName
+                        uuid: uuid
                     },
                     success: function (res) {
-                        layer.msg("启动成功！");
+                        layer.msg(res.message);
                     }
                 });
             },
@@ -128,13 +129,22 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     }
 
     function stopSpider(data) {
+        var uuid = data.field.uuid;
         layer.open({
             content: '确认要停止这个爬虫吗？',
             btn: ['确认', '取消']
             ,btn1: function(index, layero){
                 // do stop spider
-                console.log(data);
-                layer.msg('停止');
+                $.ajax({
+                    type: 'get',
+                    url: 'stopSpider',
+                    data: {
+                        uuid: uuid
+                    },
+                    success: function (res) {
+                        layer.msg(res.message);
+                    }
+                });
             },
             btn2: function(index, layero){
                 layer.closeAll();
@@ -143,6 +153,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     }
 
     function updateSpider(data) {
+        var newThreadNum = document.getElementById("newThreadNum").value;
         layer.open({
             type:1,
             area:['400px','300px'],
@@ -152,6 +163,16 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             btn: ['提交', '重置']
             ,btn1: function(index, layero){
                 // do update spider
+                $.ajax({
+                    type: 'post',
+                    url: 'modifySpider',
+                    data: {
+                        threadNum: newThreadNum
+                    },
+                    success: function (res) {
+                        layer.msg(res.message);
+                    }
+                });
                 layer.msg('修改成功');
                 return true;
             },
@@ -165,12 +186,22 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     }
 
     function deleteSpider(data) {
+        var uuid = data.field.uuid;
         layer.open({
-            content: '确认要删除吗？',
+            content: '确认要删除这个爬虫吗？',
             btn: ['确认', '取消']
             ,btn1: function(index, layero){
-                // do delete spider
-                layer.msg('删除成功');
+                // do restart spider
+                $.ajax({
+                    type: 'get',
+                    url: 'deleteSpider',
+                    data: {
+                        uuid: uuid
+                    },
+                    success: function (res) {
+                        layer.msg(res.message);
+                    }
+                });
             },
             btn2: function(index, layero){
                 layer.closeAll();

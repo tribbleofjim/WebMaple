@@ -60,6 +60,12 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     }
 
     @Override
+    public Result<Void> modifySpider(Integer threadNum) {
+        Result<Void> result = new Result<>();
+        return result.success("修改成功！");
+    }
+
+    @Override
     public Result<List<SpiderDTO>> querySpiderList() {
         Result<List<SpiderDTO>> result = new Result<>();
         return result.success(mockSpiders());

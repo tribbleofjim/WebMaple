@@ -105,7 +105,13 @@ public class SpiderProcess {
         if (spiderDTO == null || StringUtils.isBlank(spiderDTO.getUuid())) {
             return result.fail("爬虫或爬虫uuid不能为空");
         }
-        SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
+        SpiderDTO oldSpiderDTO = SpiderContainer.getSpiderDTO(spiderDTO.getUuid());
+        if (oldSpiderDTO == null) {
+            SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
+        } else {
+            oldSpiderDTO.setThreadNum(spiderDTO.getThreadNum());
+            SpiderContainer.createSpider(spiderDTO.getUuid(), oldSpiderDTO);
+        }
         return result.success("修改成功！");
     }
 
