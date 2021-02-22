@@ -46,13 +46,13 @@ public class SpiderManageController {
     @RequestMapping("/deleteSpider")
     @ResponseBody
     public Result<Void> deleteSpider(@RequestParam String uuid) {
-        Result<Void> result = new Result<>();
+        return spiderManageService.removeSpider(uuid);
+    }
 
-        if (StringUtils.isBlank(uuid)) {
-            return result.fail(CommonErrorCode.NULL_PARAM);
-        }
-        spiderManageService.removeSpider(uuid);
-        return result.success();
+    @RequestMapping("/stopSpider")
+    @ResponseBody
+    public Result<Void> stopSpider(@RequestParam String uuid) {
+        return spiderManageService.stopSpider(uuid);
     }
 
     @RequestMapping("/spiderList")
