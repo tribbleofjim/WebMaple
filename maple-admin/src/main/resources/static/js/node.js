@@ -17,7 +17,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
                     user: data.field.user,
                     password: data.field.password,
                     port: data.field.port,
-                    fileName: ;
+                    fileName: filename
                 }
             });
         } else {
