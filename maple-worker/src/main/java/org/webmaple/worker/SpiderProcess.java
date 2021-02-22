@@ -1,5 +1,6 @@
 package org.webmaple.worker;
 
+import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.worker.util.ModelUtil;
 import org.webmaple.worker.container.SpiderContainer;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.monitor.SpiderStatus;
 import us.codecraft.webmagic.thread.CountableThreadPool;
 import java.util.List;
 
@@ -57,22 +59,37 @@ public class SpiderProcess {
         SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
     }
 
-    public void startSpider(String uuid) {
+    public Result<Void> startSpider(String uuid) {
+        Result<Void> result = new Result<>();
         if (StringUtils.isBlank(uuid)) {
-            return;
+            return result.fail("uuid不能为空！");
         }
+
+        Spider spider;
+        if ((spider = SpiderContainer.getSpider(uuid)) != null) {
+            if (Spider.Status.Running.equals(spider.getStatus())) {
+                return result.fail("该爬虫已经在运行");
+
+            } else {
+                run(spider);
+                return result.success("启动成功！");
+            }
+        }
+
         SpiderDTO spiderDTO = SpiderContainer.getSpiderDTO(uuid);
-        Spider spider = modelUtil.getSpiderFromDTO(spiderDTO);
-        if (spider == null) {
-            return;
+        if (spiderDTO == null) {
+            return result.fail("该爬虫不存在，请先创建");
         }
-        if (SpiderContainer.getSpiderDTO(spiderDTO.getUuid()) == null) {
-            createSpider(spiderDTO);
+        spider = modelUtil.getSpiderFromDTO(spiderDTO);
+        if (spider == null) {
+            return result.fail("获取spider错误");
         }
         run(spider);
+        return result.success("启动成功！");
     }
 
     private void run(Spider spider) {
+        SpiderContainer.runSpider(spider);
         threadPool.execute(spider);
     }
 

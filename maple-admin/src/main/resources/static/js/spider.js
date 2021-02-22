@@ -110,7 +110,16 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             btn: ['确认', '取消']
             ,btn1: function(index, layero){
                 // do restart spider
-                layer.msg('启动成功!');
+                $.ajax({
+                    type: 'get',
+                    url: 'getTemplate',
+                    data: {
+                        templateName: templateName
+                    },
+                    success: function (res) {
+                        layer.msg("启动成功！");
+                    }
+                });
             },
             btn2: function(index, layero){
                 layer.closeAll();
