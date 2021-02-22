@@ -21,9 +21,7 @@ public class SpiderController {
     @PostMapping("/createSpider")
     @ResponseBody
     public Result<Void> createSpider(@RequestBody SpiderDTO spiderDTO) {
-        spiderProcess.createSpider(spiderDTO);
-        Result<Void> result = new Result<>();
-        return result.success();
+        return spiderProcess.createSpider(spiderDTO);
     }
 
     @RequestMapping("/startSpider")
@@ -35,32 +33,24 @@ public class SpiderController {
     @RequestMapping("/removeSpider")
     @ResponseBody
     public Result<Void> removeSpider(@RequestParam String uuid) {
-        spiderProcess.removeSpider(uuid);
-        Result<Void> result = new Result<>();
-        return result.success();
+        return spiderProcess.removeSpider(uuid);
     }
 
     @RequestMapping("/stopSpider")
     @ResponseBody
     public Result<Void> stopSpider(@RequestParam String uuid) {
-        spiderProcess.stopSpider(uuid);
-        Result<Void> result = new Result<>();
-        return result.success();
+        return spiderProcess.stopSpider(uuid);
     }
 
     @RequestMapping("/modifySpider")
     @ResponseBody
     public Result<Void> modifySpider(@RequestBody SpiderDTO spiderDTO) {
-        spiderProcess.modifySpider(spiderDTO);
-        Result<Void> result = new Result<>();
-        return result.success();
+        return spiderProcess.modifySpider(spiderDTO);
     }
 
     @RequestMapping("/spiderList")
     @ResponseBody
     public Result<List<SpiderDTO>> spiderList() {
-        List<SpiderDTO> spiders = spiderProcess.getSpiders();
-        Result<List<SpiderDTO>> result = new Result<>();
-        return result.success(spiders);
+        return spiderProcess.getSpiders();
     }
 }

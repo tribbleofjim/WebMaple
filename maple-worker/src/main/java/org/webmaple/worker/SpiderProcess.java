@@ -52,11 +52,13 @@ public class SpiderProcess {
         this.threadNum = threadNum;
     }
 
-    public void createSpider(SpiderDTO spiderDTO) {
+    public Result<Void> createSpider(SpiderDTO spiderDTO) {
+        Result<Void> result = new Result<>();
         if (spiderDTO == null || StringUtils.isBlank(spiderDTO.getUuid())) {
-            return;
+            return result.fail("参数不能为空");
         }
         SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
+        return result.success("创建爬虫成功！");
     }
 
     public Result<Void> startSpider(String uuid) {
@@ -93,28 +95,36 @@ public class SpiderProcess {
         threadPool.execute(spider);
     }
 
-    public List<SpiderDTO> getSpiders() {
-        return SpiderContainer.getSpiderList();
+    public Result<List<SpiderDTO>> getSpiders() {
+        Result<List<SpiderDTO>> result = new Result<>();
+        List<SpiderDTO> spiderList =  SpiderContainer.getSpiderList();
+        return result.success(spiderList);
     }
 
-    public void modifySpider(SpiderDTO spiderDTO) {
+    public Result<Void> modifySpider(SpiderDTO spiderDTO) {
+        Result<Void> result = new Result<>();
         if (spiderDTO == null || StringUtils.isBlank(spiderDTO.getUuid())) {
-            return;
+            return result.fail("爬虫或爬虫uuid不能为空");
         }
         SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);
+        return result.success("修改成功！");
     }
 
-    public void removeSpider(String uuid) {
+    public Result<Void> removeSpider(String uuid) {
+        Result<Void> result = new Result<>();
         if (StringUtils.isBlank(uuid)) {
-            return;
+            return result.fail("uuid不能为空");
         }
         SpiderContainer.removeSpider(uuid);
+        return result.success("删除成功！");
     }
 
-    public void stopSpider(String uuid) {
+    public Result<Void> stopSpider(String uuid) {
+        Result<Void> result = new Result<>();
         if (StringUtils.isBlank(uuid)) {
-            return;
+            return result.fail("uuid不能为空");
         }
         SpiderContainer.stopSpider(uuid);
+        return result.success("暂停成功！");
     }
 }
