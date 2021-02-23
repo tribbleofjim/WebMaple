@@ -128,7 +128,7 @@ public class ModelUtil {
         return builder.toString().substring(1);
     }
 
-    private String getCron(String rawCron) {
+    public String getCron(String rawCron) {
         // 5m / 4h
         if (StringUtils.isBlank(rawCron)) {
             LOGGER.error("invalid_rawCron : {}", rawCron);
@@ -147,5 +147,20 @@ public class ModelUtil {
         } else {
             throw new RuntimeException("invalid_rawCron : " + rawCron);
         }
+    }
+
+    public String fromCron(String cron) {
+        if (StringUtils.isBlank(cron)) {
+            LOGGER.error("invalid_cron:{}", cron);
+            return null;
+        }
+        String[] strs = cron.split(" ");
+        String easyCron;
+        if (!strs[1].equals("0")) {
+            easyCron = strs[1].split("/")[1] + "m";
+        } else {
+            easyCron = strs[2].split("/")[1] + "h";
+        }
+        return easyCron;
     }
 }
