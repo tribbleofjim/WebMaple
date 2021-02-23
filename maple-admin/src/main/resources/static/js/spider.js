@@ -100,12 +100,11 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                 deleteSpider(data);
             break;
         };
-        event.stoppropagation();
     });
 
     function startSpider(data) {
         // do start spider
-        var uuid = data.field.uuid;
+        var uuid = data.uuid;
         layer.open({
             content: '确认要启动这个爬虫吗？',
             btn: ['确认', '取消']
@@ -129,7 +128,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     }
 
     function stopSpider(data) {
-        var uuid = data.field.uuid;
+        var uuid = data.uuid;
         layer.open({
             content: '确认要停止这个爬虫吗？',
             btn: ['确认', '取消']
@@ -186,7 +185,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     }
 
     function deleteSpider(data) {
-        var uuid = data.field.uuid;
+        var uuid = data.uuid;
         layer.open({
             content: '确认要删除这个爬虫吗？',
             btn: ['确认', '取消']

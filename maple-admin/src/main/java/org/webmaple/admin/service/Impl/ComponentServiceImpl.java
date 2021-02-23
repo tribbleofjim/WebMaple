@@ -82,14 +82,17 @@ public class ComponentServiceImpl implements ComponentService {
             if (i == 0) {
                 componentDTO.setType(ComponentType.DOWNLOADER.getType());
                 componentDTO.setName("com.ecspider.downloader.SeleniumDownloader");
+                componentDTO.setWorker("worker0,worker1");
             } else if (i == 1) {
                 componentDTO.setType(ComponentType.PROCESSOR.getType());
                 componentDTO.setName("com.ecspider.processor.JDProcessor");
                 componentDTO.setSite("jd.com");
+                componentDTO.setWorker("worker0,worker1");
             } else {
                 componentDTO.setType(ComponentType.PIPELINE.getType());
                 componentDTO.setName("com.ecspider.pipeline.JDPipeline");
                 componentDTO.setSite("jd.com");
+                componentDTO.setWorker("worker0,worker1");
             }
             componentList.add(componentDTO);
         }

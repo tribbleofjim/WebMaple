@@ -201,24 +201,24 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     private List<SpiderDTO> mockSpiders() {
         List<SpiderDTO> spiderDTOS = new ArrayList<>();
         Random random = new Random(20);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 8; i++) {
             SpiderDTO spiderDTO = new SpiderDTO();
-            if (i < 8) {
-                spiderDTO.setWorker("101.87.19.29");
+            if (i % 3 == 0) {
+                spiderDTO.setWorker("worker0");
                 spiderDTO.setUuid("jd.com" + random.nextInt(20));
                 spiderDTO.setUrls(Arrays.asList("https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=5&s=116&click=0",
                         "https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=7&s=176&click=0"));
                 spiderDTO.setState(SpiderState.RUNNING.getState());
                 spiderDTO.setThreadNum(1);
-            } else if (i < 16) {
-                spiderDTO.setWorker("144.34.288.164");
+            } else if (i % 3 == 1) {
+                spiderDTO.setWorker("worker2");
                 spiderDTO.setUuid("jd.com" + random.nextInt(20));
                 spiderDTO.setUrls(Arrays.asList("https://search.jd.com/Search?keyword=家电&suggest=1.def.0.base&wq=家电&page=5&s=116&click=0",
                         "https://search.jd.com/Search?keyword=家电&suggest=1.def.0.base&wq=家电&page=7&s=176&click=0"));
                 spiderDTO.setState(SpiderState.RUNNING.getState());
-                spiderDTO.setThreadNum(4);
+                spiderDTO.setThreadNum(2);
             } else {
-                spiderDTO.setWorker("101.87.19.29");
+                spiderDTO.setWorker("worker1");
                 spiderDTO.setUuid("jd.com" + random.nextInt(20));
                 spiderDTO.setUrls(Arrays.asList("https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=5&s=116&click=0",
                         "https://search.jd.com/Search?keyword=手机&suggest=1.def.0.base&wq=手机&page=7&s=176&click=0"));
