@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author lyifee
  * on 2021/1/14
  */
 public class SpiderContainer {
+    private static final AtomicInteger idx = new AtomicInteger(0);
+
     private static final ConcurrentHashMap<String, SpiderDTO> SPIDER_MAP = new ConcurrentHashMap<>();
 
     private static final ConcurrentHashMap<String, Spider> EXECUTING_SPIDER_MAP = new ConcurrentHashMap<>();
@@ -37,7 +40,8 @@ public class SpiderContainer {
         if (StringUtils.isBlank(uuid)) {
             return;
         }
-        SPIDER_MAP.put(uuid, spider);
+        int currentIdx = idx.incrementAndGet();
+        SPIDER_MAP.put(uuid + currentIdx, spider);
     }
 
     public static SpiderDTO getSpiderDTO(String uuid) {

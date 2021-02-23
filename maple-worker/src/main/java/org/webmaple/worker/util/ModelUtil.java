@@ -1,6 +1,7 @@
 package org.webmaple.worker.util;
 
 import com.alibaba.fastjson.JSON;
+import org.webmaple.common.enums.MaintainType;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.worker.config.JedisSPI;
 import org.webmaple.worker.job.model.QuartzJob;
@@ -77,10 +78,10 @@ public class ModelUtil {
     
     public QuartzJob getQuartzJobForSpider(SpiderDTO spiderDTO, String maintainType, int maintain, String rawCron) {
         QuartzJob quartzJob = new QuartzJob();
-        int randomPlus = new Random().nextInt(1000);
 
+        String uuid = spiderDTO.getUuid();
         quartzJob.setExecuting(true);
-        quartzJob.setJobName("job_" + randomPlus);
+        quartzJob.setJobName(getJobWithPlus(getUuidPlus(uuid)));
         quartzJob.setJobClazz("org.webmaple.worker.job.spider.SpiderJob");
         String cron = getCron(rawCron);
         if (StringUtils.isBlank(cron)) {
@@ -95,13 +96,25 @@ public class ModelUtil {
         spiderInfo.setProcessor(spiderDTO.getProcessor());
         spiderInfo.setPipeline(spiderDTO.getPipeline());
         spiderInfo.setUrls(listToString(spiderDTO.getUrls()));
-        spiderInfo.setUuid("spider_" + randomPlus);
+        spiderInfo.setUuid(uuid);
         spiderInfo.setDownloader(spiderDTO.getDownloader());
         spiderInfo.setThreadNum(spiderDTO.getThreadNum());
         spiderInfo.setMaintainUrlNum(maintain);
 
         quartzJob.setExtraInfo(JSON.toJSONString(spiderInfo));
         return quartzJob;
+    }
+
+    public String getUuidPlus(String uuid) {
+        String[] strs;
+        if (StringUtils.isBlank(uuid) || (strs = uuid.split("_")).length < 2) {
+            return null;
+        }
+        return strs[1];
+    }
+
+    public String getJobWithPlus(String plus) {
+        return "job_" + plus;
     }
 
     public String listToString(List<String> list) {

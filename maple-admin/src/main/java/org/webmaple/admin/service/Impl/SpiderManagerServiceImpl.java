@@ -73,12 +73,15 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     private Result<Void> createSpiderFromWorker(SpiderDTO spiderDTO) {
         Result<Void> result = new Result<>();
-
         if (spiderDTO == null) {
             LOGGER.error("null_spiderDTO_create_spider");
             return result.fail("爬虫实体不能为空");
         }
+
         NodeDTO worker = workerContainer.getWorker(spiderDTO.getWorker());
+        String uuid = spiderDTO.getUuid();
+        spiderDTO.setUuid(uuid + "_" + worker.getIdx());
+
         HashMap<String, Object> params = new HashMap<>();
         params.put("spiderDTO", spiderDTO);
         Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createSpider", params);
