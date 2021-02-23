@@ -1,7 +1,9 @@
 package org.webmaple.admin.service;
 
+import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.common.model.SpiderJobDTO;
+import org.webmaple.common.view.TimedSpiderView;
 
 import java.util.List;
 
@@ -10,13 +12,13 @@ import java.util.List;
  * on 2021/1/12
  */
 public interface TimedJobService {
-    void createTimedSpider(SpiderDTO spiderDTO, String maintainType, int maintain, String cron);
+    Result<Void> createTimedSpider(TimedSpiderView timedSpiderView);
 
-    void pauseSpider(String jobName);
+    Result<Void> pauseSpider(String jobName, String worker);
 
-    void resumeSpider(String jobName);
+    Result<Void> resumeSpider(String jobName, String worker);
 
-    void deleteSpider(String jobName);
+    Result<Void> deleteSpider(String jobName, String worker);
 
-    List<SpiderJobDTO> queryTimedJobList();
+    Result<List<SpiderJobDTO>> queryTimedJobList();
 }

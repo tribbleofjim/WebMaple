@@ -31,144 +31,35 @@ public class TimedManageController {
     @Autowired
     private TimedJobService timedJobService;
 
-    @Autowired
-    private WorkerContainer workerContainer;
-
-    @Autowired
-    private RequestSender requestSender;
-
     @PostMapping("/createTimedSpider")
     @ResponseBody
     public Result<Void> createTimedSpider(TimedSpiderView timedSpiderView) {
-        System.out.println(timedSpiderView);
-        Result<Void> result = new Result<>();
-        return result.success("添加成功！");
+        return timedJobService.createTimedSpider(timedSpiderView);
     }
 
     @GetMapping("/resumeTimedSpider")
     @ResponseBody
     public Result<Void> resumeTimedSpider(@RequestParam String jobName, @RequestParam String worker) {
-        System.out.println(jobName);
-        Result<Void> result = new Result<>();
-        return result.success("重新启动成功！");
+        return timedJobService.resumeSpider(jobName, worker);
     }
 
     @GetMapping("/pauseTimedSpider")
     @ResponseBody
     public Result<Void> pauseTimedSpider(@RequestParam String jobName, @RequestParam String worker) {
-        System.out.println(jobName);
-        Result<Void> result = new Result<>();
-        return result.success("暂停成功！");
+        return timedJobService.pauseSpider(jobName, worker);
     }
 
     @GetMapping("/deleteTimedSpider")
     @ResponseBody
     public Result<Void> deleteTimedSpider(@RequestParam String jobName, @RequestParam String worker) {
-        System.out.println(jobName);
-        Result<Void> result = new Result<>();
-        return result.success("删除成功！");
-    }
-
-    private Result<Void> createTimedSpiderFromWorker(TimedSpiderView timedSpiderView) {
-        Result<Void> result = new Result<>();
-        if (timedSpiderView == null) {
-            return result.fail("定时任务不能为空！");
-        }
-        String workerName = timedSpiderView.getWorker();
-        if (StringUtils.isBlank(workerName)) {
-            return result.fail("节点名称不能为空！");
-        }
-        NodeDTO worker = workerContainer.getWorker(workerName);
-        if (worker == null) {
-            return result.fail("无效的节点名称，请更换一个节点");
-        }
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("uuid", timedSpiderView.getUuid());
-        param.put("maintainType", timedSpiderView.getType());
-        param.put("maintain", timedSpiderView.getMaintain());
-        String rawCron = timedSpiderView.getCronNum() + timedSpiderView.getCronUnit();
-        param.put("cron", CommonUtil.getCron(rawCron));
-        Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createTimedSpider", param);
-        try {
-            CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
-
-        } catch (Exception e) {
-            return result.fail(e.getMessage());
-        }
-    }
-
-    private Result<Void> resumeTimedSpiderFromWorker(String jobName, String workerName) {
-        Result<Void> result = new Result<>();
-        if (StringUtils.isBlank(jobName) || StringUtils.isBlank(workerName)) {
-            return result.fail("定时任务名或节点名为空！");
-        }
-        NodeDTO worker = workerContainer.getWorker(workerName);
-        if (worker == null) {
-            return result.fail("无效的节点名称，请更换一个节点");
-        }
-        HashMap<String, String> param = new HashMap<>();
-        param.put("jobName", jobName);
-        Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "resumeTimedSpider", param);
-        try {
-            CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
-
-        } catch (Exception e) {
-            return result.fail(e.getMessage());
-        }
-    }
-
-    private Result<Void> pauseTimedSpiderFromWorker(String jobName, String workerName) {
-        Result<Void> result = new Result<>();
-        if (StringUtils.isBlank(jobName) || StringUtils.isBlank(workerName)) {
-            return result.fail("定时任务名或节点名为空！");
-        }
-        NodeDTO worker = workerContainer.getWorker(workerName);
-        if (worker == null) {
-            return result.fail("无效的节点名称，请更换一个节点");
-        }
-        HashMap<String, String> param = new HashMap<>();
-        param.put("jobName", jobName);
-        Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "pauseTimedSpider", param);
-        try {
-            CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
-
-        } catch (Exception e) {
-            return result.fail(e.getMessage());
-        }
-    }
-
-    private Result<Void> deleteTimedSpiderFromWorker(String jobName, String workerName) {
-        Result<Void> result = new Result<>();
-        if (StringUtils.isBlank(jobName) || StringUtils.isBlank(workerName)) {
-            return result.fail("定时任务名或节点名为空！");
-        }
-        NodeDTO worker = workerContainer.getWorker(workerName);
-        if (worker == null) {
-            return result.fail("无效的节点名称，请更换一个节点");
-        }
-        HashMap<String, String> param = new HashMap<>();
-        param.put("jobName", jobName);
-        Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "deleteTimedSpider", param);
-        try {
-            CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
-
-        } catch (Exception e) {
-            return result.fail(e.getMessage());
-        }
+        return timedJobService.deleteSpider(jobName, worker);
     }
 
     @RequestMapping("/timedJobs")
     @ResponseBody
     public DataTableDTO queryTimedJobsList(@RequestParam int page, @RequestParam int limit) {
-        List<SpiderJobDTO> jobList = timedJobService.queryTimedJobList();
+        Result<List<SpiderJobDTO>> result = timedJobService.queryTimedJobList();
+        List<SpiderJobDTO> jobList = result.getModel();
         DataTableDTO dataTableDTO = new DataTableDTO();
         dataTableDTO.setCode(0);
         dataTableDTO.setMsg("");
