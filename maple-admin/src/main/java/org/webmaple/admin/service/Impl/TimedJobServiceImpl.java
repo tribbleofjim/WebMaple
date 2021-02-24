@@ -1,7 +1,12 @@
 package org.webmaple.admin.service.Impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.common.enums.JobState;
@@ -28,6 +33,8 @@ import java.util.List;
  */
 @Service
 public class TimedJobServiceImpl implements TimedJobService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TimedJobServiceImpl.class);
+
     @Autowired
     private WorkerContainer workerContainer;
 
@@ -154,6 +161,27 @@ public class TimedJobServiceImpl implements TimedJobService {
         }
     }
 
+    private Result<List<SpiderJobDTO>> queryTimedJobListFromWorkers() {
+        List<NodeDTO> workers = workerContainer.getWorkerList();
+        List<SpiderJobDTO> spiderJobList = new ArrayList<>();
+        for (NodeDTO worker : workers) {
+            Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "timedSpiderList", null);
+            HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+            try {
+                CloseableHttpResponse response = requestSender.request(httpUriRequest);
+                String text = RequestUtil.getResponseText(response);
+                JSONObject spiderObject = JSON.parseObject(text);
+                List<SpiderJobDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderJobDTO.class);
+                spiderJobList.addAll(spiders);
+
+            } catch (Exception e) {
+                LOGGER.error("query_spider_job_list_exception:", e);
+            }
+        }
+        Result<List<SpiderJobDTO>> result = new Result<>();
+        return result.success(spiderJobList);
+    }
+
     @Override
     public Result<List<SpiderJobDTO>> queryTimedJobList() {
         Result<List<SpiderJobDTO>> result = new Result<>();
@@ -166,21 +194,21 @@ public class TimedJobServiceImpl implements TimedJobService {
             SpiderJobDTO spiderJobDTO = new SpiderJobDTO();
             if (i % 2 == 0) {
                 spiderJobDTO.setJobName("job_24");
-                spiderJobDTO.setWorker("myworker1");
+                spiderJobDTO.setWorker("worker2");
                 spiderJobDTO.setSpiderUUID("jd.com");
-                spiderJobDTO.setSpiderSite("jd.com");
                 spiderJobDTO.setType(MaintainType.URL_NUM.getType());
                 spiderJobDTO.setState(JobState.RUNNING.getState());
                 spiderJobDTO.setMaintain(1000);
+                spiderJobDTO.setCronExpression("0 0 0/2 * * ?");
 
             } else {
-                spiderJobDTO.setJobName("job_72");
-                spiderJobDTO.setWorker("myworker2");
+                spiderJobDTO.setJobName("job_12");
+                spiderJobDTO.setWorker("worker1");
                 spiderJobDTO.setSpiderUUID("jd.com");
-                spiderJobDTO.setSpiderSite("jd.com");
                 spiderJobDTO.setType(MaintainType.TIME.getType());
                 spiderJobDTO.setState(JobState.STOP.getState());
                 spiderJobDTO.setMaintain(180);
+                spiderJobDTO.setCronExpression("0 0 0/5 * * ?");
 
             }
             list.add(spiderJobDTO);

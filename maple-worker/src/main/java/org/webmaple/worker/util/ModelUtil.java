@@ -1,9 +1,12 @@
 package org.webmaple.worker.util;
 
 import com.alibaba.fastjson.JSON;
-import org.webmaple.common.enums.MaintainType;
+import com.alibaba.fastjson.JSONObject;
+import org.webmaple.common.enums.JobState;
 import org.webmaple.common.model.SpiderDTO;
+import org.webmaple.common.model.SpiderJobDTO;
 import org.webmaple.worker.config.JedisSPI;
+import org.webmaple.worker.job.JobMapDataKey;
 import org.webmaple.worker.job.model.QuartzJob;
 import org.webmaple.worker.job.model.SpiderInfo;
 import org.apache.commons.collections.CollectionUtils;
@@ -12,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.JedisPool;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.downloader.Downloader;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
@@ -103,6 +105,25 @@ public class ModelUtil {
 
         quartzJob.setExtraInfo(JSON.toJSONString(spiderInfo));
         return quartzJob;
+    }
+
+    public SpiderJobDTO getSpiderJobDTOFromQuartzJob(QuartzJob quartzJob) {
+        SpiderJobDTO spiderJobDTO = new SpiderJobDTO();
+        spiderJobDTO.setJobName(quartzJob.getJobName());
+        spiderJobDTO.setState((quartzJob.isExecuting()) ? JobState.RUNNING.getState() : JobState.STOP.getState());
+        spiderJobDTO.setCronExpression(quartzJob.getCronExpression());
+
+        String extraInfo = quartzJob.getExtraInfo();
+        JSONObject spiderInfo = JSON.parseObject(extraInfo);
+        spiderJobDTO.setSpiderUUID(spiderInfo.getString(JobMapDataKey.UUID.getKey()));
+        if (spiderInfo.containsKey(JobMapDataKey.MAINTAIN_URL_NUM.getKey())) {
+            spiderJobDTO.setType(JobMapDataKey.MAINTAIN_URL_NUM.getKey());
+            spiderJobDTO.setMaintain(spiderInfo.getInteger(JobMapDataKey.MAINTAIN_URL_NUM.getKey()));
+        } else {
+            spiderJobDTO.setType(JobMapDataKey.MAINTAIN_TIME.getKey());
+            spiderJobDTO.setMaintain(spiderInfo.getInteger(JobMapDataKey.MAINTAIN_TIME.getKey()));
+        }
+        return spiderJobDTO;
     }
 
     public String getUuidPlus(String uuid) {

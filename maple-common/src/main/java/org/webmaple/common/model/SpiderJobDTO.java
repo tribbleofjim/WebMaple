@@ -23,11 +23,6 @@ public class SpiderJobDTO {
     private String spiderUUID;
 
     /**
-     * 任务开启的spider site
-     */
-    private String spiderSite;
-
-    /**
      * 任务定时类型
      */
     private String type;
@@ -89,14 +84,6 @@ public class SpiderJobDTO {
 
     public void setSpiderUUID(String spiderUUID) {
         this.spiderUUID = spiderUUID;
-    }
-
-    public String getSpiderSite() {
-        return spiderSite;
-    }
-
-    public void setSpiderSite(String spiderSite) {
-        this.spiderSite = spiderSite;
     }
 
     public String getType() {
