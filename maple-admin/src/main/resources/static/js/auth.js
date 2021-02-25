@@ -1,12 +1,13 @@
 document.getElementById("username").innerHTML = "用户：" + decodeURIComponent(getCookieByKey("user"));
 
+// auth : 0-有权限，1-无权限（0以外都算无权限）
 var gotAuths = [
-    {"value": "1", "title": "server1", "disabled": "", "checked": "", "type": "server"}
-    ,{"value": "2", "title": "mysql1", "disabled": "", "checked": "", "type": "db"}
-    ,{"value": "3", "title": "server2", "disabled": "", "checked": "", "type": "server"}
-    ,{"value": "4", "title": "mongo1", "disabled": "", "checked": "", "type": "db"}
-    ,{"value": "5", "title": "redis1", "disabled": "", "checked": "", "type": "db"}
-    ,{"value": "6", "title": "redis2", "disabled": "", "checked": "", "type": "db"}
+    {"value": "1", "title": "server1", "disabled": "", "checked": "", "auth": 0, "type": "server", "ip": "142.43.43.59", "stype": "worker", "user": "root", "password":"123456"}
+    ,{"value": "2", "title": "mysql1", "disabled": "", "checked": "", "auth": 1,"type": "db", "ip": "142.43.43.60", "stype": "mysql","user": "root", "password":"123456"}
+    ,{"value": "3", "title": "server2", "disabled": "", "checked": "", "auth": 0,"type": "server", "ip": "142.43.43.61", "stype": "worker","user": "root", "password":"123456"}
+    ,{"value": "4", "title": "mongo1", "disabled": "", "checked": "", "auth": 0,"type": "db", "ip": "142.43.43.73", "stype": "mongodb","user": "root", "password":"123456"}
+    ,{"value": "5", "title": "redis1", "disabled": "", "checked": "", "auth": 0,"type": "db", "ip": "142.43.43.249", "stype": "redis","user": "root", "password":"123456"}
+    ,{"value": "6", "title": "redis2", "disabled": "", "checked": "", "auth": 1,"type": "db", "ip": "142.43.413.59", "stype": "redis","user": "root", "password":"123456"}
 ]
 
 var value = ["4", "5", "6"]
@@ -37,48 +38,61 @@ function showSources(param) {
     var target = document.getElementById(param.target);
     var data = param.data;
     for (idx in data) {
-        console.log(data[idx]);
-        target.insertAdjacentHTML("beforeEnd", sourceHTML(data[idx]));
+        // console.log(data[idx]);
+        target.insertAdjacentHTML("beforeEnd", sourceHTML(data[idx], idx));
     }
 }
 
-function sourceHTML(source) {
+function sourceHTML(source, idx) {
     var html;
-    if (source.type === 'server') {
-        html = '<div class="layui-col-md4">\n'+
-                    '<div class="layui-card" style="height: 150px">\n'+
-                    '<div class="layui-card-header">\n'+
-                        '<i class="layui-icon layui-icon-console" style="font-size: 30px;"></i>服务器</div>\n'+
-                    '<div class="layui-card-body">\n'+
-                        '<div>ip地址：<span>101.37.89.120</span></div>\n'+
-                        '<div>服务器类型：<span>admin、worker</span></div>\n'+
-                        '<div>\n'+
-                            '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm">\n'+
-                                '<i class="layui-icon layui-icon-ok"></i> 您有权限\n'+
-                            '</button>\n'+
-                            '<button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">\n'+
-                                '<i class="layui-icon layui-icon-key"></i> 查看信息\n'+
-                            '</button></div></div></div></div>'
-
-    } else if (source.type === 'db') {
-        html = '<div class="layui-col-md4">\n'+
-                '<div class="layui-card" style="height: 150px">\n'+
-                '<div class="layui-card-header">\n'+
-                    '<i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>数据库</div>\n'+
-                '<div class="layui-card-body">\n'+
-                    '<div>ip地址：<span>101.37.89.120</span></div>\n'+
-                    '<div>数据库类型：<span>mongodb</span></div>\n'+
-                    '<div>\n'+
-                        '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm">\n'+
-                            '<i class="layui-icon layui-icon-ok"></i> 您有权限\n'+
-                        '</button>\n'+
-                        '<button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm">\n'+
-                            '<i class="layui-icon layui-icon-key"></i> 查看信息\n'+
-                        '</button></div></div></div></div>'
+    var sourceType = (source.type === 'server') ? '服务器' : '数据库';
+    var isServer = (source.type === 'server') ? true : false;
+    html = '<div class="layui-col-md4">\n'+
+            '<div class="layui-card" style="height: 150px">\n'+
+            '<div class="layui-card-header">\n';
+    if (isServer) {
+        html += '<i class="layui-icon layui-icon-console" style="font-size: 30px;"></i>'+ sourceType +'</div>\n';
     } else {
-        console.log("无效的资源类型:" + source.type);
+        html += '<i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>'+ sourceType +'</div>\n';
+    }
+
+    if (source.auth === 0) {
+        html += '<div class="layui-card-body">\n'+
+            '<div>ip地址：<span>' + source.ip + '</span></div>\n'+
+            '<div>' + source.type + '类型：<span>' + source.stype + '</span></div>\n'+
+            '<div>\n'+
+                '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm">\n'+
+                    '<i class="layui-icon layui-icon-ok"></i> 您有权限\n'+
+                '</button>\n'+
+                '<button type="button" class="layui-btn layui-btn-radius layui-btn-normal layui-btn-sm" '
+                + 'id = "'+ idx + '"' + 'onclick = "sourceInfo(this.id)"' + '>\n'+
+                    '<i class="layui-icon layui-icon-key"></i> 查看信息\n'+
+                '</button></div></div></div></div>';
+
+    } else {
+        html += '<div class="layui-card-body">\n'+
+            '<div>ip地址：<span>' + source.ip + '</span></div>\n'+
+            '<div>' + source.type + '类型：<span>' + source.stype + '</span></div>\n'+
+            '<div>\n'+
+                '<button type="button" class="layui-btn layui-btn-radius layui-btn-danger layui-btn-sm">\n' +
+                    '<i class="layui-icon layui-icon-close"></i> 您没有权限\n' +
+                '</button>\n' +
+                '<button type="button" class="layui-btn layui-btn-radius layui-btn-disabled layui-btn-sm">\n' +
+                    '<i class="layui-icon layui-icon-key"></i> 查看信息\n' +
+                '</button></div></div></div></div>'
     }
     return html;
+}
+
+function sourceInfo(id) {
+    var idx = parseInt(id);
+    console.log(gotAuths[idx]);
+    var data = gotAuths[idx];
+    layer.open({
+        type:1,
+        title:'资源信息展示',
+        content: '用户名:' + data.user + ', 密码:' + data.password
+    });
 }
 
 function addSource() {
