@@ -1,8 +1,10 @@
 package org.webmaple.admin.controller;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
+import org.webmaple.admin.model.UserSource;
 import org.webmaple.common.enums.NodeType;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
@@ -15,11 +17,19 @@ import org.springframework.web.bind.annotation.*;
 import org.webmaple.admin.service.ComponentService;
 import org.webmaple.admin.service.SourceService;
 import org.webmaple.admin.service.UserService;
+import org.webmaple.common.view.SourceAuthView;
+import org.webmaple.common.view.UserSourceView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @author lyifee
@@ -129,6 +139,48 @@ public class CommonController {
             return result.fail("登录状态异常，无法获取用户信息");
         }
         return userService.getNickname(phone);
+    }
+
+    @GetMapping("/searchUserAuth")
+    @ResponseBody
+    public Result<UserSourceView> searchUserAuth(@RequestParam String phone) {
+        Result<UserSourceView> result = new Result<>();
+        List<UserSource> sourceList = sourceService.queryUserSources(phone).getModel();
+        if (CollectionUtils.isEmpty(sourceList)) {
+            return result.fail("该用户不存在！");
+        }
+
+        HashSet<String> titleSet = new HashSet<>();
+        List<String> authValues = new ArrayList<>();
+        AtomicInteger idx = new AtomicInteger(1);
+        List<SourceAuthView> authViews = sourceList.stream().map(userSource -> {
+            SourceAuthView sourceAuthView = new SourceAuthView();
+            sourceAuthView.setAuth(true);
+            sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
+            authValues.add(sourceAuthView.getValue());
+            sourceAuthView.setTitle(userSource.getSourceName());
+            titleSet.add(userSource.getSourceName());
+            return sourceAuthView;
+        }).collect(Collectors.toList());
+
+        List<Source> sources = sourceService.querySources().getModel();
+        List<SourceAuthView> notAuthViews = sources.stream().map(source -> {
+            if (titleSet.contains(source.getSourceName())) {
+                return null;
+            }
+            SourceAuthView sourceAuthView = new SourceAuthView();
+            sourceAuthView.setAuth(true);
+            sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
+            sourceAuthView.setTitle(source.getSourceName());
+            return sourceAuthView;
+        }).filter(Objects::nonNull).collect(Collectors.toList());
+        authViews.addAll(notAuthViews);
+
+        UserSourceView userSourceView = new UserSourceView();
+        userSourceView.setSourceAuthViews(authViews);
+        userSourceView.setAuthValues(authValues);
+
+        return result.success(userSourceView);
     }
 
     @PostMapping("/addSource")

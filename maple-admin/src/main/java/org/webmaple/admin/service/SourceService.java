@@ -1,7 +1,10 @@
 package org.webmaple.admin.service;
 
 import org.webmaple.admin.model.Source;
+import org.webmaple.admin.model.UserSource;
 import org.webmaple.common.model.Result;
+
+import java.util.List;
 
 /**
  * @author lyifee
@@ -9,6 +12,10 @@ import org.webmaple.common.model.Result;
  */
 public interface SourceService {
     Result<Void> addSource(Source source);
+
+    Result<List<UserSource>> queryUserSources(String phone);
+
+    Result<List<Source>> querySources();
 
     Result<Void> editSource(Source source);
 

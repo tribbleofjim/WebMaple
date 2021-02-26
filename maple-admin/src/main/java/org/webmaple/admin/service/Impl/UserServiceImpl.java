@@ -65,6 +65,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Result<User> searchUser(String phone) {
+        Result<User> result = new Result<>();
+        User user = userMapper.getUserByPhone(phone);
+        if (user == null) {
+            return result.fail("该用户不存在");
+        }
+        return result.success(user);
+    }
+
+    @Override
     public Result<Void> modifyNickname(User user) {
         Result<Void> result = new Result<>();
         User oldUser = userMapper.getUserByPhone(user.getPhone());

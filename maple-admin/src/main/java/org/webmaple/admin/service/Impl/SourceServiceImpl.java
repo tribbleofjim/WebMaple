@@ -1,12 +1,16 @@
 package org.webmaple.admin.service.Impl;
 
 import org.webmaple.admin.mapper.SourceMapper;
+import org.webmaple.admin.mapper.UserSourceMapper;
 import org.webmaple.admin.model.Source;
+import org.webmaple.admin.model.UserSource;
 import org.webmaple.admin.service.SourceService;
 import org.webmaple.common.model.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author lyifee
@@ -17,6 +21,9 @@ public class SourceServiceImpl implements SourceService {
     @Autowired
     private SourceMapper sourceMapper;
 
+    @Autowired
+    private UserSourceMapper userSourceMapper;
+
     @Override
     public Result<Void> addSource(Source source) {
         Result<Void> result = new Result<>();
@@ -25,6 +32,20 @@ public class SourceServiceImpl implements SourceService {
         }
         sourceMapper.insertSource(source);
         return result.success("添加资源成功!");
+    }
+
+    @Override
+    public Result<List<UserSource>> queryUserSources(String phone) {
+        Result<List<UserSource>> result = new Result<>();
+        List<UserSource> sourceList = userSourceMapper.queryUserSources(phone);
+        return result.success(sourceList);
+    }
+
+    @Override
+    public Result<List<Source>> querySources() {
+        Result<List<Source>> result = new Result<>();
+        List<Source> sourceList = sourceMapper.querySources();
+        return result.success(sourceList);
     }
 
     @Override

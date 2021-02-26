@@ -1,11 +1,10 @@
 package org.webmaple.admin.mapper;
 
+import org.apache.ibatis.annotations.*;
 import org.webmaple.admin.model.Source;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author lyifee
@@ -14,6 +13,9 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface SourceMapper {
+    @Select("SELECT * FROM maple_source")
+    List<Source> querySources();
+
     @Insert("INSERT INTO maple_source (source_name, source_type, ip, account, pass) " +
             "VALUES (#{sourceName}, #{sourceType}, #{ip}, #{account}, #{pass})")
     void insertSource(Source source);

@@ -2,12 +2,12 @@ document.getElementById("username").innerHTML = "用户：" + decodeURIComponent
 
 // auth : 0-有权限，1-无权限（0以外都算无权限）
 var gotAuths = [
-    {"value": "1", "title": "server1", "disabled": "", "checked": "", "auth": 0, "type": "server", "ip": "142.43.43.59", "stype": "worker", "user": "root", "password":"123456"}
-    ,{"value": "2", "title": "mysql1", "disabled": "", "checked": "", "auth": 1,"type": "db", "ip": "142.43.43.60", "stype": "mysql","user": "root", "password":"123456"}
-    ,{"value": "3", "title": "server2", "disabled": "", "checked": "", "auth": 0,"type": "server", "ip": "142.43.43.61", "stype": "worker","user": "root", "password":"123456"}
-    ,{"value": "4", "title": "mongo1", "disabled": "", "checked": "", "auth": 0,"type": "db", "ip": "142.43.43.73", "stype": "mongodb","user": "root", "password":"123456"}
-    ,{"value": "5", "title": "redis1", "disabled": "", "checked": "", "auth": 0,"type": "db", "ip": "142.43.43.249", "stype": "redis","user": "root", "password":"123456"}
-    ,{"value": "6", "title": "redis2", "disabled": "", "checked": "", "auth": 1,"type": "db", "ip": "142.43.413.59", "stype": "redis","user": "root", "password":"123456"}
+    {"value": "1", "title": "server1", "disabled": "", "checked": "", "auth": true, "type": "server", "ip": "142.43.43.59", "stype": "worker", "user": "root", "password":"123456"}
+    ,{"value": "2", "title": "mysql1", "disabled": "", "checked": "", "auth": false,"type": "db", "ip": "142.43.43.60", "stype": "mysql","user": "root", "password":"123456"}
+    ,{"value": "3", "title": "server2", "disabled": "", "checked": "", "auth": true,"type": "server", "ip": "142.43.43.61", "stype": "worker","user": "root", "password":"123456"}
+    ,{"value": "4", "title": "mongo1", "disabled": "", "checked": "", "auth": true,"type": "db", "ip": "142.43.43.73", "stype": "mongodb","user": "root", "password":"123456"}
+    ,{"value": "5", "title": "redis1", "disabled": "", "checked": "", "auth": true,"type": "db", "ip": "142.43.43.249", "stype": "redis","user": "root", "password":"123456"}
+    ,{"value": "6", "title": "redis2", "disabled": "", "checked": "", "auth": false,"type": "db", "ip": "142.43.413.59", "stype": "redis","user": "root", "password":"123456"}
 ]
 
 var value = ["4", "5", "6"]
@@ -56,7 +56,7 @@ function sourceHTML(source, idx) {
         html += '<i class="layui-icon layui-icon-template-1" style="font-size: 30px;"></i>'+ sourceType +'</div>\n';
     }
 
-    if (source.auth === 0) {
+    if (source.auth) {
         html += '<div class="layui-card-body">\n'+
             '<div>ip地址：<span>' + source.ip + '</span></div>\n'+
             '<div>' + source.type + '类型：<span>' + source.stype + '</span></div>\n'+
@@ -156,6 +156,33 @@ function editAuth() {
             layer.closeAll();
         }
     });
+}
+
+function searchUser() {
+    var userId = document.getElementById("searchUser").value;
+    if (userId) {
+        $.ajax({
+            type: 'get',
+            url: "searchUserAuth",
+            data: {
+                phone: userId
+            },
+            success: function (res) {
+                if (res.success) {
+                    // 重新渲染穿梭框
+                    transfer.render({
+                        elem: '#sourceAuths'  //绑定元素
+                        ,title: ['未获取权限', '已获取权限']
+                        ,data: res.model.sourceAuthViews
+                        ,value: res.model.authValues
+                        ,id: 'sourceAuths' //定义索引
+                        });
+                } else {
+                    layer.msg(res.message);
+                }
+            }
+        });
+    }
 }
 
 function getCookieByKey(name){
