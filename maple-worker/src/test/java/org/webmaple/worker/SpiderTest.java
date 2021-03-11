@@ -50,7 +50,7 @@ public class SpiderTest {
     @Order(3)
     @Test
     public void spiderListTest() {
-        List<SpiderDTO> spiders = spiderProcess.getSpiders();
+        List<SpiderDTO> spiders = spiderProcess.getSpiders().getModel();
         for (SpiderDTO spiderDTO : spiders) {
             System.out.println(spiderDTO);
         }
