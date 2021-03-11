@@ -41,6 +41,7 @@ public class SpiderContainer {
             return;
         }
         int currentIdx = idx.incrementAndGet();
+        spider.setUuid(uuid + currentIdx);
         SPIDER_MAP.put(uuid + currentIdx, spider);
     }
 
