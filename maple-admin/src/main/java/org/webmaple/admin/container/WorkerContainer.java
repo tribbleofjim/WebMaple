@@ -132,6 +132,7 @@ public class WorkerContainer implements InitializingBean {
         NodeDTO worker0 = new NodeDTO();
         worker0.setName("worker0");
         worker0.setIp("127.0.0.1");
+        worker0.setPort(8081);
         worker0.setType(NodeType.WORKER.getType());
 //        NodeDTO worker2 = new NodeDTO();
 //        worker2.setName("worker2");

@@ -34,7 +34,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         type: 'get',
         success: function (data) {
             $.each(data, function (index, value) {
-                $('#workers').append(new Option(value, index));// 下拉菜单里添加元素
+                $('#worker').append(new Option(value, value));// 下拉菜单里添加元素
             });
             layui.form.render("select");//重新渲染 固定写法
         }
@@ -45,12 +45,13 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         for (i = 0; i < startUrlNum; i++) {
             urls[i] = data.field["startUrls[" + i + "]"];
         }
+        var worker = document.getElementById('worker').value;
         $.ajax({
             type: 'post',
             url: "createSpider",
             data: {
                 uuid: data.field.uuid,
-                ip: data.field.ip,
+                worker: worker,
                 processor: data.field.processor,
                 downloader: data.field.downloader,
                 pipeline: data.field.pipeline,

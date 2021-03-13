@@ -20,7 +20,7 @@ public class SpiderController {
 
     @PostMapping("/createSpider")
     @ResponseBody
-    public Result<Void> createSpider(@RequestBody SpiderDTO spiderDTO) {
+    public Result<Void> createSpider(SpiderDTO spiderDTO) {
         return spiderProcess.createSpider(spiderDTO);
     }
 
@@ -44,7 +44,7 @@ public class SpiderController {
 
     @RequestMapping("/modifySpider")
     @ResponseBody
-    public Result<Void> modifySpider(@RequestBody SpiderDTO spiderDTO) {
+    public Result<Void> modifySpider(SpiderDTO spiderDTO) {
         return spiderProcess.modifySpider(spiderDTO);
     }
 
