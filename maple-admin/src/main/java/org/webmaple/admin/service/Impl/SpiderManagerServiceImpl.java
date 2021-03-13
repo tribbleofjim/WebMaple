@@ -89,7 +89,15 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         spiderDTO.setUuid(uuid + "_" + worker.getIdx());
 
         HashMap<String, Object> params = new HashMap<>();
-        params.put("spiderDTO", spiderDTO);
+        params.put("worker", spiderDTO.getWorker());
+        params.put("urls", spiderDTO.getUrls());
+        params.put("uuid", spiderDTO.getUuid());
+        params.put("state", spiderDTO.getState());
+        params.put("threadNum", spiderDTO.getThreadNum());
+        params.put("processor", spiderDTO.getProcessor());
+        params.put("pipeline", spiderDTO.getPipeline());
+        params.put("downloader", spiderDTO.getDownloader());
+        // params.put("spiderDTO", spiderDTO);
         Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createSpider", params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
