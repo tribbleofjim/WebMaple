@@ -105,6 +105,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     function startSpider(data) {
         // do start spider
         var uuid = data.uuid;
+        var worker = data.worker;
         layer.open({
             content: '确认要启动这个爬虫吗？',
             btn: ['确认', '取消']
@@ -114,7 +115,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     type: 'get',
                     url: 'startSpider',
                     data: {
-                        uuid: uuid
+                        uuid: uuid,
+                        worker: worker
                     },
                     success: function (res) {
                         layer.msg(res.message);
@@ -129,6 +131,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
 
     function stopSpider(data) {
         var uuid = data.uuid;
+        var worker = data.worker;
         layer.open({
             content: '确认要停止这个爬虫吗？',
             btn: ['确认', '取消']
@@ -138,7 +141,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     type: 'get',
                     url: 'stopSpider',
                     data: {
-                        uuid: uuid
+                        uuid: uuid,
+                        worker: worker
                     },
                     success: function (res) {
                         layer.msg(res.message);
@@ -166,7 +170,9 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     type: 'post',
                     url: 'modifySpider',
                     data: {
-                        threadNum: newThreadNum
+                        threadNum: newThreadNum,
+                        // todo: fix bug
+                        worker: 'worker0'
                     },
                     success: function (res) {
                         layer.msg(res.message);
@@ -186,6 +192,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
 
     function deleteSpider(data) {
         var uuid = data.uuid;
+        var worker = data.worker;
         layer.open({
             content: '确认要删除这个爬虫吗？',
             btn: ['确认', '取消']
@@ -195,7 +202,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     type: 'get',
                     url: 'deleteSpider',
                     data: {
-                        uuid: uuid
+                        uuid: uuid,
+                        worker: worker
                     },
                     success: function (res) {
                         layer.msg(res.message);
