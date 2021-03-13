@@ -37,30 +37,34 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     @Override
     public Result<Void> createSpider(SpiderDTO spiderDTO) {
-        Result<Void> result = new Result<>();
-        return result.success("创建成功！");
+        return createSpiderFromWorker(spiderDTO);
+//        Result<Void> result = new Result<>();
+//        return result.success("创建成功！");
     }
 
     @Override
-    public Result<Void> startSpider(String uuid) {
-        Result<Void> result = new Result<>();
-        return result.success("启动成功！");
+    public Result<Void> startSpider(String uuid, String worker) {
+        return startSpiderFromWorker(uuid, worker);
+//        Result<Void> result = new Result<>();
+//        return result.success("启动成功！");
     }
 
     @Override
-    public Result<Void> removeSpider(String uuid) {
-        Result<Void> result = new Result<>();
-        return result.success("删除成功！");
+    public Result<Void> removeSpider(String uuid, String worker) {
+        return removeSpiderFromWorker(uuid, worker);
+//        Result<Void> result = new Result<>();
+//        return result.success("删除成功！");
     }
 
     @Override
-    public Result<Void> stopSpider(String uuid) {
-        Result<Void> result = new Result<>();
-        return result.success("暂停成功！");
+    public Result<Void> stopSpider(String uuid, String worker) {
+        return startSpiderFromWorker(uuid, worker);
+//        Result<Void> result = new Result<>();
+//        return result.success("暂停成功！");
     }
 
     @Override
-    public Result<Void> modifySpider(Integer threadNum) {
+    public Result<Void> modifySpider(Integer threadNum, String worker) {
         Result<Void> result = new Result<>();
         return result.success("修改成功！");
     }
@@ -68,7 +72,9 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     @Override
     public Result<List<SpiderDTO>> querySpiderList() {
         Result<List<SpiderDTO>> result = new Result<>();
-        return result.success(mockSpiders());
+        return result.success(querySpiderListFromWorkers());
+//        Result<List<SpiderDTO>> result = new Result<>();
+//        return result.success(mockSpiders());
     }
 
     private Result<Void> createSpiderFromWorker(SpiderDTO spiderDTO) {
@@ -100,7 +106,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         }
     }
 
-    private Result<Void> startSpiderFromWorker(String workerName, String uuid) {
+    private Result<Void> startSpiderFromWorker(String uuid, String workerName) {
         Result<Void> result = new Result<>();
 
         if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
@@ -127,7 +133,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         }
     }
 
-    private Result<Void> removeSpiderFromWorker(String workerName, String uuid) {
+    private Result<Void> removeSpiderFromWorker(String uuid, String workerName) {
         Result<Void> result = new Result<>();
 
         if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {
@@ -154,7 +160,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         }
     }
 
-    private Result<Void> stopSpiderFromWorker(String workerName, String uuid) {
+    private Result<Void> stopSpiderFromWorker(String uuid, String workerName) {
         Result<Void> result = new Result<>();
 
         if (StringUtils.isBlank(workerName) || StringUtils.isBlank(uuid)) {

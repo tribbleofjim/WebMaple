@@ -20,25 +20,25 @@ public interface SpiderManageService {
      * start a spider
      * @param uuid uuid
      */
-    Result<Void> startSpider(String uuid);
+    Result<Void> startSpider(String uuid, String worker);
 
     /**
      * remove a spider
      * @param uuid uuid of spider
      */
-    Result<Void> removeSpider(String uuid);
+    Result<Void> removeSpider(String uuid, String worker);
 
     /**
      * stop a spider
      * @param uuid uuid of spider
      */
-    Result<Void> stopSpider(String uuid);
+    Result<Void> stopSpider(String uuid, String worker);
 
     /**
      * modify a spider
      * @param threadNum thread num
      */
-    Result<Void> modifySpider(Integer threadNum);
+    Result<Void> modifySpider(Integer threadNum, String worker);
 
     /**
      * query all spiders

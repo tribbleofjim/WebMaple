@@ -2,7 +2,6 @@ package org.webmaple.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.web.bind.annotation.*;
-import org.webmaple.common.enums.CommonErrorCode;
 import org.webmaple.common.model.DataTableDTO;
 import org.webmaple.common.model.Result;
 import org.webmaple.admin.service.SpiderManageService;
@@ -10,7 +9,6 @@ import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.common.util.ModelConverter;
 import org.webmaple.common.view.SpiderView;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
@@ -33,26 +31,26 @@ public class SpiderManageController {
 
     @GetMapping("/startSpider")
     @ResponseBody
-    public Result<Void> startSpider(String uuid) {
-        return spiderManageService.startSpider(uuid);
+    public Result<Void> startSpider(@RequestParam String uuid, @RequestParam String worker) {
+        return spiderManageService.startSpider(uuid, worker);
     }
 
     @PostMapping("/modifySpider")
     @ResponseBody
-    public Result<Void> modifySpider(@RequestParam Integer threadNum) {
-        return spiderManageService.modifySpider(threadNum);
+    public Result<Void> modifySpider(@RequestParam Integer threadNum, @RequestParam String worker) {
+        return spiderManageService.modifySpider(threadNum, worker);
     }
 
     @RequestMapping("/deleteSpider")
     @ResponseBody
-    public Result<Void> deleteSpider(@RequestParam String uuid) {
-        return spiderManageService.removeSpider(uuid);
+    public Result<Void> deleteSpider(@RequestParam String uuid, @RequestParam String worker) {
+        return spiderManageService.removeSpider(uuid, worker);
     }
 
     @RequestMapping("/stopSpider")
     @ResponseBody
-    public Result<Void> stopSpider(@RequestParam String uuid) {
-        return spiderManageService.stopSpider(uuid);
+    public Result<Void> stopSpider(@RequestParam String uuid, @RequestParam String worker) {
+        return spiderManageService.stopSpider(uuid, worker);
     }
 
     @RequestMapping("/spiderList")

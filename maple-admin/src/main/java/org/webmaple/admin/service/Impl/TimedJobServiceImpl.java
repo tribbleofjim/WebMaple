@@ -43,26 +43,30 @@ public class TimedJobServiceImpl implements TimedJobService {
 
     @Override
     public Result<Void> createTimedSpider(TimedSpiderView timedSpiderView) {
-        Result<Void> result = new Result<>();
-        return result.success("创建成功！");
+        return createTimedSpiderFromWorker(timedSpiderView);
+//        Result<Void> result = new Result<>();
+//        return result.success("创建成功！");
     }
 
     @Override
     public Result<Void> pauseSpider(String jobName, String worker) {
-        Result<Void> result = new Result<>();
-        return result.success("暂停成功！");
+        return pauseTimedSpiderFromWorker(jobName, worker);
+//        Result<Void> result = new Result<>();
+//        return result.success("暂停成功！");
     }
 
     @Override
     public Result<Void> resumeSpider(String jobName, String worker) {
-        Result<Void> result = new Result<>();
-        return result.success("重启成功！");
+        return resumeTimedSpiderFromWorker(jobName, worker);
+//        Result<Void> result = new Result<>();
+//        return result.success("重启成功！");
     }
 
     @Override
     public Result<Void> deleteSpider(String jobName, String worker) {
-        Result<Void> result = new Result<>();
-        return result.success("删除成功！");
+        return deleteTimedSpiderFromWorker(jobName, worker);
+//        Result<Void> result = new Result<>();
+//        return result.success("删除成功！");
     }
 
     private Result<Void> createTimedSpiderFromWorker(TimedSpiderView timedSpiderView) {
