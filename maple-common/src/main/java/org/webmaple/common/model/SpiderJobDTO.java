@@ -1,7 +1,5 @@
 package org.webmaple.common.model;
 
-import java.util.Date;
-
 /**
  * @author lyifee
  * on 2021/1/12
@@ -50,7 +48,7 @@ public class SpiderJobDTO {
     /**
      * 任务开始时间
      */
-    private Date startTime;
+    private String startTime;
 
     /**
      * corn表达式
@@ -126,11 +124,11 @@ public class SpiderJobDTO {
         this.jobClazz = jobClazz;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 

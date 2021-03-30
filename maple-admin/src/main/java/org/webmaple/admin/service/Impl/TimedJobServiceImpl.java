@@ -1,6 +1,7 @@
 package org.webmaple.admin.service.Impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -69,6 +70,13 @@ public class TimedJobServiceImpl implements TimedJobService {
 //        return result.success("删除成功！");
     }
 
+    @Override
+    public Result<List<SpiderJobDTO>> queryTimedJobList() {
+        return queryTimedJobListFromWorkers();
+//        Result<List<SpiderJobDTO>> result = new Result<>();
+//        return result.success(mock());
+    }
+
     private Result<Void> createTimedSpiderFromWorker(TimedSpiderView timedSpiderView) {
         Result<Void> result = new Result<>();
         if (timedSpiderView == null) {
@@ -87,7 +95,7 @@ public class TimedJobServiceImpl implements TimedJobService {
         param.put("maintainType", timedSpiderView.getType());
         param.put("maintain", timedSpiderView.getMaintain());
         String rawCron = timedSpiderView.getCronNum() + timedSpiderView.getCronUnit();
-        param.put("cron", CommonUtil.getCron(rawCron));
+        param.put("cron", rawCron);
         Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createTimedSpider", param);
         try {
             CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
@@ -175,7 +183,7 @@ public class TimedJobServiceImpl implements TimedJobService {
                 CloseableHttpResponse response = requestSender.request(httpUriRequest);
                 String text = RequestUtil.getResponseText(response);
                 JSONObject spiderObject = JSON.parseObject(text);
-                List<SpiderJobDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderJobDTO.class);
+                List<SpiderJobDTO> spiders = toSpiderJobList(spiderObject.getJSONArray("model"), worker.getName());
                 spiderJobList.addAll(spiders);
 
             } catch (Exception e) {
@@ -186,10 +194,32 @@ public class TimedJobServiceImpl implements TimedJobService {
         return result.success(spiderJobList);
     }
 
-    @Override
-    public Result<List<SpiderJobDTO>> queryTimedJobList() {
-        Result<List<SpiderJobDTO>> result = new Result<>();
-        return result.success(mock());
+    private List<SpiderJobDTO> toSpiderJobList(JSONArray quartzJobs, String workerName) {
+        List<SpiderJobDTO> list = new ArrayList<>();
+        for (Object quartzJob : quartzJobs) {
+            try {
+                JSONObject job = JSON.parseObject(JSONObject.toJSONString(quartzJob));
+                SpiderJobDTO spiderJobDTO = new SpiderJobDTO();
+                spiderJobDTO.setJobName(job.getString("jobName"));
+                spiderJobDTO.setCronExpression(job.getString("cronExpression"));
+                spiderJobDTO.setJobClazz(job.getString("jobClazz"));
+                spiderJobDTO.setStartTime(job.getString("startTime"));
+                spiderJobDTO.setState(job.getBoolean("executing") ? JobState.RUNNING.getState() : JobState.STOP.getState());
+                spiderJobDTO.setWorker(workerName);
+                spiderJobDTO.setIp(workerContainer.getWorker(workerName).getIp());
+
+                JSONObject extraInfo = job.getJSONObject("extraInfo");
+                spiderJobDTO.setSpiderUUID(extraInfo.getString("uuid"));
+                spiderJobDTO.setType((extraInfo.containsKey("maintainUrlNum")) ? MaintainType.URL_NUM.getType() : MaintainType.TIME.getType());
+                spiderJobDTO.setMaintain((extraInfo.containsKey("maintainUrlNum")) ? extraInfo.getInteger("maintainUrlNum") : extraInfo.getInteger("maintainTime"));
+
+                list.add(spiderJobDTO);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
 
     private List<SpiderJobDTO> mock() {

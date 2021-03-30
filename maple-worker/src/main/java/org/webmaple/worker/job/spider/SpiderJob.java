@@ -32,7 +32,7 @@ import java.util.List;
  *          "uuid" : "jd.com", // 必填
  *          "downloader" : "com.ecspider.common.downloader.SeleniumDownloader", // 可选
  *          "threadNum" : 1, // 必填
- *          "maintainType" : 1000 // 必填
+ *          "maintainUrlNum" : 1000 // 必填
  *     }
  * }
  *
@@ -45,7 +45,7 @@ import java.util.List;
  *          "uuid" : "jd.com", // 必填
  *          "downloader" : "com.ecspider.common.downloader.SeleniumDownloader", // 可选
  *          "threadNum" : 1, // 必填
- *          "maintainType" : 60 // 必填
+ *          "maintainTime" : 60 // 必填
  *     }
  * }
  *
