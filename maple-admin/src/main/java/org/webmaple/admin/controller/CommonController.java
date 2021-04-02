@@ -1,6 +1,7 @@
 package org.webmaple.admin.controller;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.webmaple.admin.service.ComponentService;
 import org.webmaple.admin.service.SourceService;
 import org.webmaple.admin.service.UserService;
+import org.webmaple.common.view.BasicDataView;
 import org.webmaple.common.view.SourceAuthView;
 import org.webmaple.common.view.UserSourceView;
 
@@ -228,6 +230,19 @@ public class CommonController {
             return result.fail("请填写完整字段！");
         }
         return userService.modifyPassword(phone, oldPass, newPass);
+    }
+
+    @GetMapping("/basicData")
+    @ResponseBody
+    public Result<BasicDataView> basicData() {
+        Result<BasicDataView> result = new Result<>();
+
+        BasicDataView basicDataView = new BasicDataView();
+
+        basicDataView.setNodeNum(workerContainer.size());
+        basicDataView.setSpiderNum(BasicDataContainer.getSpiderNum());
+        basicDataView.setTimedJobNum(BasicDataContainer.getTimedJobNum());
+        return result.success(basicDataView);
     }
 
     @RequestMapping("/heartbeat")

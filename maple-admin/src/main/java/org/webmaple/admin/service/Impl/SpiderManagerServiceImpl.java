@@ -2,6 +2,7 @@ package org.webmaple.admin.service.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.common.enums.SpiderState;
 import org.webmaple.common.model.NodeDTO;
@@ -212,6 +213,10 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
                 LOGGER.error("query_spider_list_exception:", e);
             }
         }
+
+        // spider num
+        BasicDataContainer.setSpiderNum(spiderList.size());
+
         return spiderList;
     }
 

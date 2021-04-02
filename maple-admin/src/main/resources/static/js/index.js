@@ -5,7 +5,20 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     let element = layui.element;
     let carousel = layui.carousel;
     let $ = layui.jquery;
+
+    $.ajax({
+        type: 'get',
+        url: "basicData",
+        data: {},
+        success: function (res) {
+            document.getElementById("nodeNum").innerHTML = res.model.nodeNum;
+            document.getElementById("spiderNum").innerHTML = res.model.spiderNum;
+            document.getElementById("timedJobNum").innerHTML = res.model.timedJobNum;
+        }
+    });
 });
+
+
 
 var myChart = echarts.init(document.getElementById('visits', 'dark'));
 var option = {

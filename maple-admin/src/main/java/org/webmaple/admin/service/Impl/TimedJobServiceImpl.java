@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.common.enums.JobState;
 import org.webmaple.common.enums.MaintainType;
@@ -190,6 +191,10 @@ public class TimedJobServiceImpl implements TimedJobService {
                 LOGGER.error("query_spider_job_list_exception:", e);
             }
         }
+
+        // timed spider num
+        BasicDataContainer.setTimedJobNum(spiderJobList.size());
+
         Result<List<SpiderJobDTO>> result = new Result<>();
         return result.success(spiderJobList);
     }
