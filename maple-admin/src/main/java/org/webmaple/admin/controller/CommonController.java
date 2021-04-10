@@ -261,7 +261,10 @@ public class CommonController {
             // first heartbeat
             NodeDTO nodeDTO = new NodeDTO();
             nodeDTO.setType(NodeType.WORKER.getType());
-            nodeDTO.setIp(ip);
+            if (ip == null) {
+                return result.fail("worker_ip_is_null");
+            }
+            nodeDTO.setIp(ip.startsWith("10") ? "127.0.0.1" : ip);
             nodeDTO.setPort(Integer.parseInt(port));
             nodeDTO.setName(workerName);
             String name = workerContainer.addWorker(nodeDTO);

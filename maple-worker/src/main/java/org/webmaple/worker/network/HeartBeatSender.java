@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Request;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 
 /**
@@ -46,6 +47,7 @@ public class HeartBeatSender {
     private Integer workerPort;
 
     @Scheduled(cron = "0 0/20 * * * ?")
+    @PostConstruct
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
         if (workerName == null) {

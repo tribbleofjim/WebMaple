@@ -129,21 +129,11 @@ public class WorkerContainer implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         // mock
-        NodeDTO worker0 = new NodeDTO();
-        worker0.setName("worker0");
-        worker0.setIp("127.0.0.1");
-        worker0.setPort(8081);
-        worker0.setType(NodeType.WORKER.getType());
-//        NodeDTO worker2 = new NodeDTO();
-//        worker2.setName("worker2");
-//        worker2.setIp("101.37.89.200");
-//        worker2.setType(NodeType.WORKER.getType());
-//        NodeDTO worker3 = new NodeDTO();
-//        worker3.setName("worker3");
-//        worker3.setIp("101.33.188.66");
-//        worker3.setType(NodeType.WORKER.getType());
-        addWorker(worker0);
-//        addWorker(worker2);
-//        addWorker(worker3);
+//        NodeDTO worker0 = new NodeDTO();
+//        worker0.setName("worker0");
+//        worker0.setIp("127.0.0.1");
+//        worker0.setPort(8081);
+//        worker0.setType(NodeType.WORKER.getType());
+//        addWorker(worker0);
     }
 }
