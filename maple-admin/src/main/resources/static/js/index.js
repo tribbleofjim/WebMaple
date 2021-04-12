@@ -16,6 +16,17 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             document.getElementById("timedJobNum").innerHTML = res.model.timedJobNum;
         }
     });
+
+    $.ajax({
+        type: 'get',
+        url: "advance",
+        data: {},
+        success: function (res) {
+            document.getElementById("nodeNum").innerHTML = res.model.nodeNum;
+            document.getElementById("spiderNum").innerHTML = res.model.spiderNum;
+            document.getElementById("timedJobNum").innerHTML = res.model.timedJobNum;
+        }
+    });
 });
 
 

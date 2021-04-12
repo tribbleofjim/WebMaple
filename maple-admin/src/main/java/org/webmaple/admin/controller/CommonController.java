@@ -1,6 +1,9 @@
 package org.webmaple.admin.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.model.Source;
@@ -9,6 +12,8 @@ import org.webmaple.admin.model.UserSource;
 import org.webmaple.common.enums.NodeType;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
+import org.webmaple.common.model.SpiderAdvance;
+import org.webmaple.common.network.RequestSender;
 import org.webmaple.common.util.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -21,11 +26,13 @@ import org.webmaple.admin.service.UserService;
 import org.webmaple.common.view.BasicDataView;
 import org.webmaple.common.view.SourceAuthView;
 import org.webmaple.common.view.UserSourceView;
+import us.codecraft.webmagic.Request;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -52,6 +59,9 @@ public class CommonController {
 
     @Resource
     private WorkerContainer workerContainer;
+
+    @Resource
+    private RequestSender requestSender;
 
     @RequestMapping("/index")
     public String index() {
@@ -243,6 +253,34 @@ public class CommonController {
         basicDataView.setSpiderNum(BasicDataContainer.getSpiderNum());
         basicDataView.setTimedJobNum(BasicDataContainer.getTimedJobNum());
         return result.success(basicDataView);
+    }
+
+    @RequestMapping("/advance")
+    @ResponseBody
+    public Result<List<SpiderAdvance>> advanceList() {
+        Result<List<SpiderAdvance>> result = new Result<>();
+        List<SpiderAdvance> res = new ArrayList<>();
+
+        List<NodeDTO> workers = workerContainer.getWorkerList();
+
+        try {
+            for (NodeDTO worker : workers) {
+                Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "advance", null);
+                CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
+                String text = RequestUtil.getResponseText(response);
+                JSONArray jsonArray = JSON.parseArray(text);
+
+                for (Object o : jsonArray) {
+                    String advanceStr = (String) o;
+                    SpiderAdvance advance = JSON.parseObject(advanceStr, SpiderAdvance.class);
+                    res.add(advance);
+                }
+            }
+            return result.success(res);
+
+        } catch (Exception e) {
+            return result.fail(e.getMessage());
+        }
     }
 
     @RequestMapping("/heartbeat")

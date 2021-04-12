@@ -1,7 +1,5 @@
 package org.webmaple.admin.container;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @author lyifee
  * on 2021/4/2
