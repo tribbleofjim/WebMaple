@@ -22,11 +22,30 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         url: "advance",
         data: {},
         success: function (res) {
-            document.getElementById("nodeNum").innerHTML = res.model.nodeNum;
-            document.getElementById("spiderNum").innerHTML = res.model.spiderNum;
-            document.getElementById("timedJobNum").innerHTML = res.model.timedJobNum;
+            if (res.success) {
+                showAdvance(res.model);
+            } else {
+                layer.msg(res.message);
+            }
         }
     });
+
+    function showAdvance(data) {
+        var th = document.getElementById("advance");
+        for (idx in data) {
+            th.insertAdjacentHTML("beforeEnd", advanceHTML(data[idx], idx));
+        }
+    }
+
+    function advanceHTML(advance, idx) {
+        var html = '<th>';
+        html += advance.site;
+        var percent = (advance.temp / advance.pageNum) * 100;
+        html += '<div class="layui-progress layui-progress-big" lay-showPercent="true">' +
+                     '<div class="layui-progress-bar layui-bg-blue" lay-percent="' + percent + '%"></div>' +
+                 '</div></th>';
+        return html;
+    }
 });
 
 
