@@ -53,7 +53,7 @@
 
                                 <div class="layui-input-block" style="margin-top: 20px;">
                                     <a href="#" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">忘记密码？</a>
-                                    <a class="layui-btn-sm" lay-filter="fetchPassword" href="showfindpassword">找回密码</a>
+                                    <a class="layui-btn-sm" lay-filter="fetchPassword" onclick="findPassword()">找回密码</a>
                                 </div>
 
                             </div>
@@ -85,8 +85,54 @@
                                    autocomplete="on" class="layui-input" id="pass" style="width:200px">
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密保问题</label>
+                        <div class="layui-input-block">
+                            <select name="question">
+                                <option value=""></option>
+                                <option value="0">你的生日是？</option>
+                                <option value="1">你的小学校名是？</option>
+                                <option value="2">你最喜欢的明星是谁？</option>
+                                <option value="3">你的家乡在什么地方？</option>
+                                <option value="4">你最喜欢吃的食物是什么？</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-block">
+                            <input type="text" name="questionAnswer" required placeholder="请输入密保问题答案"
+                                   autocomplete="on" class="layui-input" id="questionAnswer" style="width:200px">
+                        </div>
+                    </div>
                 </form>
                 <!--/注册表单-->
+
+                <!--找回密码表单-->
+                <form class="layui-form" id="findPassword" style="display:none; padding-top: 50px;">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="phone" required  lay-verify="required" placeholder="请输入手机号"
+                                   autocomplete="on" class="layui-input" id="pass_phone" style="width:200px">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户昵称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="nickname" required  lay-verify="required" placeholder="请输入用户昵称"
+                                   autocomplete="on" class="layui-input" id="pass_nickname" style="width:200px">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密保问题:
+                            <span id="pass_question"></span>
+                        </label>
+                        <div class="layui-input-block">
+                            <input type="text" name="question" required placeholder="请输入密保问题答案"
+                                   autocomplete="on" class="layui-input" id="pass_question_answer" style="width:200px">
+                        </div>
+                    </div>
+                </form>
+                <!--/找回密码表单-->
+            </div>
             </div>
         </div>
     </body>

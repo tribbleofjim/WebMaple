@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.webmaple.admin.Questions;
 import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.model.Source;
@@ -104,7 +105,9 @@ public class CommonController {
 
     @PostMapping("/doLogin")
     @ResponseBody
-    public Result<Void> doLogin(@RequestParam String phone, @RequestParam String password, HttpServletResponse response) {
+    public Result<Void> doLogin(@RequestParam String phone,
+                                @RequestParam String password,
+                                HttpServletResponse response) {
         Result<Void> result = new Result<>();
         if (StringUtils.isBlank(phone)) {
             return result.fail("手机号不能为空");
@@ -112,6 +115,7 @@ public class CommonController {
         if (StringUtils.isBlank(password)) {
             return result.fail("密码不能为空");
         }
+
         User user = new User();
         user.setPhone(phone);
         user.setPassword(password);
@@ -126,7 +130,11 @@ public class CommonController {
 
     @PostMapping("/register")
     @ResponseBody
-    public Result<Void> register(@RequestParam String phone, @RequestParam String nickname, @RequestParam String password) {
+    public Result<Void> register(@RequestParam String phone,
+                                 @RequestParam String nickname,
+                                 @RequestParam String password,
+                                 @RequestParam(required = false) Character question,
+                                 @RequestParam(required = false) String answer) {
         Result<Void> result = new Result<>();
         if (StringUtils.isBlank(phone)) {
             return result.fail("手机号不能为空");
@@ -141,6 +149,10 @@ public class CommonController {
         user.setPhone(phone);
         user.setPassword(password);
         user.setNickname(nickname);
+        if (question != null) {
+            user.setQuestion(question);
+            user.setAnswer(answer);
+        }
         return userService.register(user);
     }
 
@@ -152,6 +164,45 @@ public class CommonController {
             return result.fail("登录状态异常，无法获取用户信息");
         }
         return userService.getNickname(phone);
+    }
+
+    @GetMapping("/getUserQuestion")
+    @ResponseBody
+    public Result<String> getUserQuestion(@RequestParam String phone) {
+        Result<String> result = new Result<>();
+
+        User user = userService.searchUser(phone).getModel();
+        if (user == null) {
+            return result.fail("不存在此用户", null);
+        }
+        Character question = user.getQuestion();
+        if (question == null) {
+            return result.success("未设置密保问题", "");
+        }
+        return result.success("", Questions.questions.get(question));
+    }
+
+    @PostMapping("/findPassword")
+    @ResponseBody
+    public Result<String> findPassword(@RequestParam String phone,
+                                       @RequestParam String nickname,
+                                       @RequestParam String answer) {
+        Result<String> result = new Result<>();
+
+        User user = userService.searchUser(phone).getModel();
+        if (user == null) {
+            return result.fail("不存在此用户", null);
+        }
+        if (StringUtils.isNotBlank(nickname) && answer == null) {
+            return result.fail("昵称与密保问题至少应填写一个", null);
+        }
+        if (StringUtils.isNotBlank(nickname) && !nickname.equals(user.getNickname())) {
+            return result.fail("昵称错误，找回失败", null);
+        }
+        if (user.getQuestion() != null && !answer.equals(user.getAnswer())) {
+            return result.fail("密保问题答案错误，找回失败", null);
+        }
+        return result.success("找回成功！", user.getPassword());
     }
 
     @GetMapping("/searchUserAuth")

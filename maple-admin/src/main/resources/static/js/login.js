@@ -34,13 +34,60 @@ function register() {
             let phone = document.getElementById('phone').value;
             let nickname = document.getElementById('nickname').value;
             let password = document.getElementById('pass').value;
+            let question = document.getElementById('question').value;
+            let questionAnswer = document.getElementById('questionAnswer').value;
             $.ajax({
                 type: 'post',
                 url: "register",
                 data: {
                     phone: phone,
                     nickname: nickname,
-                    password: password
+                    password: password,
+                    question: question,
+                    answer: questionAnswer
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                }
+            });
+            return true;
+        },
+        cancel: function(layero,index){
+            layer.closeAll();
+        }
+    });
+}
+
+function findPassword() {
+    $.ajax({
+        type: 'get',
+        url: "getUserQuestion",
+        data: {
+            phone: phone
+        },
+        success: function (res) {
+            document.getElementById('pass_question').text = res.model
+        }
+    });
+
+    layer.open({
+        type:1,
+        area:['400px','300px'],
+        title: '找回密码',
+        content: $("#findPassword"),
+        shade: 0,
+        btn: '提交'
+        ,yes: function(index, layero){
+            let phone = document.getElementById('pass_phone').value;
+            let nickname = document.getElementById('pass_nickname').value;
+            let questionAnswer = document.getElementById('pass_question_answer').value;
+            $.ajax({
+                type: 'post',
+                url: "findPassword",
+                data: {
+                    phone: phone,
+                    nickname: nickname,
+                    answer: questionAnswer
                 },
                 success: function (res) {
                     layer.msg(res.message);

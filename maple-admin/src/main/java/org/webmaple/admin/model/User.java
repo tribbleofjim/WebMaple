@@ -25,6 +25,16 @@ public class User {
      */
     private Character auth;
 
+    /**
+     * 密保问题
+     */
+    private Character question;
+
+    /**
+     * 答案
+     */
+    private String answer;
+
     public String getPhone() {
         return phone;
     }
@@ -55,5 +65,21 @@ public class User {
 
     public void setAuth(Character auth) {
         this.auth = auth;
+    }
+
+    public Character getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Character question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }
