@@ -32,7 +32,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -157,36 +156,68 @@ public class CommonController {
     @ResponseBody
     public Result<UserSourceView> searchUserAuth(@RequestParam String phone) {
         Result<UserSourceView> result = new Result<>();
-        List<UserSource> sourceList = sourceService.queryUserSources(phone).getModel();
-        if (CollectionUtils.isEmpty(sourceList)) {
+        List<UserSource> sourceList;
+        List<Source> sources;
+
+        Result<User> user = userService.searchUser(phone);
+        if (user == null) {
             return result.fail("该用户不存在！");
         }
 
-        HashSet<String> titleSet = new HashSet<>();
         List<String> authValues = new ArrayList<>();
-        AtomicInteger idx = new AtomicInteger(1);
-        List<SourceAuthView> authViews = sourceList.stream().map(userSource -> {
-            SourceAuthView sourceAuthView = new SourceAuthView();
-            sourceAuthView.setAuth(true);
-            sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
-            authValues.add(sourceAuthView.getValue());
-            sourceAuthView.setTitle(userSource.getSourceName());
-            titleSet.add(userSource.getSourceName());
-            return sourceAuthView;
-        }).collect(Collectors.toList());
+        List<SourceAuthView> authViews;
 
-        List<Source> sources = sourceService.querySources().getModel();
-        List<SourceAuthView> notAuthViews = sources.stream().map(source -> {
-            if (titleSet.contains(source.getSourceName())) {
-                return null;
+        if (user.getModel().getAuth() == '0') {
+            // 如果是管理员账号
+            sources = sourceService.querySources().getModel();
+            sourceList = sources.stream().map(source -> {
+                UserSource userSource = new UserSource();
+                userSource.setPhone(phone);
+                userSource.setSourceName(source.getSourceName());
+                userSource.setSourceType(source.getSourceType());
+                return userSource;
+            }).collect(Collectors.toList());
+
+            authViews = sourceList.stream().map(userSource -> {
+                SourceAuthView sourceAuthView = new SourceAuthView();
+                sourceAuthView.setAuth(true);
+                authValues.add(sourceAuthView.getValue());
+                sourceAuthView.setTitle(userSource.getSourceName());
+                return sourceAuthView;
+            }).collect(Collectors.toList());
+
+        } else {
+            sources = sourceService.querySources().getModel();
+            sourceList = sourceService.queryUserSources(phone).getModel();
+            if (CollectionUtils.isEmpty(sourceList)) {
+                return result.fail("该用户不存在！");
             }
-            SourceAuthView sourceAuthView = new SourceAuthView();
-            sourceAuthView.setAuth(true);
-            sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
-            sourceAuthView.setTitle(source.getSourceName());
-            return sourceAuthView;
-        }).filter(Objects::nonNull).collect(Collectors.toList());
-        authViews.addAll(notAuthViews);
+
+            HashSet<String> titleSet = new HashSet<>();
+            AtomicInteger idx = new AtomicInteger(1);
+            authViews = sourceList.stream().map(userSource -> {
+                SourceAuthView sourceAuthView = new SourceAuthView();
+                sourceAuthView.setAuth(true);
+                sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
+                authValues.add(sourceAuthView.getValue());
+                sourceAuthView.setTitle(userSource.getSourceName());
+                titleSet.add(userSource.getSourceName());
+                return sourceAuthView;
+            }).collect(Collectors.toList());
+
+            List<SourceAuthView> notAuthViews = sources.stream().map(source -> {
+                if (titleSet.contains(source.getSourceName())) {
+                    return null;
+                }
+                SourceAuthView sourceAuthView = new SourceAuthView();
+                sourceAuthView.setAuth(true);
+                sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
+                sourceAuthView.setTitle(source.getSourceName());
+                return sourceAuthView;
+            }).filter(Objects::nonNull).collect(Collectors.toList());
+
+            authViews.addAll(notAuthViews);
+        }
 
         UserSourceView userSourceView = new UserSourceView();
         userSourceView.setSourceAuthViews(authViews);
