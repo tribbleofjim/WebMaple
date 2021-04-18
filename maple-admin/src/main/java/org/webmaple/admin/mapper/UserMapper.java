@@ -17,7 +17,8 @@ public interface UserMapper {
     @Select("SELECT nickname FROM maple_user WHERE phone = #{phone}")
     String getNickname(String phone);
     
-    @Insert("INSERT INTO maple_user (phone, nickname, password) VALUES (#{phone}, #{nickname}, #{password})")
+    @Insert("INSERT INTO maple_user (phone, nickname, password, question, answer) " +
+            "VALUES (#{phone}, #{nickname}, #{password}, #{question}, #{answer})")
     void insertUser(User user);
 
     @Update("UPDATE maple_user SET nickname = #{nickname} WHERE phone = #{phone}")

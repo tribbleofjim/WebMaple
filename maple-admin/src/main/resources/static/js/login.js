@@ -25,7 +25,7 @@ function doLogin() {
 function register() {
     layer.open({
         type:1,
-        area:['400px','300px'],
+        area:['600px','480px'],
         title: '注册',
         content: $("#registForm"),
         shade: 0,
@@ -48,6 +48,7 @@ function register() {
                 },
                 success: function (res) {
                     layer.msg(res.message);
+                    layer.closeAll();
                 }
             });
             return true;
@@ -58,7 +59,8 @@ function register() {
     });
 }
 
-function findPassword() {
+function getQuestion() {
+    let phone = document.getElementById('pass_phone').value;
     $.ajax({
         type: 'get',
         url: "getUserQuestion",
@@ -66,13 +68,15 @@ function findPassword() {
             phone: phone
         },
         success: function (res) {
-            document.getElementById('pass_question').text = res.model
+            document.getElementById('pass_question').innerText = res.model
         }
     });
+}
 
+function findPassword() {
     layer.open({
         type:1,
-        area:['400px','300px'],
+        area:['600px','480px'],
         title: '找回密码',
         content: $("#findPassword"),
         shade: 0,
@@ -90,7 +94,11 @@ function findPassword() {
                     answer: questionAnswer
                 },
                 success: function (res) {
-                    layer.msg(res.message);
+                    if (res.success) {
+                        layer.msg(res.message + "您的密码是：" + res.model + ", 请及时修改密码");
+                    } else {
+                        layer.msg(res.message);
+                    }
                 }
             });
             return true;
