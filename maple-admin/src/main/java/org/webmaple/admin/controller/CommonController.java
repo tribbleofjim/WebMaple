@@ -117,7 +117,9 @@ public class CommonController {
         user.setPassword(password);
         result = userService.login(user);
         if (result.getSuccess()) {
-            response.addCookie(new Cookie("user", phone));
+            Cookie cookie = new Cookie("user", phone);
+            cookie.setMaxAge(8 * 60 * 60); // 设置8小时过期
+            response.addCookie(cookie);
         }
         return result;
     }
