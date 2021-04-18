@@ -20,6 +20,21 @@ layui.use(['layer', 'form', 'jquery', 'element', 'transfer'], function () {
     form = layui.form;
     $ = layui.jquery;
 
+    $.ajax({
+        type: 'get',
+        url: "searchUserAuth",
+        data: {
+            phone: userId
+        },
+        success: function (res) {
+            if (res.success) {
+                gotAuths = res.model.sourceAuthViews;
+            } else {
+                layer.msg(res.message);
+            }
+        }
+    });
+
     transfer.render({
         elem: '#sourceAuths'  //绑定元素
         ,title: ['未获取权限', '已获取权限']
