@@ -100,6 +100,21 @@ public class CommonController {
         return "login";
     }
 
+    @RequestMapping("/commander")
+    public String commander(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if ("user".equals(cookie.getName())) {
+                String phone = cookie.getValue();
+                User user = userService.searchUser(phone).getModel();
+                if (user.getAuth() == '0') {
+                    return "commander";
+                }
+            }
+        }
+        return "error";
+    }
+
     @PostMapping("/doLogin")
     @ResponseBody
     public Result<Void> doLogin(@RequestParam String phone,

@@ -30,7 +30,7 @@ layui.use(['layer', 'form', 'jquery', 'element', 'transfer'], function () {
         },
         success: function (res) {
             if (res.success) {
-                if (res.model.isCommander) {
+                if (res.model.commander) {
                     auth = true;
                 }
                 gotAuths = res.model.sourceAuthViews;
@@ -181,6 +181,21 @@ function editAuth() {
         },
         cancel: function(layero,index){
             layer.closeAll();
+        }
+    });
+}
+
+function commander() {
+    if (!auth) {
+        layer.msg("您不是管理员，不能访问网站管理页面");
+        return;
+    }
+    $.ajax({
+        type: 'get',
+        url: "commander",
+        data: {},
+        success: function (res) {
+
         }
     });
 }
