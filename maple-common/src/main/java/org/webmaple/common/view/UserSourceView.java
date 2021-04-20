@@ -7,9 +7,19 @@ import java.util.List;
  * on 2021/2/26
  */
 public class UserSourceView {
+    private boolean isCommander = false;
+
     private List<SourceAuthView> sourceAuthViews;
 
     private List<String> authValues;
+
+    public boolean isCommander() {
+        return isCommander;
+    }
+
+    public void setCommander(boolean commander) {
+        isCommander = commander;
+    }
 
     public List<SourceAuthView> getSourceAuthViews() {
         return sourceAuthViews;

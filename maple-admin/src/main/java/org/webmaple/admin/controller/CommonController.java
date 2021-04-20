@@ -213,12 +213,14 @@ public class CommonController {
         if (user == null) {
             return result.fail("该用户不存在！");
         }
+        UserSourceView userSourceView = new UserSourceView();
 
         List<String> authValues = new ArrayList<>();
         List<SourceAuthView> authViews;
 
         if (user.getModel().getAuth() == '0') {
             // 如果是管理员账号
+            userSourceView.setCommander(true);
             sourceList = sourceService.querySources().getModel();
 
             AtomicInteger idx = new AtomicInteger(1);
@@ -288,10 +290,8 @@ public class CommonController {
             }
         }
 
-        UserSourceView userSourceView = new UserSourceView();
         userSourceView.setSourceAuthViews(authViews);
         userSourceView.setAuthValues(authValues);
-
         return result.success(userSourceView);
     }
 

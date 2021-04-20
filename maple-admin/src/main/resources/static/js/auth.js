@@ -1,4 +1,5 @@
 var userId = decodeURIComponent(getCookieByKey("user"));
+var auth = false;
 document.getElementById("username").innerHTML = "用户：" + userId;
 
 // auth : 0-有权限，1-无权限（0以外都算无权限）
@@ -29,6 +30,9 @@ layui.use(['layer', 'form', 'jquery', 'element', 'transfer'], function () {
         },
         success: function (res) {
             if (res.success) {
+                if (res.model.isCommander) {
+                    auth = true;
+                }
                 gotAuths = res.model.sourceAuthViews;
                 showSources({
                     target: 'sources'
@@ -111,6 +115,10 @@ function sourceInfo(id) {
 }
 
 function addSource() {
+    if (!auth) {
+        layer.msg("您不是管理员，没有添加资源权限");
+        return;
+    }
     layer.open({
         type:1,
         area:['700px','500px'],
@@ -147,6 +155,10 @@ function addSource() {
 }
 
 function editAuth() {
+    if (!auth) {
+        layer.msg("您不是管理员，不能添加用户权限");
+        return;
+    }
     layer.open({
         type:1,
         area:['570px','530px'],
