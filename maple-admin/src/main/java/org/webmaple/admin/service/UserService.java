@@ -12,8 +12,6 @@ public interface UserService {
 
     Result<Void> register(User user);
 
-    Result<Void> getNickname(String phone);
-
     Result<User> searchUser(String phone);
 
     Result<Void> modifyNickname(User user);

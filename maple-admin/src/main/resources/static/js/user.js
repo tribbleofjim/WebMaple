@@ -8,12 +8,16 @@ layui.use(['form', 'layer', 'jquery', 'element'], function () {
 
     $.ajax({
         type: 'get',
-        url: "getNickname",
+        url: "getUserInfo",
         data: {
             phone: phone
         },
         success: function (res) {
-            document.getElementById("username").innerHTML = res.message;
+            document.getElementById("username").innerHTML = res.model.nickname;
+            document.getElementById("auth").innerHTML = (res.model.auth === '0') ?  "管理员" : "普通用户";
+            document.getElementById("applyAuth").innerHTML = (res.model.auth === '0') ? "" :
+                '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm" onclick="applyAuth()">' +
+                '<i class="layui-icon layui-icon-edit"></i>申请管理员权限</button>';
         }
     });
 });
@@ -80,6 +84,10 @@ function editPassword() {
             layer.closeAll();
         }
     });
+}
+
+function applyAuth() {
+    console.log(phone + "申请管理员权限");
 }
 
 function getCookieByKey(name){

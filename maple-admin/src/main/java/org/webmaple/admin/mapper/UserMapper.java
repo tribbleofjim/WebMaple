@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 public interface UserMapper {
     @Select("SELECT * FROM maple_user WHERE phone = #{phone}")
     User getUserByPhone(String phone);
-
-    @Select("SELECT nickname FROM maple_user WHERE phone = #{phone}")
-    String getNickname(String phone);
     
     @Insert("INSERT INTO maple_user (phone, nickname, password, question, answer) " +
             "VALUES (#{phone}, #{nickname}, #{password}, #{question}, #{answer})")

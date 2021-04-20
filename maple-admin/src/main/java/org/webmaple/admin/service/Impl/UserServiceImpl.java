@@ -59,12 +59,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result<Void> getNickname(String phone) {
-        Result<Void> result = new Result<>();
-        return result.success(userMapper.getNickname(phone));
-    }
-
-    @Override
     public Result<User> searchUser(String phone) {
         Result<User> result = new Result<>();
         User user = userMapper.getUserByPhone(phone);

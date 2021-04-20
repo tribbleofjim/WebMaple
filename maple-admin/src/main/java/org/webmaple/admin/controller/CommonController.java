@@ -156,14 +156,14 @@ public class CommonController {
         return userService.register(user);
     }
 
-    @GetMapping("/getNickname")
+    @GetMapping("/getUserInfo")
     @ResponseBody
-    public Result<Void> getNickname(@RequestParam String phone) {
-        Result<Void> result = new Result<>();
+    public Result<User> getUserInfo(@RequestParam String phone) {
+        Result<User> result = new Result<>();
         if (StringUtils.isBlank(phone)) {
             return result.fail("登录状态异常，无法获取用户信息");
         }
-        return userService.getNickname(phone);
+        return userService.searchUser(phone);
     }
 
     @GetMapping("/getUserQuestion")
