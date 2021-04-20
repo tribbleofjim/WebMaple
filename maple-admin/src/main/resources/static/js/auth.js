@@ -1,4 +1,5 @@
-document.getElementById("username").innerHTML = "用户：" + decodeURIComponent(getCookieByKey("user"));
+var userId = decodeURIComponent(getCookieByKey("user"));
+document.getElementById("username").innerHTML = "用户：" + userId;
 
 // auth : 0-有权限，1-无权限（0以外都算无权限）
 var gotAuths = [
@@ -29,6 +30,10 @@ layui.use(['layer', 'form', 'jquery', 'element', 'transfer'], function () {
         success: function (res) {
             if (res.success) {
                 gotAuths = res.model.sourceAuthViews;
+                showSources({
+                    target: 'sources'
+                    , data: gotAuths
+                });
             } else {
                 layer.msg(res.message);
             }
@@ -42,11 +47,6 @@ layui.use(['layer', 'form', 'jquery', 'element', 'transfer'], function () {
         ,value: value
         ,id: 'sourceAuths' //定义索引
     });
-});
-
-showSources({
-    target: 'sources'
-    , data: gotAuths
 });
 
 function showSources(param) {

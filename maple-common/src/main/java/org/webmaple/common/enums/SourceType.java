@@ -23,4 +23,14 @@ public enum SourceType {
     public void setType(char type) {
         this.type = type;
     }
+
+    public static String getTypeStr(char type) throws Exception {
+        SourceType[] types = SourceType.values();
+        for (SourceType sourceType : types) {
+            if (sourceType.type == type) {
+                return sourceType.name().toLowerCase();
+            }
+        }
+        throw new Exception("invalid type : " + type);
+    }
 }

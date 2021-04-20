@@ -36,9 +36,9 @@ public class SourceServiceImpl implements SourceService {
     }
 
     @Override
-    public Result<List<UserSource>> queryUserSources(String phone) {
-        Result<List<UserSource>> result = new Result<>();
-        List<UserSource> sourceList = userSourceMapper.queryUserSources(phone);
+    public Result<List<Source>> queryUserSources(String phone) {
+        Result<List<Source>> result = new Result<>();
+        List<Source> sourceList = userSourceMapper.queryUserSources(phone);
         return result.success(sourceList);
     }
 

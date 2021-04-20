@@ -13,7 +13,7 @@ import java.util.List;
 public interface SourceService {
     Result<Void> addSource(Source source);
 
-    Result<List<UserSource>> queryUserSources(String phone);
+    Result<List<Source>> queryUserSources(String phone);
 
     Result<List<Source>> querySources();
 

@@ -9,8 +9,8 @@ import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
-import org.webmaple.admin.model.UserSource;
 import org.webmaple.common.enums.NodeType;
+import org.webmaple.common.enums.SourceType;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderAdvance;
@@ -33,10 +33,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -209,7 +206,7 @@ public class CommonController {
     @ResponseBody
     public Result<UserSourceView> searchUserAuth(@RequestParam String phone) {
         Result<UserSourceView> result = new Result<>();
-        List<UserSource> sourceList;
+        List<Source> sourceList;
         List<Source> sources;
 
         Result<User> user = userService.searchUser(phone);
@@ -222,20 +219,25 @@ public class CommonController {
 
         if (user.getModel().getAuth() == '0') {
             // 如果是管理员账号
-            sources = sourceService.querySources().getModel();
-            sourceList = sources.stream().map(source -> {
-                UserSource userSource = new UserSource();
-                userSource.setPhone(phone);
-                userSource.setSourceName(source.getSourceName());
-                userSource.setSourceType(source.getSourceType());
-                return userSource;
-            }).collect(Collectors.toList());
+            sourceList = sourceService.querySources().getModel();
 
+            AtomicInteger idx = new AtomicInteger(1);
             authViews = sourceList.stream().map(userSource -> {
                 SourceAuthView sourceAuthView = new SourceAuthView();
                 sourceAuthView.setAuth(true);
                 authValues.add(sourceAuthView.getValue());
+                sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
+
                 sourceAuthView.setTitle(userSource.getSourceName());
+                sourceAuthView.setIp(userSource.getIp());
+                try {
+                    sourceAuthView.setStype(SourceType.getTypeStr(userSource.getSourceType()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                sourceAuthView.setUser(userSource.getAccount());
+                sourceAuthView.setPassword(userSource.getPass());
+                sourceAuthView.setType(userSource.getSourceType() == '0' ? "server" : "db");
                 return sourceAuthView;
             }).collect(Collectors.toList());
 
@@ -253,23 +255,37 @@ public class CommonController {
                 sourceAuthView.setAuth(true);
                 sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
                 authValues.add(sourceAuthView.getValue());
-                sourceAuthView.setTitle(userSource.getSourceName());
                 titleSet.add(userSource.getSourceName());
+
+                sourceAuthView.setTitle(userSource.getSourceName());
+                sourceAuthView.setIp(userSource.getIp());
+                try {
+                    sourceAuthView.setStype(SourceType.getTypeStr(userSource.getSourceType()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                sourceAuthView.setUser(userSource.getAccount());
+                sourceAuthView.setPassword(userSource.getPass());
+                sourceAuthView.setType(userSource.getSourceType() == '0' ? "server" : "db");
                 return sourceAuthView;
             }).collect(Collectors.toList());
 
-            List<SourceAuthView> notAuthViews = sources.stream().map(source -> {
-                if (titleSet.contains(source.getSourceName())) {
-                    return null;
+            for (Source source : sources) {
+                if (!titleSet.contains(source.getSourceName())) {
+                    SourceAuthView sourceAuthView = new SourceAuthView();
+                    sourceAuthView.setAuth(false);
+                    sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
+                    sourceAuthView.setTitle(source.getSourceName());
+                    sourceAuthView.setIp(source.getIp());
+                    try {
+                        sourceAuthView.setStype(SourceType.getTypeStr(source.getSourceType()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    sourceAuthView.setType(source.getSourceType() == '0' ? "server" : "db");
+                    authViews.add(sourceAuthView);
                 }
-                SourceAuthView sourceAuthView = new SourceAuthView();
-                sourceAuthView.setAuth(true);
-                sourceAuthView.setValue(String.valueOf(idx.getAndIncrement()));
-                sourceAuthView.setTitle(source.getSourceName());
-                return sourceAuthView;
-            }).filter(Objects::nonNull).collect(Collectors.toList());
-
-            authViews.addAll(notAuthViews);
+            }
         }
 
         UserSourceView userSourceView = new UserSourceView();
