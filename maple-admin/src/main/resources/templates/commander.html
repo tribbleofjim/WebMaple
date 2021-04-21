@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
     <head>
-    <meta charset="UTF-8">
-    <title>资源权限管理</title>
-    <link rel="stylesheet" href="/layui/css/layui.css">
-    <script type="text/javascript" src="/layui/layui.js"></script>
-</head>
+        <meta charset="UTF-8">
+        <title>网站管理</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+        <style>
+            .my-layui-body {
+                padding-left:220px;
+                padding-right:20px;
+                padding-top:20px;
+                left:200px;
+                right:0;
+                top:0;
+                bottom:0;
+                z-index:998;
+                width:auto;
+                overflow-y:auto;
+                box-sizing:border-box
+            }
+        </style>
+    </head>
+    <body class="layui-layout-body">
+        <div id="noticeMarker"></div>
 
-    <body class="layui-layout-body layui-bg-gray">
         <!--左边的导航条-->
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
@@ -50,7 +65,7 @@
                                 <i class="layui-icon layui-icon-tabs"></i>
                                 基本资料
                             </a></dd>
-                            <dd><a href="auth">
+                            <dd><a href="javascript:;">
                                 <i class="layui-icon layui-icon-auz"></i>
                                 资源权限管理
                             </a></dd>
@@ -62,12 +77,41 @@
         <!--/左边的导航条-->
 
         <!--内容主体区域-->
-        <div class="layui-body">
-            <div class="layui-container" style="padding: 15px;">
-                <div class="padding: 20px">
+        <div class="my-layui-body">
+            <fieldset class="layui-elem-field">
+                <legend>网站管理说明</legend>
+                <div class="layui-field-box">
+                    欢迎来到网站管理界面，想要查看消息，可点击页面右边的隐藏图标查看
                 </div>
-            </div>
+            </fieldset>
+
+            <!--用户管理-->
+            <table class="layui-table" lay-data="{height:550, width: 1000, url:'/userList', page:true,
+                            id:'', toolbar: '#headBar'}" lay-filter="" >
+                <thead>
+                <tr>
+                    <th lay-data="{checkbox:true}"></th>
+                    <th lay-data="{field:'phone', width:200, sort: true}">用户id(手机号)</th>
+                    <th lay-data="{field:'nickname', width:600}">用户昵称</th>
+                    <th lay-data="{field:'auth', width:200}">是否为管理员</th>
+                </tr>
+                </thead>
+            </table>
+            <!--用户管理-->
+
         </div>
         <!--/内容主体区域-->
     </body>
+    <script src="/layui/layui.js"></script>
+    <script type="text/javascript" src="../js/commander.js"></script>
+
+    <script type="text/html" id="headBar">
+        <button type="button" class="layui-btn" lay-event="">
+            <i class="layui-icon layui-icon-addition"></i> 添加用户为管理员
+        </button>
+        <button type="button" class="layui-btn" lay-event="">
+            <i class="layui-icon layui-icon-delete"></i> 删除用户
+        </button>
+    </script>
+
 </html>
