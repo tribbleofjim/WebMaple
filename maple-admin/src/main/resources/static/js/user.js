@@ -103,14 +103,24 @@ function applyAuth() {
 }
 
 function exit() {
-    $.ajax({
-        type: 'get',
-        url: "exit",
-        data: {},
-        success: function (res) {
-            layer.msg(res.message);
+    layer.open({
+        content: '确认要退出登录吗？',
+        btn: ['确认', '取消']
+        ,btn1: function(index, layero){
+            // exit
+            $.ajax({
+                type: 'get',
+                url: "exit",
+                data: {},
+                success: function (res) {
+                    layer.msg(res.message);
+                    layer.closeAll();
+                    window.location.href="login";
+                }
+            });
+        },
+        btn2: function(index, layero){
             layer.closeAll();
-            window.location.href="login";
         }
     });
 }
