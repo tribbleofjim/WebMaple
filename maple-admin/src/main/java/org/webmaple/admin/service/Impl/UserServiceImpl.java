@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author lyifee
  * on 2021/2/2
@@ -94,5 +96,13 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.updatePassword(phone, newPass);
         return result.success();
+    }
+
+    @Override
+    public Result<List<User>> userList() {
+        Result<List<User>> result = new Result<>();
+
+        List<User> userList = userMapper.userList();
+        return result.success(userList);
     }
 }

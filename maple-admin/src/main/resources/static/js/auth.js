@@ -109,6 +109,7 @@ function sourceInfo(id) {
     var data = gotAuths[idx];
     layer.open({
         type:1,
+        area:['200px','100px'],
         title:'资源信息展示',
         content: '用户名:' + data.user + ', 密码:' + data.password
     });

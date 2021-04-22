@@ -3,6 +3,8 @@ package org.webmaple.admin.service;
 import org.webmaple.admin.model.User;
 import org.webmaple.common.model.Result;
 
+import java.util.List;
+
 /**
  * @author lyifee
  * on 2021/2/2
@@ -17,4 +19,6 @@ public interface UserService {
     Result<Void> modifyNickname(User user);
 
     Result<Void> modifyPassword(String phone, String oldPass, String newPass);
+
+    Result<List<User>> userList();
 }

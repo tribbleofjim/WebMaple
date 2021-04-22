@@ -11,6 +11,7 @@ import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
 import org.webmaple.common.enums.NodeType;
 import org.webmaple.common.enums.SourceType;
+import org.webmaple.common.model.DataTableDTO;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderAdvance;
@@ -113,6 +114,21 @@ public class CommonController {
             }
         }
         return "error";
+    }
+
+    @RequestMapping("/userList")
+    @ResponseBody
+    public DataTableDTO userList() {
+        List<User> userList = userService.userList().getModel();
+        for (User user : userList) {
+            user.setAuth(user.getAuth() == '0' ? '是' : '否');
+        }
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(0);
+        dataTableDTO.setMsg("");
+        dataTableDTO.setCount((CollectionUtils.isEmpty(userList)) ? 0 : userList.size());
+        dataTableDTO.setData(userList);
+        return dataTableDTO;
     }
 
     @PostMapping("/doLogin")

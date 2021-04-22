@@ -17,7 +17,7 @@ layui.use(['form', 'layer', 'jquery', 'element'], function () {
             document.getElementById("auth").innerHTML = (res.model.auth === '0') ?  "管理员" : "普通用户";
             document.getElementById("applyAuth").innerHTML = (res.model.auth === '0') ? "" :
                 '<button type="button" class="layui-btn layui-btn-radius layui-btn-sm" onclick="applyAuth()">' +
-                '<i class="layui-icon layui-icon-edit"></i>申请管理员权限</button>';
+                '<i class="layui-icon layui-icon-email"></i>申请管理员权限</button>';
         }
     });
 });
@@ -88,6 +88,10 @@ function editPassword() {
 
 function applyAuth() {
     console.log(phone + "申请管理员权限");
+}
+
+function exit() {
+    console.log(phone + "退出登录");
 }
 
 function getCookieByKey(name){

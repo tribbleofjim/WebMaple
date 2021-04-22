@@ -86,13 +86,13 @@
             </fieldset>
 
             <!--用户管理-->
-            <table class="layui-table" lay-data="{height:550, width: 1000, url:'/userList', page:true,
-                            id:'', toolbar: '#headBar'}" lay-filter="" >
+            <table class="layui-table" lay-data="{height:550, width: 1100, url:'/userList', page:true,
+                            id:'userList', toolbar: '#headBar'}" lay-filter="" >
                 <thead>
                 <tr>
                     <th lay-data="{checkbox:true}"></th>
                     <th lay-data="{field:'phone', width:200, sort: true}">用户id(手机号)</th>
-                    <th lay-data="{field:'nickname', width:600}">用户昵称</th>
+                    <th lay-data="{field:'nickname'}">用户昵称</th>
                     <th lay-data="{field:'auth', width:200}">是否为管理员</th>
                 </tr>
                 </thead>
