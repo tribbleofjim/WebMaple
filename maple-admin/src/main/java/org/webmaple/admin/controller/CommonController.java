@@ -7,6 +7,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.webmaple.admin.Questions;
 import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
+import org.webmaple.admin.model.Message;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
 import org.webmaple.common.enums.NodeType;
@@ -154,6 +155,18 @@ public class CommonController {
             response.addCookie(cookie);
         }
         return result;
+    }
+
+    @RequestMapping("/exit")
+    @ResponseBody
+    public Result<Void> exit(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (!"user".equals(cookie.getName())) {
+                response.addCookie(cookie);
+            }
+        }
+        return new Result<Void>().success("退出登录成功");
     }
 
     @PostMapping("/register")
@@ -324,6 +337,17 @@ public class CommonController {
         userSourceView.setSourceAuthViews(authViews);
         userSourceView.setAuthValues(authValues);
         return result.success(userSourceView);
+    }
+
+    @RequestMapping("/applyAuth")
+    @ResponseBody
+    public Result<Void> applyAuth(@RequestParam String phone) {
+        // todo: apply auth
+        Message message = new Message();
+        message.setFromUser(phone);
+        message.setContent("用户 " + phone + " 申请成为管理员");
+        message.setValid(true);
+        return new Result<Void>().success("申请成功");
     }
 
     @PostMapping("/addSource")

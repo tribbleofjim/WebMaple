@@ -87,11 +87,32 @@ function editPassword() {
 }
 
 function applyAuth() {
+    $.ajax({
+        type: 'get',
+        url: "applyAuth",
+        data: {
+            phone: phone
+        },
+        success: function (res) {
+            layer.msg(res.message);
+            layer.closeAll();
+            window.location.href="login";
+        }
+    });
     console.log(phone + "申请管理员权限");
 }
 
 function exit() {
-    console.log(phone + "退出登录");
+    $.ajax({
+        type: 'get',
+        url: "exit",
+        data: {},
+        success: function (res) {
+            layer.msg(res.message);
+            layer.closeAll();
+            window.location.href="login";
+        }
+    });
 }
 
 function getCookieByKey(name){

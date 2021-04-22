@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
         <title>用户基本资料</title>
@@ -70,39 +70,51 @@
 
                         <div class="layui-row layui-col-space15">
                             <!--数据总览-->
-                            <div class="layui-col-md4">
+                            <div class="layui-col-md3">
                                 <!--用户名-->
                                 <div class="layui-card" style="height: 150px">
                                     <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-username" style="font-size: 30px;"></i>
-                                        <span id="username"></span>
-                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-sm" onclick="editNickname()">
-                                            <i class="layui-icon layui-icon-edit"></i> 编辑
+                                        <span id="username"></span> </br>
+                                        <button type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-sm" onclick="editNickname()">
+                                            <i class="layui-icon layui-icon-edit"></i> 编辑昵称
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-col-md4">
+                            <div class="layui-col-md3">
                                 <!--密码-->
                                 <div class="layui-card" style="height: 150px">
                                     <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-password" style="font-size: 30px;"></i>
-                                        <span id="password">******</span>
+                                        <span id="password">******</span> </br>
                                         <button type="button" class="layui-btn layui-btn-radius layui-btn-sm" onclick="editPassword()">
                                             <i class="layui-icon layui-icon-edit"></i> 修改密码
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="layui-col-md4">
+                            <div class="layui-col-md3">
                                 <!--账号权限-->
                                 <div class="layui-card" style="height: 150px">
                                     <div class="layui-card-body">
                                         <i class="layui-icon layui-icon-auz" style="font-size: 30px;"></i>
-                                        <span id="auth">管理员</span>
-                                        <span id="applyAuth"></span>
-                                        <button type="button" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-sm" onclick="exit()">
+                                        <span id="auth">普通用户</span> </br>
+                                        <button type="button" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-sm" onclick="exit()">
                                             <i class="layui-icon layui-icon-return"></i> 退出登录
+                                        </button>
+                                        <span id="applyAuth"></span> </br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">
+                                <!--消息-->
+                                <div class="layui-card" style="height: 150px">
+                                    <div class="layui-card-body">
+                                        <i class="layui-icon layui-icon-notice" style="font-size: 30px;"></i>
+                                        <span>消息通知</span> </br>
+                                        <button type="button" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-sm" onclick="">
+                                            <i class="layui-icon layui-icon-release"></i> 查看消息通知
                                         </button>
                                     </div>
                                 </div>
