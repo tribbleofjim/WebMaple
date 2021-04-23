@@ -15,19 +15,15 @@ import org.webmaple.common.enums.JobState;
 import org.webmaple.common.enums.MaintainType;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
-import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.common.model.SpiderJobDTO;
 import org.webmaple.admin.service.TimedJobService;
 import org.springframework.stereotype.Service;
 import org.webmaple.common.network.RequestSender;
-import org.webmaple.common.util.CommonUtil;
 import org.webmaple.common.util.RequestUtil;
 import org.webmaple.common.view.TimedSpiderView;
 import us.codecraft.webmagic.Request;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author lyifee
@@ -100,8 +96,12 @@ public class TimedJobServiceImpl implements TimedJobService {
         Request request = RequestUtil.postRequest(worker.getIp(), worker.getPort(), "createTimedSpider", param);
         try {
             CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
 
         } catch (Exception e) {
             return result.fail(e.getMessage());
@@ -122,8 +122,12 @@ public class TimedJobServiceImpl implements TimedJobService {
         Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "resumeTimedSpider", param);
         try {
             CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
 
         } catch (Exception e) {
             return result.fail(e.getMessage());
@@ -144,9 +148,12 @@ public class TimedJobServiceImpl implements TimedJobService {
         Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "pauseTimedSpider", param);
         try {
             CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
-
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
         } catch (Exception e) {
             return result.fail(e.getMessage());
         }
@@ -166,8 +173,12 @@ public class TimedJobServiceImpl implements TimedJobService {
         Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "deleteTimedSpider", param);
         try {
             CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            String text = RequestUtil.getResponseText(response);
-            return result.success(text);
+            JSONObject responseObject = RequestUtil.getResponseObject(response);
+            if (responseObject.getBoolean("success")) {
+                return result.success(responseObject.getString("message"));
+            } else {
+                return result.fail(responseObject.getString("message"));
+            }
 
         } catch (Exception e) {
             return result.fail(e.getMessage());

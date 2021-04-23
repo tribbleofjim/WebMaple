@@ -39,6 +39,19 @@
             <version>${selenium.version}</version>
         </dependency>
 
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis.spring.boot</groupId>-->
+<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--            <version>${mybatis.version}</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/mysql/mysql-connector-java &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>${mysql.connector.version}</version>-->
+<!--        </dependency>-->
+
         <!-- ===================== test =================== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

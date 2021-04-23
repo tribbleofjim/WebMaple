@@ -4,12 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
+import org.webmaple.admin.mapper.SpiderMapper;
+import org.webmaple.admin.model.MapleSpider;
 import org.webmaple.common.enums.SpiderState;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.admin.service.SpiderManageService;
 import org.webmaple.common.network.RequestSender;
+import org.webmaple.common.util.CommonUtil;
+import org.webmaple.common.util.ModelConverter;
 import org.webmaple.common.util.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -32,6 +36,9 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     @Autowired
     private WorkerContainer workerContainer;
+
+    @Autowired
+    private SpiderMapper spiderMapper;
 
     @Autowired
     private RequestSender requestSender;
@@ -59,7 +66,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
 
     @Override
     public Result<Void> stopSpider(String uuid, String worker) {
-        return startSpiderFromWorker(uuid, worker);
+        return stopSpiderFromWorker(uuid, worker);
 //        Result<Void> result = new Result<>();
 //        return result.success("暂停成功！");
     }
@@ -105,6 +112,8 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             CloseableHttpResponse response = requestSender.request(httpUriRequest);
             JSONObject responseObject = RequestUtil.getResponseObject(response);
             if (responseObject.getBoolean("success")) {
+                MapleSpider mapleSpider = spiderDTO2MapleSpider(spiderDTO);
+                spiderMapper.createSpider(mapleSpider);
                 return result.success(responseObject.getString("message"));
             } else {
                 return result.fail(responseObject.getString("message"));
@@ -131,6 +140,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             CloseableHttpResponse response = requestSender.request(httpUriRequest);
             JSONObject responseObject = RequestUtil.getResponseObject(response);
             if (responseObject.getBoolean("success")) {
+                spiderMapper.startSpider(uuid, workerName);
                 return result.success(responseObject.getString("message"));
             } else {
                 return result.fail(responseObject.getString("message"));
@@ -158,6 +168,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             CloseableHttpResponse response = requestSender.request(httpUriRequest);
             JSONObject responseObject = RequestUtil.getResponseObject(response);
             if (responseObject.getBoolean("success")) {
+                spiderMapper.removeSpider(uuid, workerName);
                 return result.success(responseObject.getString("message"));
             } else {
                 return result.fail(responseObject.getString("message"));
@@ -218,6 +229,22 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         BasicDataContainer.setSpiderNum(spiderList.size());
 
         return spiderList;
+    }
+
+    private MapleSpider spiderDTO2MapleSpider(SpiderDTO spiderDTO) {
+        if (spiderDTO == null) {
+            return null;
+        }
+        MapleSpider mapleSpider = new MapleSpider();
+        mapleSpider.setWorker(spiderDTO.getWorker());
+        mapleSpider.setUrls(JSON.toJSONString(spiderDTO.getUrls()));
+        mapleSpider.setUuid(spiderDTO.getUuid());
+        mapleSpider.setState(spiderDTO.getState());
+        mapleSpider.setThreadNum(spiderDTO.getThreadNum());
+        mapleSpider.setDownloader(spiderDTO.getDownloader());
+        mapleSpider.setProcessor(spiderDTO.getProcessor());
+        mapleSpider.setPipeline(spiderDTO.getPipeline());
+        return mapleSpider;
     }
 
     private List<SpiderDTO> mockSpiders() {

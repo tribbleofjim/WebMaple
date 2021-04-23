@@ -47,7 +47,7 @@ public class HeartBeatSender {
     private Integer workerPort;
 
     @Scheduled(cron = "0 0/20 * * * ?")
-    @PostConstruct
+    @PostConstruct // 在项目初始加载时即执行
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
         if (workerName == null) {
