@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author lyifee
@@ -208,22 +209,35 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     }
 
     private List<SpiderDTO> querySpiderListFromWorkers() {
-        List<NodeDTO> workers = workerContainer.getWorkerList();
-        List<SpiderDTO> spiderList = new ArrayList<>();
-        for (NodeDTO worker : workers) {
-            Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "spiderList", null);
-            HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
-            try {
-                CloseableHttpResponse response = requestSender.request(httpUriRequest);
-                String text = RequestUtil.getResponseText(response);
-                JSONObject spiderObject = JSON.parseObject(text);
-                List<SpiderDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderDTO.class);
-                spiderList.addAll(spiders);
-
-            } catch (Exception e) {
-                LOGGER.error("query_spider_list_exception:", e);
-            }
-        }
+        List<MapleSpider> mapleSpiders = spiderMapper.spiderList();
+        List<SpiderDTO> spiderList = mapleSpiders.stream().map(spider -> {
+            SpiderDTO spiderDTO = new SpiderDTO();
+            spiderDTO.setWorker(spider.getWorker());
+            spiderDTO.setUuid(spider.getUuid());
+            spiderDTO.setUrls(JSONObject.parseArray(spider.getUrls()).toJavaList(String.class));
+            spiderDTO.setThreadNum(spider.getThreadNum());
+            spiderDTO.setDownloader(spider.getDownloader());
+            spiderDTO.setProcessor(spider.getProcessor());
+            spiderDTO.setPipeline(spider.getPipeline());
+            spiderDTO.setState(spider.getState());
+            return spiderDTO;
+        }).collect(Collectors.toList());
+//        List<NodeDTO> workers = workerContainer.getWorkerList();
+//        List<SpiderDTO> spiderList = new ArrayList<>();
+//        for (NodeDTO worker : workers) {
+//            Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "spiderList", null);
+//            HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+//            try {
+//                CloseableHttpResponse response = requestSender.request(httpUriRequest);
+//                String text = RequestUtil.getResponseText(response);
+//                JSONObject spiderObject = JSON.parseObject(text);
+//                List<SpiderDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderDTO.class);
+//                spiderList.addAll(spiders);
+//
+//            } catch (Exception e) {
+//                LOGGER.error("query_spider_list_exception:", e);
+//            }
+//        }
 
         // spider num
         BasicDataContainer.setSpiderNum(spiderList.size());
