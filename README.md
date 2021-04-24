@@ -32,6 +32,8 @@
        <version>1.0-SNAPSHOT</version>
    </dependency>
    ```
+   
+   注意：当前worker包还未发布到maven中央仓库，可以下载项目后自行将worker文件夹打包并部署到本地仓库，然后就可以在本地项目中引入worker包查看效果了。
 
 2. 在application.yml里填写webmaple的选项如下：（目前均为必填）
 
