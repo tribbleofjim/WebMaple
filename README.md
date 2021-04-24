@@ -38,11 +38,11 @@
    ```yaml
    webmaple:
      admin:
-       host: 101.37.89.200
-       port: 8080
+       host: 127.0.0.1 # 自由修改
+       port: 8080 # 自由修改
        heartbeat: heartbeat
      worker:
-       port: 8080
+       port: 8080 # 自由修改
        package-path: org.webmaple.worker
    ```
 
