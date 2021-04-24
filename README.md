@@ -45,7 +45,7 @@
        heartbeat: heartbeat
      worker:
        port: 8080 # 自由修改
-       package-path: org.webmaple.worker
+       package-path: org.webmaple.worker # 此处修改成你的项目的根目录，比如你的项目名叫testPro，包路径为com.testPro，则修改为com.testPro
    ```
 
 3. 在worker项目中，完成 你想使用web Magic去爬取的网站 对应的downloader，processor和pipeline，并使用注解@MaplePipeline和@MapleProcessor去标明它们，以及它们对应的网站site；
