@@ -88,7 +88,7 @@
      configuration:
        map-underscore-to-camel-case: true
    webmaple: # webmaple相关配置
-     jar: /Users/lyifee/TriSources # 此处替换成服务器上的jar包暂存路径
+     jar: /Users/lyifee/TriSources # 此处替换成服务器上的jar包暂存路径，创建节点时，将jar包上传到服务器的这个路径下
    ```
 
 3. 在对应的mysql中创建一个名为webmaple的数据库；
