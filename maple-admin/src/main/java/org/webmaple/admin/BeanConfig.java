@@ -1,5 +1,6 @@
 package org.webmaple.admin;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.webmaple.admin.container.WorkerContainer;
@@ -35,6 +36,9 @@ public class BeanConfig {
     @Scheduled(cron = "0 0/20 * * * ?")
     public void removeInvalidNodeSpiders() {
         List<NodeDTO> workers = workerContainer.getWorkerList();
+        if (CollectionUtils.isEmpty(workers)) {
+            return;
+        }
         List<String> workerNames = workers.stream().map(NodeDTO::getName).collect(Collectors.toList());
         spiderMapper.removeInvalidNodeSpiders(workerNames);
     }

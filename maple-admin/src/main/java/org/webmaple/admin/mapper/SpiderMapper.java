@@ -20,10 +20,10 @@ public interface SpiderMapper {
             "VALUES (#{worker}, #{urls}, #{uuid}, #{state}, #{threadNum}, #{processor}, #{pipeline}, #{downloader})")
     void createSpider(MapleSpider spider);
 
-    @Delete("DELETE * FROM maple_spider WHERE uuid = #{uuid} and worker = #{worker}")
+    @Delete("DELETE FROM maple_spider WHERE uuid = #{uuid} and worker = #{worker}")
     void removeSpider(String uuid, String worker);
 
-    @Delete("DELETE * FROM maple_spider")
+    @Delete("DELETE FROM maple_spider")
     void removeAllSpider();
 
     @Delete({"<script>",
