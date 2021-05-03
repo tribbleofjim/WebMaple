@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -35,16 +36,27 @@ public class ComponentServiceImpl implements ComponentService {
 
     @Override
     public List<ComponentDTO> queryComponentList() {
-        return mockComponentList();
+        // return mockComponentList();
+        return componentList();
     }
 
     private List<ComponentDTO> componentList() {
         List<NodeDTO> workers = workerContainer.getWorkerList();
-        List<ComponentDTO> res = new ArrayList<>();
+        HashMap<String, ComponentDTO> componentMap = new HashMap<>();
+        List<ComponentDTO> res;
         for (NodeDTO worker : workers) {
             List<ComponentDTO> list = queryComponentsFromWorker(worker);
-            res.addAll(list);
+            for (ComponentDTO component : list) {
+                ComponentDTO tempComp;
+                if (componentMap.containsKey(component.getName())) {
+                    tempComp = componentMap.get(component.getName());
+                    tempComp.setWorker(tempComp.getWorker() + "," + component.getWorker());
+                } else {
+                    componentMap.put(component.getName(), component);
+                }
+            }
         }
+        res = (List<ComponentDTO>) componentMap.values();
         return res;
     }
 
