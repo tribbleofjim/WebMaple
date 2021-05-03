@@ -98,7 +98,7 @@ public class ComponentRegister implements InitializingBean {
                         component.setName(clazz.getName());
                         component.setType(ComponentType.PIPELINE.getType());
                         component.setSite(site);
-                        processorList.add(JSON.toJSONString(component));
+                        pipelineList.add(JSON.toJSONString(component));
 
                     } catch (Exception e) {
                         LOGGER.error("exception_register_pipeline: {}, {}", clazz.getName(), e.getMessage());

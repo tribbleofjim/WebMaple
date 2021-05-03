@@ -2,6 +2,8 @@ package org.webmaple.admin.service.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.service.ComponentService;
 import org.webmaple.common.enums.ComponentType;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.Request;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,7 +46,6 @@ public class ComponentServiceImpl implements ComponentService {
     private List<ComponentDTO> componentList() {
         List<NodeDTO> workers = workerContainer.getWorkerList();
         HashMap<String, ComponentDTO> componentMap = new HashMap<>();
-        List<ComponentDTO> res;
         for (NodeDTO worker : workers) {
             List<ComponentDTO> list = queryComponentsFromWorker(worker);
             for (ComponentDTO component : list) {
@@ -56,8 +58,7 @@ public class ComponentServiceImpl implements ComponentService {
                 }
             }
         }
-        res = (List<ComponentDTO>) componentMap.values();
-        return res;
+        return new ArrayList<>(componentMap.values());
     }
 
     private List<ComponentDTO> queryComponentsFromWorker(NodeDTO worker) {
@@ -69,15 +70,14 @@ public class ComponentServiceImpl implements ComponentService {
         try {
             CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
             String text = RequestUtil.getResponseText(response);
-            JSONArray jsonArray = JSON.parseArray(text);
-
+            JSONObject result = JSON.parseObject(text);
+            JSONArray jsonArray = result.getJSONArray("model");
             for (Object o : jsonArray) {
-                try {
-                    String componentStr = (String) o;
+                String componentStr = (String) o;
+                if (StringUtils.isNotBlank(componentStr)) {
                     ComponentDTO component = JSON.parseObject(componentStr, ComponentDTO.class);
+                    component.setWorker(worker.getName());
                     components.add(component);
-                } catch (Exception e) {
-                    LOGGER.error(e.getMessage());
                 }
             }
 
