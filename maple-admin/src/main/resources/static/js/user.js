@@ -119,18 +119,34 @@ function accuse() {
 }
 
 function applyAuth() {
-    $.ajax({
-        type: 'get',
-        url: "applyAuth",
-        data: {
-            phone: phone
+    layer.open({
+        type:1,
+        area:['400px','300px'],
+        title: '申请成为管理员',
+        content: $("#applyForm"),
+        shade: 0,
+        btn: '提交'
+        ,yes: function(index, layero) {
+            var reason = document.getElementById("applyReason").value;
+            $.ajax({
+                type: 'get',
+                url: "applyAuth",
+                data: {
+                    phone: phone,
+                    reason: reason
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                    layer.closeAll();
+                }
+            });
+            return true;
         },
-        success: function (res) {
-            layer.msg(res.message);
+        cancel: function(layero, index){
             layer.closeAll();
-            window.location.href="login";
         }
     });
+
     console.log(phone + "申请管理员权限");
 }
 

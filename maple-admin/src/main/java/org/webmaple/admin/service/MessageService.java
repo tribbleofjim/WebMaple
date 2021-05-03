@@ -15,4 +15,12 @@ public interface MessageService {
      * @return 举报结果
      */
     Result<Void> accuse(String accuseId, String accuseReason, String userId);
+
+    /**
+     * 申请成为管理员
+     * @param userId 申请人id
+     * @param reason 申请理由
+     * @return 申请结果
+     */
+    Result<Void> applyAuth(String userId, String reason);
 }

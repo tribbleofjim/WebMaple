@@ -345,13 +345,8 @@ public class CommonController {
 
     @RequestMapping("/applyAuth")
     @ResponseBody
-    public Result<Void> applyAuth(@RequestParam String phone) {
-        // todo: apply auth
-        Message message = new Message();
-        message.setFromUser(phone);
-        message.setContent("用户 " + phone + " 申请成为管理员");
-        message.setValid(true);
-        return new Result<Void>().success("申请成功");
+    public Result<Void> applyAuth(@RequestParam String phone, @RequestParam String reason) {
+        return messageService.applyAuth(phone, reason);
     }
 
     @PostMapping("/addSource")

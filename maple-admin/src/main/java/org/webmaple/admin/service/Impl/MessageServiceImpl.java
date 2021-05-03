@@ -46,4 +46,24 @@ public class MessageServiceImpl implements MessageService {
         messageMapper.insertMany(messages);
         return result.success();
     }
+
+    @Override
+    public Result<Void> applyAuth(String userId, String reason) {
+        Result<Void> result = new Result<>();
+
+        List<User> commanders = userService.commanderList().getModel();
+        List<Message> messages = new ArrayList<>();
+
+        for (User commander : commanders) {
+            Message message = new Message();
+            message.setFromUser(userId);
+            message.setToUser(commander.getPhone());
+            message.setContent(reason);
+            message.setType(MessageType.APPLY.getType());
+            message.setValid(true);
+        }
+
+        messageMapper.insertMany(messages);
+        return result.success();
+    }
 }
