@@ -10,6 +10,7 @@ import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.model.Message;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
+import org.webmaple.admin.service.MessageService;
 import org.webmaple.common.enums.NodeType;
 import org.webmaple.common.enums.SourceType;
 import org.webmaple.common.model.DataTableDTO;
@@ -55,6 +56,9 @@ public class CommonController {
 
     @Resource
     private SourceService sourceService;
+
+    @Resource
+    private MessageService messageService;
 
     @Resource
     private WorkerContainer workerContainer;
@@ -443,9 +447,10 @@ public class CommonController {
     public Result<Void> accuse(@RequestParam String accuseId,
                                @RequestParam String accuseReason,
                                @RequestParam String userId) {
-        Result<Void> result = new Result<>();
-
-        return result;
+        if (StringUtils.isBlank(accuseId) || StringUtils.isBlank(accuseReason) || StringUtils.isBlank(userId)) {
+            return new Result<Void>().fail("举报信息不能为空！");
+        }
+        return messageService.accuse(accuseId, accuseReason, userId);
     }
 
     @RequestMapping("/heartbeat")
