@@ -105,4 +105,12 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userMapper.userList();
         return result.success(userList);
     }
+
+    @Override
+    public Result<List<User>> commanderList() {
+        Result<List<User>> result = new Result<>();
+
+        List<User> commanderList = userMapper.commanderList();
+        return result.success(commanderList);
+    }
 }

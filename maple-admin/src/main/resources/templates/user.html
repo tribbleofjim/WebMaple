@@ -103,7 +103,7 @@
                                         <button type="button" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-sm" onclick="exit()">
                                             <i class="layui-icon layui-icon-return"></i> 退出登录
                                         </button>
-                                        <button type="button" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-sm" onclick="exit()">
+                                        <button type="button" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-sm" onclick="accuse()">
                                             <i class="layui-icon layui-icon-tread"></i> 举报用户
                                         </button> </br>
                                         <span id="applyAuth" style="padding-top:10px;"></span> </br>
@@ -161,6 +161,25 @@
                                 </div>
                             </form>
                             <!--/修改密码-->
+
+                            <!--举报用户-->
+                            <form class="layui-form" id="accuseForm" style="display:none; padding-top: 50px;">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">你想举报谁？</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="oldPass" required  lay-verify="required" placeholder="请输入被举报的用户id"
+                                               autocomplete="on" class="layui-input" id="accuseId" style="width:200px">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label"></label>
+                                    <div class="layui-input-block">举报理由
+                                        <input type="text" name="newPass" required  lay-verify="required" placeholder="请输入举报理由"
+                                               autocomplete="on" class="layui-input" id="accuseReason" style="width:200px">
+                                    </div>
+                                </div>
+                            </form>
+                            <!--/举报用户-->
                         </div>
 
 

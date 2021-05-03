@@ -18,6 +18,9 @@ public interface UserMapper {
 
     @Select("SELECT * FROM maple_user")
     List<User> userList();
+
+    @Select("SELECT * FROM maple_user WHERE auth = '0'")
+    List<User> commanderList();
     
     @Insert("INSERT INTO maple_user (phone, nickname, password, question, answer) " +
             "VALUES (#{phone}, #{nickname}, #{password}, #{question}, #{answer})")

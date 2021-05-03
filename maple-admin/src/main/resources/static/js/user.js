@@ -86,6 +86,38 @@ function editPassword() {
     });
 }
 
+function accuse() {
+    layer.open({
+        type:1,
+        area:['400px','300px'],
+        title: '举报用户',
+        content: $("#accuseForm"),
+        shade: 0,
+        btn: '提交'
+        ,yes: function(index, layero) {
+            var accuseId = document.getElementById("accuseId").value;
+            var accuseReason = document.getElementById("accuseReason").value;
+            $.ajax({
+                type: 'get',
+                url: "accuse",
+                data: {
+                    accuseId: accuseId,
+                    accuseReason: accuseReason,
+                    userId: phone
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                    layer.closeAll();
+                }
+            });
+            return true;
+        },
+        cancel: function(layero, index){
+            layer.closeAll();
+        }
+    });
+}
+
 function applyAuth() {
     $.ajax({
         type: 'get',

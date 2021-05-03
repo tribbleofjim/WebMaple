@@ -438,6 +438,16 @@ public class CommonController {
         }
     }
 
+    @RequestMapping("/accuse")
+    @ResponseBody
+    public Result<Void> accuse(@RequestParam String accuseId,
+                               @RequestParam String accuseReason,
+                               @RequestParam String userId) {
+        Result<Void> result = new Result<>();
+
+        return result;
+    }
+
     @RequestMapping("/heartbeat")
     @ResponseBody
     public Result<Void> heartbeat(@RequestParam(required = false) String workerName,

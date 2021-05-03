@@ -21,4 +21,6 @@ public interface UserService {
     Result<Void> modifyPassword(String phone, String oldPass, String newPass);
 
     Result<List<User>> userList();
+
+    Result<List<User>> commanderList();
 }

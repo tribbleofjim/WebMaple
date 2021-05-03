@@ -57,10 +57,11 @@ CREATE TABLE `maple_spider` (
 -- ----------------------------
 DROP TABLE IF EXISTS `maple_message`;
 CREATE TABLE `maple_message` (
-  `from_user` varchar(255) NOT NULL,
-  `to_user` varchar(255) NOT NULL,
-  `content` varchar(255) DEFAULT NULL,
+  `from_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `to_user` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `valid` binary(0) DEFAULT NULL,
+  `type` enum('0','1','2') NOT NULL COMMENT '0-申请，1-举报，2-其他',
   PRIMARY KEY (`from_user`,`to_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

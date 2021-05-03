@@ -26,6 +26,11 @@ public class Message {
      */
     private Boolean valid;
 
+    /**
+     * 消息类型
+     */
+    private Character type;
+
     public String getFromUser() {
         return fromUser;
     }
@@ -56,5 +61,13 @@ public class Message {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
+    }
+
+    public Character getType() {
+        return type;
+    }
+
+    public void setType(Character type) {
+        this.type = type;
     }
 }
