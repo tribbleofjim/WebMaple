@@ -1,5 +1,7 @@
 package org.webmaple.admin.model;
 
+import java.util.Date;
+
 /**
  * 站内信
  * @author lyifee
@@ -30,6 +32,11 @@ public class Message {
      * 消息类型
      */
     private Character type;
+
+    /**
+     * 消息发送时间
+     */
+    private Date date;
 
     public String getFromUser() {
         return fromUser;
@@ -69,5 +76,13 @@ public class Message {
 
     public void setType(Character type) {
         this.type = type;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

@@ -11,6 +11,7 @@ import org.webmaple.common.enums.MessageType;
 import org.webmaple.common.model.Result;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -40,6 +41,7 @@ public class MessageServiceImpl implements MessageService {
             message.setContent(accuseReason);
             message.setType(MessageType.ACCUSE.getType());
             message.setValid(true);
+            message.setDate(new Date());
             messages.add(message);
         }
 
@@ -61,6 +63,8 @@ public class MessageServiceImpl implements MessageService {
             message.setContent(reason);
             message.setType(MessageType.APPLY.getType());
             message.setValid(true);
+            message.setDate(new Date());
+            messages.add(message);
         }
 
         messageMapper.insertMany(messages);

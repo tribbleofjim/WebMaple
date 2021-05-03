@@ -7,7 +7,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.webmaple.admin.Questions;
 import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
-import org.webmaple.admin.model.Message;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
 import org.webmaple.admin.service.MessageService;
@@ -99,6 +98,11 @@ public class CommonController {
     @RequestMapping("/template")
     public String template() {
         return "template";
+    }
+
+    @RequestMapping("/message")
+    public String message() {
+        return "message";
     }
 
     @RequestMapping("/login")

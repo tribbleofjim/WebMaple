@@ -16,9 +16,9 @@ import java.util.List;
 public interface MessageMapper {
     @Insert({
             "<script>",
-            "INSERT INTO maple_message(from_user, to_user, content, type, valid) values",
+            "INSERT INTO maple_message(from_user, to_user, content, type, valid, date) values",
             "<foreach collection='messages' item='item' index='index' separator=','>",
-            "(#{item.fromUser}, #{item.toUser}, #{item.content}, #{item.type}, #{item.valid})",
+            "(#{item.fromUser}, #{item.toUser}, #{item.content}, #{item.type}, #{item.valid}, #{item.date})",
             "</foreach>",
             "</script>"
     })

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>消息查看</title>
+        <link rel="stylesheet" href="/layui/css/layui.css">
+        <script type="text/javascript" src="/layui/layui.js"></script>
+    </head>
+    <body class="layui-layout-body">
+        <!--左边的导航条-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree layui-nav-side"  lay-filter="nav">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">WebMaple</a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="index">
+                            <i class="layui-icon layui-icon-home"></i>
+                            主页
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="spider">
+                                <i class="layui-icon layui-icon-layer"></i>
+                                爬虫列表
+                            </a></dd>
+                            <dd><a href="node">
+                                <i class="layui-icon layui-icon-template-1"></i>
+                                节点列表
+                            </a></dd>
+                            <dd><a href="timed">
+                                <i class="layui-icon layui-icon-time"></i>
+                                定时任务
+                            </a></dd>
+                            <dd><a href="template">
+                                <i class="layui-icon layui-icon-template"></i>
+                                爬虫定制化
+                            </a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="user">
+                            <i class="layui-icon layui-icon-username"></i>
+                            用户中心
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="user">
+                                <i class="layui-icon layui-icon-tabs"></i>
+                                基本资料
+                            </a></dd>
+                            <dd><a href="auth">
+                                <i class="layui-icon layui-icon-auz"></i>
+                                资源权限管理
+                            </a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--/左边的导航条-->
+
+        <!--内容主体区域-->
+        <div class="layui-body">
+            <div class="layui-container" style="padding: 15px;">
+                <div class="padding: 20px">
+
+                    <!--普通用户消息管理-->
+                    <table class="layui-table" lay-data="{height:550, width: 1100, url:'/messageList', page:true,
+                            id:'messageList', toolbar: '#headBar'}" lay-filter="" >
+                        <thead>
+                        <tr>
+                            <th lay-data="{checkbox:true}"></th>
+                            <th lay-data="{field:'date', width:200, sort: true}">日期</th>
+                            <th lay-data="{field:'content'}">内容</th>
+                            <th lay-data="{field:'type', width:200}">消息类型</th>
+                            <th lay-data="{field:'valid', width:200}">是否有效</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <!--普通用户消息管理-->
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="../js/message.js"></script>
+
+        <script type="text/html" id="headBar">
+            <button type="button" class="layui-btn" lay-event="deleteMessage">
+                <i class="layui-icon layui-icon-delete"></i> 删除消息
+            </button>
+        </script>
+
+    </body>
+</html>
