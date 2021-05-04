@@ -66,8 +66,8 @@
                 <div class="padding: 20px">
 
                     <!--普通用户消息管理-->
-                    <table class="layui-table" lay-data="{height:550, width: 1100, url:'/messageList', page:true,
-                            id:'messageList', toolbar: '#headBar'}" lay-filter="" >
+                    <table class="layui-table" lay-data="{height:550, width: 1100, url:'/messageList', where:{id: phone},
+                     page:true, id:'messageList', toolbar: '#headBar'}" lay-filter="" >
                         <thead>
                         <tr>
                             <th lay-data="{checkbox:true}"></th>

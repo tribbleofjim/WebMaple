@@ -2,6 +2,7 @@ package org.webmaple.admin.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.webmaple.admin.model.Message;
 
@@ -23,4 +24,7 @@ public interface MessageMapper {
             "</script>"
     })
     void insertMany(List<Message> messages);
+
+    @Select("SELECT * FROM maple_message WHERE from_user = #{id} OR to_user = #{id}")
+    List<Message> selectUserMsg(String id);
 }

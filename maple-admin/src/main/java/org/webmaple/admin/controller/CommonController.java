@@ -7,6 +7,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.webmaple.admin.Questions;
 import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
+import org.webmaple.admin.model.Message;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
 import org.webmaple.admin.service.MessageService;
@@ -35,6 +36,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -450,6 +452,22 @@ public class CommonController {
             return new Result<Void>().fail("举报信息不能为空！");
         }
         return messageService.accuse(accuseId, accuseReason, userId);
+    }
+
+    @RequestMapping("/messageList")
+    @ResponseBody
+    public DataTableDTO messageList(@RequestParam String id) {
+        if (StringUtils.isBlank(id)) {
+            return new DataTableDTO();
+        }
+
+        List<Message> messages = messageService.userMessages(id).getModel();
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(200);
+        dataTableDTO.setMsg("");
+        dataTableDTO.setCount(messages.size());
+        dataTableDTO.setData(messages);
+        return dataTableDTO;
     }
 
     @RequestMapping("/heartbeat")

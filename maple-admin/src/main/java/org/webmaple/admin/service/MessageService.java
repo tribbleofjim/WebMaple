@@ -1,6 +1,9 @@
 package org.webmaple.admin.service;
 
+import org.webmaple.admin.model.Message;
 import org.webmaple.common.model.Result;
+
+import java.util.List;
 
 /**
  * @author lyifee
@@ -23,4 +26,11 @@ public interface MessageService {
      * @return 申请结果
      */
     Result<Void> applyAuth(String userId, String reason);
+
+    /**
+     * 查找与某个用户相关的消息
+     * @param id 用户id
+     * @return 消息列表
+     */
+    Result<List<Message>> userMessages(String id);
 }

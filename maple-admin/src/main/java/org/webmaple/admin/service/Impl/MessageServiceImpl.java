@@ -70,4 +70,10 @@ public class MessageServiceImpl implements MessageService {
         messageMapper.insertMany(messages);
         return result.success();
     }
+
+    @Override
+    public Result<List<Message>> userMessages(String id) {
+        Result<List<Message>> result = new Result<>();
+        return result.success(messageMapper.selectUserMsg(id));
+    }
 }

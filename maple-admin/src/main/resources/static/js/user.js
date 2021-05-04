@@ -174,9 +174,9 @@ function exit() {
 }
 
 function getCookieByKey(name){
-var cookies = document.cookie.split(';');
-var c;
-for(var i=0; i<cookies.length ; i++){
+    var cookies = document.cookie.split(';');
+    var c;
+    for(var i=0; i<cookies.length ; i++){
         c = cookies[i].split('=');
         if (c[0].replace(' ', '') == name) {
             return c[1];
