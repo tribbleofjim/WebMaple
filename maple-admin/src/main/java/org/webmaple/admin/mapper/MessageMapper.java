@@ -29,6 +29,9 @@ public interface MessageMapper {
     @Select("SELECT * FROM maple_message WHERE from_user = #{id} OR to_user = #{id}")
     List<Message> selectUserMsg(String id);
 
+    @Select("SELECT * FROM maple_message WHERE to_user = #{id}")
+    List<Message> selectCommanderMsg(String id);
+
     @Delete({
             "<script>",
             "<foreach collection='messages' item='item' index='index' separator=','>",

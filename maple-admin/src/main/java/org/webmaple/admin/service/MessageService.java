@@ -35,6 +35,13 @@ public interface MessageService {
     Result<List<Message>> userMessages(String id);
 
     /**
+     * 查找与某个管理员相关的消息
+     * @param id 管理员id
+     * @return 消息列表
+     */
+    Result<List<Message>> commanderMessages(String id);
+
+    /**
      * 批量删除消息
      * @param messages 消息列表
      */

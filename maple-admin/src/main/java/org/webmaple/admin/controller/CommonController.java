@@ -11,6 +11,7 @@ import org.webmaple.admin.model.Message;
 import org.webmaple.admin.model.Source;
 import org.webmaple.admin.model.User;
 import org.webmaple.admin.service.MessageService;
+import org.webmaple.common.enums.MessageType;
 import org.webmaple.common.enums.NodeType;
 import org.webmaple.common.enums.SourceType;
 import org.webmaple.common.model.DataTableDTO;
@@ -27,9 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.webmaple.admin.service.ComponentService;
 import org.webmaple.admin.service.SourceService;
 import org.webmaple.admin.service.UserService;
-import org.webmaple.common.view.BasicDataView;
-import org.webmaple.common.view.SourceAuthView;
-import org.webmaple.common.view.UserSourceView;
+import org.webmaple.common.view.*;
 import us.codecraft.webmagic.Request;
 
 import javax.annotation.Resource;
@@ -468,6 +467,39 @@ public class CommonController {
         dataTableDTO.setCount(messages.size());
         dataTableDTO.setData(messages);
         return dataTableDTO;
+    }
+
+    @RequestMapping("/commanderMsgList")
+    @ResponseBody
+    public CmdMsgListView commanderMsgList(@RequestParam String id) {
+        if (StringUtils.isBlank(id)) {
+            return new CmdMsgListView();
+        }
+
+        List<Message> messages = messageService.commanderMessages(id).getModel();
+        CmdMsgListView cmdMsgListView = new CmdMsgListView();
+
+        for (Message message : messages) {
+            CommanderMsgView commanderMsgView = new CommanderMsgView();
+
+            commanderMsgView.setContent("用户 " + message.getFromUser() + " :" + message.getContent());
+            commanderMsgView.setDate(message.getDate().toString());
+            switch (message.getType()) {
+                case '0':
+                    commanderMsgView.setTitle("【" + MessageType.APPLY.getName() + "】");
+                    cmdMsgListView.getNoticeView().add(commanderMsgView);
+                    break;
+                case '1':
+                    commanderMsgView.setTitle("【" + MessageType.ACCUSE.getName() + "】");
+                    cmdMsgListView.getAccuseView().add(commanderMsgView);
+                    break;
+                case '2':
+                    commanderMsgView.setTitle("【" + MessageType.OTHER.getName() + "】");
+                    cmdMsgListView.getOtherView().add(commanderMsgView);
+                    break;
+            }
+        }
+        return cmdMsgListView;
     }
 
     @PostMapping("/deleteMessage")

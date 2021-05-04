@@ -78,6 +78,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public Result<List<Message>> commanderMessages(String id) {
+        Result<List<Message>> result = new Result<>();
+        return result.success(messageMapper.selectCommanderMsg(id));
+    }
+
+    @Override
     public void deleteMessages(List<Message> messages) {
         messageMapper.deleteMany(messages);
     }
