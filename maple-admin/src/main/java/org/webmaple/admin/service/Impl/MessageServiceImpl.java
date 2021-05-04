@@ -76,4 +76,9 @@ public class MessageServiceImpl implements MessageService {
         Result<List<Message>> result = new Result<>();
         return result.success(messageMapper.selectUserMsg(id));
     }
+
+    @Override
+    public void deleteMessages(List<Message> messages) {
+        messageMapper.deleteMany(messages);
+    }
 }

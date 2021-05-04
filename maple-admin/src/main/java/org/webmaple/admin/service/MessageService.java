@@ -33,4 +33,10 @@ public interface MessageService {
      * @return 消息列表
      */
     Result<List<Message>> userMessages(String id);
+
+    /**
+     * 批量删除消息
+     * @param messages 消息列表
+     */
+    void deleteMessages(List<Message> messages);
 }

@@ -67,14 +67,16 @@
 
                     <!--普通用户消息管理-->
                     <table class="layui-table" lay-data="{height:550, width: 1100, url:'/messageList', where:{id: phone},
-                     page:true, id:'messageList', toolbar: '#headBar'}" lay-filter="" >
+                     page:true, id:'messageList'}" lay-filter="messages" >
                         <thead>
                         <tr>
-                            <th lay-data="{checkbox:true}"></th>
+<!--                            <th lay-data="{checkbox:true}"></th>-->
+                            <th lay-data="{field:'fromUser', width:150}">发出人</th>
+                            <th lay-data="{field:'toUser',width:150}">接收人</th>
                             <th lay-data="{field:'date', width:200, sort: true}">日期</th>
                             <th lay-data="{field:'content'}">内容</th>
-                            <th lay-data="{field:'type', width:200}">消息类型</th>
-                            <th lay-data="{field:'valid', width:200}">是否有效</th>
+                            <th lay-data="{field:'type', width:150}">消息类型</th>
+                            <th lay-data="{field:'valid', width:150}">是否有效</th>
                         </tr>
                         </thead>
                     </table>
@@ -86,11 +88,11 @@
 
         <script type="text/javascript" src="../js/message.js"></script>
 
-        <script type="text/html" id="headBar">
-            <button type="button" class="layui-btn" lay-event="deleteMessage">
-                <i class="layui-icon layui-icon-delete"></i> 删除消息
-            </button>
-        </script>
+<!--        <script type="text/html" id="headBar">-->
+<!--            <button type="button" class="layui-btn" lay-event="deleteMessage">-->
+<!--                <i class="layui-icon layui-icon-delete"></i> 删除消息-->
+<!--            </button>-->
+<!--        </script>-->
 
     </body>
 </html>

@@ -463,11 +463,23 @@ public class CommonController {
 
         List<Message> messages = messageService.userMessages(id).getModel();
         DataTableDTO dataTableDTO = new DataTableDTO();
-        dataTableDTO.setCode(200);
+        dataTableDTO.setCode(0);
         dataTableDTO.setMsg("");
         dataTableDTO.setCount(messages.size());
         dataTableDTO.setData(messages);
         return dataTableDTO;
+    }
+
+    @PostMapping("/deleteMessage")
+    @ResponseBody
+    public Result<Void> deleteMessage(@RequestParam List<Message> messages) {
+        Result<Void> result = new Result<>();
+        if (CollectionUtils.isEmpty(messages)) {
+            return result.success("删除成功!");
+        }
+
+        messageService.deleteMessages(messages);
+        return result.success("删除成功！");
     }
 
     @RequestMapping("/heartbeat")
