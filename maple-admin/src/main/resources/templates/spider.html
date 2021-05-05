@@ -93,6 +93,25 @@
                                     </table>
                                 </div>
                                 <!--/当前爬虫列表-->
+
+                                <!--爬虫进度列表-->
+                                <div class="layui-row">
+                                    <fieldset class="layui-elem-field layui-field-title">
+                                        <legend>爬虫进度查看</legend>
+                                    </fieldset>
+                                    <table class="layui-table" lay-data="{height:550, url:'/spiderAdvance', page:true,
+                            id:'advances'}" lay-filter="advances" >
+                                        <thead>
+                                        <tr>
+                                            <th lay-data="{field:'uuid', width:170, sort: true}">uuid</th>
+                                            <th lay-data="{field:'worker', width:150}">所属worker</th>
+                                            <th lay-data="{field:'threadNum'}">当前进度</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <!--/爬虫进度列表-->
+
                                 <!-- 修改爬虫表单 -->
                                 <form class="layui-form" id="update" style="display:none; padding-top: 50px;">
                                     <div class="layui-form-item">

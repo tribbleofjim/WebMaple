@@ -2,6 +2,7 @@ package org.webmaple.admin.service;
 
 import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderDTO;
+import org.webmaple.common.view.SpiderAdvanceView;
 
 import java.util.List;
 
@@ -45,4 +46,10 @@ public interface SpiderManageService {
      * @return spider list
      */
     Result<List<SpiderDTO>> querySpiderList();
+
+    /**
+     * query spider advance
+     * @return spider advance list
+     */
+    Result<List<SpiderAdvanceView>> querySpiderAdvance();
 }

@@ -11,6 +11,11 @@ public class SpiderAdvance {
     private String site;
 
     /**
+     * 爬虫uuid
+     */
+    private String uuid;
+
+    /**
      * 总页数/url数
      */
     private int pageNum;
@@ -26,6 +31,14 @@ public class SpiderAdvance {
 
     public void setSite(String site) {
         this.site = site;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public int getPageNum() {

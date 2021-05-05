@@ -9,11 +9,10 @@ import org.webmaple.admin.model.MapleSpider;
 import org.webmaple.common.enums.SpiderState;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
+import org.webmaple.common.model.SpiderAdvance;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.admin.service.SpiderManageService;
 import org.webmaple.common.network.RequestSender;
-import org.webmaple.common.util.CommonUtil;
-import org.webmaple.common.util.ModelConverter;
 import org.webmaple.common.util.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -22,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webmaple.common.view.SpiderAdvanceView;
 import us.codecraft.webmagic.Request;
 
 import java.util.*;
@@ -84,6 +84,37 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
         return result.success(querySpiderListFromWorkers());
 //        Result<List<SpiderDTO>> result = new Result<>();
 //        return result.success(mockSpiders());
+    }
+
+    @Override
+    public Result<List<SpiderAdvanceView>> querySpiderAdvance() {
+        Result<List<SpiderAdvanceView>> result = new Result<>();
+        List<NodeDTO> workers = workerContainer.getWorkerList();
+        List<SpiderAdvanceView> advanceList = new ArrayList<>();
+        for (NodeDTO worker : workers) {
+            Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "advance", null);
+            HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+            try {
+                CloseableHttpResponse response = requestSender.request(httpUriRequest);
+                String text = RequestUtil.getResponseText(response);
+                JSONObject spiderObject = JSON.parseObject(text);
+                List<SpiderAdvance> advances = spiderObject.getJSONArray("model").toJavaList(SpiderAdvance.class);
+                List<SpiderAdvanceView> advanceViews = advances.stream().map(spiderAdvance -> {
+                    SpiderAdvanceView spiderAdvanceView = new SpiderAdvanceView();
+                    spiderAdvanceView.setWorker(worker.getName());
+                    spiderAdvanceView.setUuid(spiderAdvance.getUuid());
+                    spiderAdvanceView.setTarget(spiderAdvance.getPageNum());
+                    spiderAdvanceView.setTemp(spiderAdvance.getTemp());
+                    spiderAdvanceView.setPercent((spiderAdvance.getTemp() / spiderAdvance.getPageNum()) * 100 + "%");
+                    return spiderAdvanceView;
+                }).collect(Collectors.toList());
+                advanceList.addAll(advanceViews);
+
+            } catch (Exception e) {
+                LOGGER.error("query_spider_advance_exception:", e);
+            }
+        }
+        return result.success(advanceList);
     }
 
     private Result<Void> createSpiderFromWorker(SpiderDTO spiderDTO) {
@@ -222,22 +253,6 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             spiderDTO.setState(spider.getState());
             return spiderDTO;
         }).collect(Collectors.toList());
-//        List<NodeDTO> workers = workerContainer.getWorkerList();
-//        List<SpiderDTO> spiderList = new ArrayList<>();
-//        for (NodeDTO worker : workers) {
-//            Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "spiderList", null);
-//            HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
-//            try {
-//                CloseableHttpResponse response = requestSender.request(httpUriRequest);
-//                String text = RequestUtil.getResponseText(response);
-//                JSONObject spiderObject = JSON.parseObject(text);
-//                List<SpiderDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderDTO.class);
-//                spiderList.addAll(spiders);
-//
-//            } catch (Exception e) {
-//                LOGGER.error("query_spider_list_exception:", e);
-//            }
-//        }
 
         // spider num
         BasicDataContainer.setSpiderNum(spiderList.size());

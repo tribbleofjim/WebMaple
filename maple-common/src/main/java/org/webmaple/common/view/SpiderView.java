@@ -21,6 +21,8 @@ public class SpiderView {
 
     private List<String> startUrls;
 
+    private String advance;
+
     public String getUuid() {
         return uuid;
     }
@@ -75,5 +77,13 @@ public class SpiderView {
 
     public void setStartUrls(List<String> startUrls) {
         this.startUrls = startUrls;
+    }
+
+    public String getAdvance() {
+        return advance;
+    }
+
+    public void setAdvance(String advance) {
+        this.advance = advance;
     }
 }

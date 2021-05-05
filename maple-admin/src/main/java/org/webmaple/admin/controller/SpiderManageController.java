@@ -7,6 +7,7 @@ import org.webmaple.common.model.Result;
 import org.webmaple.admin.service.SpiderManageService;
 import org.webmaple.common.model.SpiderDTO;
 import org.webmaple.common.util.ModelConverter;
+import org.webmaple.common.view.SpiderAdvanceView;
 import org.webmaple.common.view.SpiderView;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Controller;
@@ -67,6 +68,22 @@ public class SpiderManageController {
             dataTableDTO.setCount(spiderList.size());
         }
         dataTableDTO.setData(JSON.toJSON(spiderList));
+        return dataTableDTO;
+    }
+
+    @RequestMapping("/spiderAdvance")
+    @ResponseBody
+    public DataTableDTO querySpiderAdvance(@RequestParam int page, @RequestParam int limit) {
+        List<SpiderAdvanceView> advanceViewList = spiderManageService.querySpiderAdvance().getModel();
+        DataTableDTO dataTableDTO = new DataTableDTO();
+        dataTableDTO.setCode(0);
+        dataTableDTO.setMsg("");
+        if (CollectionUtils.isEmpty(advanceViewList)) {
+            dataTableDTO.setCount(0);
+        } else {
+            dataTableDTO.setCount(advanceViewList.size());
+        }
+        dataTableDTO.setData(JSON.toJSON(advanceViewList));
         return dataTableDTO;
     }
 }
