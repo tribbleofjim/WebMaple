@@ -517,7 +517,7 @@ public class CommonController {
     @RequestMapping("/heartbeat")
     @ResponseBody
     public Result<Void> heartbeat(@RequestParam(required = false) String workerName,
-                                    @RequestParam(required = false) String port,
+                                    @RequestParam String port,
                                     HttpServletRequest request) {
         Result<Void> result = new Result<>();
 
@@ -526,7 +526,7 @@ public class CommonController {
         }
         String ip = RequestUtil.getIpAddr(request);
 
-        if (StringUtils.isNotBlank(port)) {
+        if (StringUtils.isBlank(workerName)) {
             // first heartbeat
             NodeDTO nodeDTO = new NodeDTO();
             nodeDTO.setType(NodeType.WORKER.getType());
@@ -544,10 +544,7 @@ public class CommonController {
         }
 
         // not first heartbeat
-        if (StringUtils.isBlank(workerName)) {
-            return result.fail("null_workerName_heartbeat");
-        }
-        workerContainer.aliveWorker(workerName);
+        workerContainer.aliveWorker(ip, port, workerName);
         return result.success();
     }
 }

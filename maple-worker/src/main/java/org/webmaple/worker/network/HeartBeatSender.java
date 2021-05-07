@@ -51,10 +51,8 @@ public class HeartBeatSender {
     @PostConstruct // 在项目初始加载时即执行
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
-        if (workerName == null) {
-            params.put("port", String.valueOf(workerPort));
-
-        } else {
+        params.put("port", String.valueOf(workerPort));
+        if (workerName != null) {
             params.put("workerName", workerName);
         }
         Request request = RequestUtil.getRequest(adminHost, adminPort, heartbeat, params);
