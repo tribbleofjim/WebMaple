@@ -414,7 +414,7 @@ public class CommonController {
         return result.success(basicDataView);
     }
 
-//    @RequestMapping("/advance")
+//    @RequestMapping("/spiderAdvance")
 //    @ResponseBody
 //    public Result<List<SpiderAdvance>> advanceList() {
 //        Result<List<SpiderAdvance>> result = new Result<>();

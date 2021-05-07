@@ -50,10 +50,11 @@ public class WorkerContainer implements InitializingBean {
     public List<NodeDTO> getWorkerList() {
         List<NodeDTO> list = new ArrayList<>();
         for (int i = 0; i < MAX_VALUE; i++) {
-            if (IDX_SET[i]) {
-                String worker;
-                if ((worker = redisUtil.get(WORKER_PREFIX + i, INDEX_DB)) != null) {
-                    list.add(NodeDTO.fromString(worker));
+            String worker;
+            if ((worker = redisUtil.get(WORKER_PREFIX + i, INDEX_DB)) != null) {
+                list.add(NodeDTO.fromString(worker));
+                if (!IDX_SET[i]) {
+                    IDX_SET[i] = true;
                 }
             }
         }
