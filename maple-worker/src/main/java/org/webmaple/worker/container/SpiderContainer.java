@@ -75,5 +75,6 @@ public class SpiderContainer {
             return;
         }
         spider.stop();
+        EXECUTING_SPIDER_MAP.remove(uuid);
     }
 }
