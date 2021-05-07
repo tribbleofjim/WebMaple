@@ -4,13 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.webmaple.admin.container.BasicDataContainer;
 import org.webmaple.admin.container.WorkerContainer;
-import org.webmaple.admin.mapper.SpiderMapper;
+//import org.webmaple.admin.mapper.SpiderMapper;
 import org.webmaple.admin.model.MapleSpider;
 import org.webmaple.common.enums.SpiderState;
-import org.webmaple.common.model.NodeDTO;
-import org.webmaple.common.model.Result;
-import org.webmaple.common.model.SpiderAdvance;
-import org.webmaple.common.model.SpiderDTO;
+import org.webmaple.common.model.*;
 import org.webmaple.admin.service.SpiderManageService;
 import org.webmaple.common.network.RequestSender;
 import org.webmaple.common.util.RequestUtil;
@@ -38,8 +35,8 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     @Autowired
     private WorkerContainer workerContainer;
 
-    @Autowired
-    private SpiderMapper spiderMapper;
+//    @Autowired
+//    private SpiderMapper spiderMapper;
 
     @Autowired
     private RequestSender requestSender;
@@ -145,7 +142,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             JSONObject responseObject = RequestUtil.getResponseObject(response);
             if (responseObject.getBoolean("success")) {
                 MapleSpider mapleSpider = spiderDTO2MapleSpider(spiderDTO);
-                spiderMapper.createSpider(mapleSpider);
+                // spiderMapper.createSpider(mapleSpider);
                 return result.success(responseObject.getString("message"));
             } else {
                 return result.fail(responseObject.getString("message"));
@@ -172,7 +169,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             CloseableHttpResponse response = requestSender.request(httpUriRequest);
             JSONObject responseObject = RequestUtil.getResponseObject(response);
             if (responseObject.getBoolean("success")) {
-                spiderMapper.startSpider(uuid, workerName);
+                // spiderMapper.startSpider(uuid, workerName);
                 return result.success(responseObject.getString("message"));
             } else {
                 return result.fail(responseObject.getString("message"));
@@ -200,7 +197,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
             CloseableHttpResponse response = requestSender.request(httpUriRequest);
             JSONObject responseObject = RequestUtil.getResponseObject(response);
             if (responseObject.getBoolean("success")) {
-                spiderMapper.removeSpider(uuid, workerName);
+                // spiderMapper.removeSpider(uuid, workerName);
                 return result.success(responseObject.getString("message"));
             } else {
                 return result.fail(responseObject.getString("message"));
@@ -240,19 +237,35 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
     }
 
     private List<SpiderDTO> querySpiderListFromWorkers() {
-        List<MapleSpider> mapleSpiders = spiderMapper.spiderList();
-        List<SpiderDTO> spiderList = mapleSpiders.stream().map(spider -> {
-            SpiderDTO spiderDTO = new SpiderDTO();
-            spiderDTO.setWorker(spider.getWorker());
-            spiderDTO.setUuid(spider.getUuid());
-            spiderDTO.setUrls(JSONObject.parseArray(spider.getUrls()).toJavaList(String.class));
-            spiderDTO.setThreadNum(spider.getThreadNum());
-            spiderDTO.setDownloader(spider.getDownloader());
-            spiderDTO.setProcessor(spider.getProcessor());
-            spiderDTO.setPipeline(spider.getPipeline());
-            spiderDTO.setState(spider.getState());
-            return spiderDTO;
-        }).collect(Collectors.toList());
+//        List<MapleSpider> mapleSpiders = spiderMapper.spiderList();
+//        List<SpiderDTO> spiderList = mapleSpiders.stream().map(spider -> {
+//            SpiderDTO spiderDTO = new SpiderDTO();
+//            spiderDTO.setWorker(spider.getWorker());
+//            spiderDTO.setUuid(spider.getUuid());
+//            spiderDTO.setUrls(JSONObject.parseArray(spider.getUrls()).toJavaList(String.class));
+//            spiderDTO.setThreadNum(spider.getThreadNum());
+//            spiderDTO.setDownloader(spider.getDownloader());
+//            spiderDTO.setProcessor(spider.getProcessor());
+//            spiderDTO.setPipeline(spider.getPipeline());
+//            spiderDTO.setState(spider.getState());
+//            return spiderDTO;
+//        }).collect(Collectors.toList());
+        List<NodeDTO> workers = workerContainer.getWorkerList();
+        List<SpiderDTO> spiderList = new ArrayList<>();
+        for (NodeDTO worker : workers) {
+            Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "spiderList", null);
+            HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
+            try {
+                CloseableHttpResponse response = requestSender.request(httpUriRequest);
+                String text = RequestUtil.getResponseText(response);
+                JSONObject spiderObject = JSON.parseObject(text);
+                List<SpiderDTO> spiders = spiderObject.getJSONArray("model").toJavaList(SpiderDTO.class);
+                spiderList.addAll(spiders);
+
+            } catch (Exception e) {
+                LOGGER.error("query_spider_job_list_exception:", e);
+            }
+        }
 
         // spider num
         BasicDataContainer.setSpiderNum(spiderList.size());

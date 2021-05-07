@@ -33,15 +33,15 @@ public class BeanConfig {
         return new RequestSender();
     }
 
-    @Scheduled(cron = "0 0/20 * * * ?")
-    public void removeInvalidNodeSpiders() {
-        List<NodeDTO> workers = workerContainer.getWorkerList();
-        if (CollectionUtils.isEmpty(workers)) {
-            return;
-        }
-        List<String> workerNames = workers.stream().map(NodeDTO::getName).collect(Collectors.toList());
-        spiderMapper.removeInvalidNodeSpiders(workerNames);
-    }
+//    @Scheduled(cron = "0 0/20 * * * ?")
+//    public void removeInvalidNodeSpiders() {
+//        List<NodeDTO> workers = workerContainer.getWorkerList();
+//        if (CollectionUtils.isEmpty(workers)) {
+//            return;
+//        }
+//        List<String> workerNames = workers.stream().map(NodeDTO::getName).collect(Collectors.toList());
+//        spiderMapper.removeInvalidNodeSpiders(workerNames);
+//    }
 
     @Value("${webmaple.jar}")
     private String jarPath;

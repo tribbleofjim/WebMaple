@@ -16,14 +16,14 @@ import org.webmaple.admin.mapper.SpiderMapper;
 public class ExitCode implements ApplicationListener<ContextClosedEvent> {
     private static final Logger logger = LoggerFactory.getLogger(ExitCode.class);
 
-    @Autowired
-    private SpiderMapper spiderMapper;
+//    @Autowired
+//    private SpiderMapper spiderMapper;
 
     @Override
     public void onApplicationEvent(ContextClosedEvent contextClosedEvent) {
         logger.info("=======run close event=======");
-        logger.info("removing all spiders...");
-        spiderMapper.removeAllSpider();
-        logger.info("========close success=======");
+        // logger.info("removing all spiders...");
+        // spiderMapper.removeAllSpider();
+        // logger.info("========close success=======");
     }
 }
