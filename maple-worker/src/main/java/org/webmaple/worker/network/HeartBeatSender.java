@@ -59,6 +59,7 @@ public class HeartBeatSender {
         Request request = RequestUtil.getRequest(adminHost, adminPort, heartbeat, params);
         HttpUriRequest httpUriRequest = RequestUtil.getHttpUriRequest(request);
         try {
+            LOGGER.info("sending_heartbeat_request:{}", httpUriRequest.getURI());
             CloseableHttpResponse response = requestSender.request(httpUriRequest);
             String text = RequestUtil.getResponseText(response);
             JSONObject jsonObject = JSON.parseObject(text);
