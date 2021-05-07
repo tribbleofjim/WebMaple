@@ -69,7 +69,7 @@ public class TimedSpiderController {
         return result.success(quartzJobs);
     }
 
-    @RequestMapping("/pauseSpider")
+    @RequestMapping("/pauseTimedSpider")
     @ResponseBody
     public Result<Void> pauseSpider(@RequestParam String jobName) {
         Result<Void> result = new Result<>();
@@ -83,7 +83,7 @@ public class TimedSpiderController {
         }
     }
 
-    @RequestMapping("/resumeSpider")
+    @RequestMapping("/resumeTimedSpider")
     @ResponseBody
     public Result<Void> resumeSpider(@RequestParam String jobName) {
         Result<Void> result = new Result<>();
@@ -97,7 +97,7 @@ public class TimedSpiderController {
         }
     }
 
-    @RequestMapping("/deleteSpider")
+    @RequestMapping("/deleteTimedSpider")
     @ResponseBody
     public Result<Void> deleteSpider(@RequestParam String jobName) {
         Result<Void> result = new Result<>();

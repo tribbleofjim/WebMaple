@@ -53,7 +53,29 @@ public class SpiderProcess {
 
     public Result<Void> createSpider(SpiderDTO spiderDTO) {
         Result<Void> result = new Result<>();
-        if (spiderDTO == null || StringUtils.isBlank(spiderDTO.getUuid())) {
+
+        if (spiderDTO == null) {
+            return result.fail("爬虫对象为空");
+        }
+
+        // fix bug:spiderDTO传过来时url头尾会有[]符号
+        List<String> urls = spiderDTO.getUrls();
+        int size;
+        if ((size = urls.size()) == 0) {
+            return result.fail("url不能为空");
+        }
+        if (size == 1) {
+            String url = urls.get(0);
+            urls.set(0, url.substring(1, url.length() - 1));
+
+        } else {
+            String urlStart = urls.get(0);
+            urls.set(0, urlStart.substring(1));
+            String urlEnd = urls.get(size - 1);
+            urls.set(size - 1, urlEnd.substring(0, urlEnd.length() - 1));
+        }
+
+        if (StringUtils.isBlank(spiderDTO.getUuid())) {
             return result.fail("参数不能为空");
         }
         SpiderContainer.createSpider(spiderDTO.getUuid(), spiderDTO);

@@ -95,6 +95,9 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
                 CloseableHttpResponse response = requestSender.request(httpUriRequest);
                 String text = RequestUtil.getResponseText(response);
                 JSONObject spiderObject = JSON.parseObject(text);
+                if (spiderObject == null || spiderObject.getJSONArray("model") == null) {
+                    return result.success(new ArrayList<>());
+                }
                 List<SpiderAdvance> advances = spiderObject.getJSONArray("model").toJavaList(SpiderAdvance.class);
                 List<SpiderAdvanceView> advanceViews = advances.stream().map(spiderAdvance -> {
                     SpiderAdvanceView spiderAdvanceView = new SpiderAdvanceView();

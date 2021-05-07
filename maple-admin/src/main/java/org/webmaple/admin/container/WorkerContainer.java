@@ -30,7 +30,7 @@ public class WorkerContainer implements InitializingBean {
 
     private static int MAX_VALUE = 10;
 
-    private static long EXPIRE_TIME = 1800;
+    private static long EXPIRE_TIME = 2400 ;
 
     private static int INDEX_DB = 0;
 
@@ -79,10 +79,10 @@ public class WorkerContainer implements InitializingBean {
     }
 
     public void aliveWorker(String workerName) {
+        LOGGER.info("alive_worker:{}", workerName);
         String workerStr = redisUtil.get(workerName, INDEX_DB);
         if (workerStr != null) {
-            NodeDTO worker = NodeDTO.fromString(workerStr);
-            redisUtil.set(worker.getName(), worker.toString(), EXPIRE_TIME, INDEX_DB);
+            redisUtil.set(workerName, workerStr, EXPIRE_TIME, INDEX_DB);
         }
     }
 

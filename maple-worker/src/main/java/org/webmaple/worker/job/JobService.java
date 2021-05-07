@@ -91,8 +91,10 @@ public class JobService implements InitializingBean {
             LOGGER.warn("pause_null_job:{}", jobName);
 
         } else {
+            LOGGER.info("pause_job:{}", jobKey);
             scheduler.pauseJob(jobKey);
             QuartzJobContainer.pauseJob(jobName);
+            LOGGER.info("end_pause_job:{}", jobName);
         }
 
     }

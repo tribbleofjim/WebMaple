@@ -17,18 +17,18 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
         }
     });
 
-    $.ajax({
-        type: 'get',
-        url: "advance",
-        data: {},
-        success: function (res) {
-            if (res.success) {
-                showAdvance(res.model);
-            } else {
-                layer.msg(res.message);
-            }
-        }
-    });
+//    $.ajax({
+//        type: 'get',
+//        url: "advance",
+//        data: {},
+//        success: function (res) {
+//            if (res.success) {
+//                showAdvance(res.model);
+//            } else {
+//                layer.msg(res.message);
+//            }
+//        }
+//    });
 
     function showAdvance(data) {
         var th = document.getElementById("advance");

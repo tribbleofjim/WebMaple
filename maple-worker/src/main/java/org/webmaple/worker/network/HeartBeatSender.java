@@ -47,6 +47,7 @@ public class HeartBeatSender {
     private Integer workerPort;
 
     @Scheduled(cron = "0 0/20 * * * ?")
+    //@Scheduled(cron = "0 0/1 * * * ?")
     @PostConstruct // 在项目初始加载时即执行
     public void sendHeartBeat() {
         HashMap<String, String> params = new HashMap<>();
@@ -65,7 +66,7 @@ public class HeartBeatSender {
             JSONObject jsonObject = JSON.parseObject(text);
 
             String returnedWorkerName;
-            if ((returnedWorkerName = jsonObject.getString("workerName")) != null) {
+            if ((returnedWorkerName = jsonObject.getString("message")) != null) {
                 setWorkerName(returnedWorkerName);
             }
         } catch (Exception e) {

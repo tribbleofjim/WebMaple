@@ -414,33 +414,33 @@ public class CommonController {
         return result.success(basicDataView);
     }
 
-    @RequestMapping("/advance")
-    @ResponseBody
-    public Result<List<SpiderAdvance>> advanceList() {
-        Result<List<SpiderAdvance>> result = new Result<>();
-        List<SpiderAdvance> res = new ArrayList<>();
-
-        List<NodeDTO> workers = workerContainer.getWorkerList();
-
-        try {
-            for (NodeDTO worker : workers) {
-                Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "advance", null);
-                CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-                String text = RequestUtil.getResponseText(response);
-                JSONArray jsonArray = JSON.parseArray(text);
-
-                for (Object o : jsonArray) {
-                    String advanceStr = (String) o;
-                    SpiderAdvance advance = JSON.parseObject(advanceStr, SpiderAdvance.class);
-                    res.add(advance);
-                }
-            }
-            return result.success(res);
-
-        } catch (Exception e) {
-            return result.fail(e.getMessage());
-        }
-    }
+//    @RequestMapping("/advance")
+//    @ResponseBody
+//    public Result<List<SpiderAdvance>> advanceList() {
+//        Result<List<SpiderAdvance>> result = new Result<>();
+//        List<SpiderAdvance> res = new ArrayList<>();
+//
+//        List<NodeDTO> workers = workerContainer.getWorkerList();
+//
+//        try {
+//            for (NodeDTO worker : workers) {
+//                Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "advance", null);
+//                CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
+//                String text = RequestUtil.getResponseText(response);
+//                JSONArray jsonArray = JSON.parseArray(text);
+//
+//                for (Object o : jsonArray) {
+//                    String advanceStr = (String) o;
+//                    SpiderAdvance advance = JSON.parseObject(advanceStr, SpiderAdvance.class);
+//                    res.add(advance);
+//                }
+//            }
+//            return result.success(res);
+//
+//        } catch (Exception e) {
+//            return result.fail(e.getMessage());
+//        }
+//    }
 
     @RequestMapping("/accuse")
     @ResponseBody
