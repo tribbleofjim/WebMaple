@@ -2,6 +2,8 @@ package org.webmaple.worker.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.webmaple.common.model.Result;
 import org.webmaple.common.model.SpiderAdvance;
 import org.webmaple.worker.SpiderAdvanceCache;
 
@@ -14,7 +16,9 @@ import java.util.List;
 @Controller
 public class AdvanceController {
     @RequestMapping("/advance")
-    public List<SpiderAdvance> advances() {
-        return SpiderAdvanceCache.getAdvanceList();
+    @ResponseBody
+    public Result<List<SpiderAdvance>> advances() {
+        Result<List<SpiderAdvance>> result = new Result<>();
+        return result.success(SpiderAdvanceCache.getAdvanceList());
     }
 }
