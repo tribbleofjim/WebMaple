@@ -81,7 +81,24 @@ public class RedisUtil {
         try {
             jedis = jedisPool.getResource();
             jedis.select(indexdb);
+            // 键值不存在时设置ttl
             return jedis.set(key, value, "NX", "EX", expireTime);
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return "0";
+        } finally {
+            close(jedis);
+        }
+    }
+
+    public String reset(String key, String value, long expireTime, int indexdb) {
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            jedis.select(indexdb);
+            // 键值已经存在时设置ttl
+            return jedis.set(key, value, "XX", "EX", expireTime);
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

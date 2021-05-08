@@ -83,7 +83,7 @@ public class WorkerContainer implements InitializingBean {
         LOGGER.info("alive_worker:{}", workerName);
         String workerStr = redisUtil.get(workerName, INDEX_DB);
         if (workerStr != null) {
-            redisUtil.set(workerName, workerStr, EXPIRE_TIME, INDEX_DB);
+            redisUtil.reset(workerName, workerStr, EXPIRE_TIME, INDEX_DB);
         } else {
             NodeDTO worker = new NodeDTO();
             worker.setPort(Integer.parseInt(port));

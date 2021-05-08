@@ -45,4 +45,9 @@ public class TestMapper {
         list.add("worker2");
         spiderMapper.removeInvalidNodeSpiders(list);
     }
+
+    @Test
+    public void redisTest() {
+
+    }
 }

@@ -2,6 +2,7 @@ package org.webmaple.worker.network;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.webmaple.common.network.RequestSender;
 import org.webmaple.common.util.RequestUtil;
@@ -63,8 +64,8 @@ public class HeartBeatSender {
             String text = RequestUtil.getResponseText(response);
             JSONObject jsonObject = JSON.parseObject(text);
 
-            String returnedWorkerName;
-            if ((returnedWorkerName = jsonObject.getString("message")) != null) {
+            String returnedWorkerName = jsonObject.getString("message");
+            if (StringUtils.isNotBlank(returnedWorkerName)) {
                 setWorkerName(returnedWorkerName);
             }
         } catch (Exception e) {
