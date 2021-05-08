@@ -17,7 +17,6 @@ import org.webmaple.common.enums.SourceType;
 import org.webmaple.common.model.DataTableDTO;
 import org.webmaple.common.model.NodeDTO;
 import org.webmaple.common.model.Result;
-import org.webmaple.common.model.SpiderAdvance;
 import org.webmaple.common.network.RequestSender;
 import org.webmaple.common.util.RequestUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -29,13 +28,11 @@ import org.webmaple.admin.service.ComponentService;
 import org.webmaple.admin.service.SourceService;
 import org.webmaple.admin.service.UserService;
 import org.webmaple.common.view.*;
-import us.codecraft.webmagic.Request;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -533,7 +530,7 @@ public class CommonController {
             if (ip == null) {
                 return result.fail("worker_ip_is_null");
             }
-            nodeDTO.setIp(ip.startsWith("10") ? "127.0.0.1" : ip);
+            nodeDTO.setIp(ip.startsWith("10.") ? "127.0.0.1" : ip);
             nodeDTO.setPort(Integer.parseInt(port));
             nodeDTO.setName(workerName);
             String name = workerContainer.addWorker(nodeDTO);

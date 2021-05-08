@@ -105,7 +105,7 @@ public class SpiderManagerServiceImpl implements SpiderManageService {
                     spiderAdvanceView.setUuid(spiderAdvance.getUuid());
                     spiderAdvanceView.setTarget(spiderAdvance.getPageNum());
                     spiderAdvanceView.setTemp(spiderAdvance.getTemp());
-                    spiderAdvanceView.setPercent((spiderAdvance.getTemp() / spiderAdvance.getPageNum()) * 100 + "%");
+                    spiderAdvanceView.setPercent(((double)spiderAdvance.getTemp() / spiderAdvance.getPageNum()) * 100 + "%");
                     return spiderAdvanceView;
                 }).collect(Collectors.toList());
                 advanceList.addAll(advanceViews);

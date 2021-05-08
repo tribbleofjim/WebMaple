@@ -26,4 +26,9 @@ public class CreateTable {
         System.out.println("reset redis ttl");
         redisUtil.reset("test", "test", 30, 0);
     }
+
+    @Test
+    public void divideTest() {
+        System.out.println(((double)4 / 100) * 100 + "%");
+    }
 }
