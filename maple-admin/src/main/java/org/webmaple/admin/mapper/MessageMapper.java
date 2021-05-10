@@ -35,7 +35,7 @@ public interface MessageMapper {
     @Delete({
             "<script>",
             "<foreach collection='messages' item='item' index='index' separator=','>",
-            "DELETE maple_message WHERE ",
+            "DELETE FROM maple_message WHERE ",
             "from_user = #{item.fromUser} and to_user = #{item.toUser} and date = #{item.date}",
             "</foreach>",
             "</script>"

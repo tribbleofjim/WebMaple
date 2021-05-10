@@ -35,6 +35,6 @@ public interface UserMapper {
     @Update("UPDATE maple_user SET auth = '0' WHERE phone = #{phone}")
     void authUser(String phone);
 
-    @Delete("DELETE maple_user WHERE phone = #{phone}")
+    @Delete("DELETE FROM maple_user WHERE phone = #{phone}")
     void deleteUser(String phone);
 }

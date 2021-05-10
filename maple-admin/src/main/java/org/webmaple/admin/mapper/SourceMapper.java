@@ -23,6 +23,6 @@ public interface SourceMapper {
     @Update("UPDATE maple_source where source_name = #{sourceName} and source_type = #{sourceType}")
     void modifySource(Source source);
 
-    @Delete("DELETE maple_source where source_name = #{sourceName} and source_type = #{sourceType}")
+    @Delete("DELETE FROM maple_source where source_name = #{sourceName} and source_type = #{sourceType}")
     void deleteSource(String sourceName, char sourceType);
 }
