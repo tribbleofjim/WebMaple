@@ -71,6 +71,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Result<Void> authUser(String phone) {
+        Result<Void> result = new Result<>();
+        userMapper.authUser(phone);
+        return result.success("授权成功！");
+    }
+
+    @Override
+    public Result<Void> delUser(String phone) {
+        Result<Void> result = new Result<>();
+        userMapper.deleteUser(phone);
+        return result.success("删除成功！");
+    }
+
+    @Override
     public Result<Void> modifyNickname(User user) {
         Result<Void> result = new Result<>();
         User oldUser = userMapper.getUserByPhone(user.getPhone());

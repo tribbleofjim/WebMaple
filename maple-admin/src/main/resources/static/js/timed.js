@@ -43,7 +43,13 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                             worker: job.worker
                         },
                         success: function (res) {
-                            layer.msg(res.message);
+                            layer.msg("启动成功！");
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                           //刷新页面
+                            parent.location.reload();
                         }
                     });
                 },
@@ -76,7 +82,13 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                             worker: job.worker
                         },
                         success: function (res) {
-                            layer.msg(res.message);
+                            layer.msg("暂停成功");
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                           //刷新页面
+                            parent.location.reload();
                         }
                     });
                 },
@@ -108,7 +120,13 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                             worker: job.worker
                         },
                         success: function (res) {
-                            layer.msg(res.message);
+                            layer.msg("删除成功");
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                           //刷新页面
+                            parent.location.reload();
                         }
                     });
                 },
@@ -132,7 +150,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             },
             success: function (res) {
                 if (res.status == 200) {
-                    layer.alert(res.message, {icon: 5}, function () {
+                    layer.alert("创建定时任务成功！", {icon: 5}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame
@@ -142,7 +160,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     });
 
                 } else {
-                    layer.alert(res.message, {icon: 6}, function () {
+                    layer.alert("创建定时任务失败，请重试", {icon: 6}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame

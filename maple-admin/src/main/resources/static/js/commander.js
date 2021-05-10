@@ -6,6 +6,27 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     let element = layui.element;
     let $ = layui.jquery;
 
+    table.on('toolbar(userList)', function(obj) {
+        let checkStatus = table.checkStatus(obj.config.id);
+        let layEvent = obj.event;//获取该点击事件
+        switch(layEvent){
+            case 'authUser':
+                if (checkStatus.data.auth) {
+                    layer.msg("该用户已经为管理员，无需添加");
+                } else {
+                    authUser(checkStatus.data.phone);
+                }
+                break;
+            case 'delUser':
+                if (checkStatus.data.auth) {
+                    layer.msg("该用户已经为管理员，无法注销");
+                } else {
+                    delUser(checkStatus.data.phone);
+                }
+                break;
+        };
+    });
+
     $.ajax({
         type: 'get',
         url: "commanderMsgList",
@@ -71,10 +92,54 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     });
 });
 
+function authUser(phone) {
+    layer.open({
+        content: '确认要将这个用户授权为管理员吗？',
+        btn: ['确认', '取消']
+        ,btn1: function(index, layero){
+            $.ajax({
+                type: 'get',
+                url: 'authUser',
+                data: {
+                    phone: phone,
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                }
+            });
+        },
+        btn2: function(index, layero){
+            layer.closeAll();
+        }
+    });
+}
+
+function delUser(phone) {
+    layer.open({
+        content: '确认要注销这个用户的账号吗？',
+        btn: ['确认', '取消']
+        ,btn1: function(index, layero){
+            $.ajax({
+                type: 'get',
+                url: 'delUser',
+                data: {
+                    phone: phone,
+                },
+                success: function (res) {
+                    layer.msg(res.message);
+                }
+            });
+        },
+        btn2: function(index, layero){
+            layer.closeAll();
+        }
+    });
+}
+
 function getCookieByKey(name){
 var cookies = document.cookie.split(';');
 var c;
-for(var i=0; i<cookies.length ; i++){
+for (var i=0; i<cookies.length ; i++){
         c = cookies[i].split('=');
         if (c[0].replace(' ', '') == name) {
             return c[1];

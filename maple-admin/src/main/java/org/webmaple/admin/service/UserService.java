@@ -16,6 +16,10 @@ public interface UserService {
 
     Result<User> searchUser(String phone);
 
+    Result<Void> authUser(String phone);
+
+    Result<Void> delUser(String phone);
+
     Result<Void> modifyNickname(User user);
 
     Result<Void> modifyPassword(String phone, String oldPass, String newPass);

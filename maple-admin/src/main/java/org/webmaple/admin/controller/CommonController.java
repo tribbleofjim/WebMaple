@@ -450,6 +450,24 @@ public class CommonController {
         return messageService.accuse(accuseId, accuseReason, userId);
     }
 
+    @RequestMapping("/authUser")
+    @ResponseBody
+    public Result<Void> authUser(@RequestParam String phone) {
+        if (StringUtils.isBlank(phone)) {
+            return new Result<Void>().fail("用户id不能为空！");
+        }
+        return userService.authUser(phone);
+    }
+
+    @RequestMapping("/delUser")
+    @ResponseBody
+    public Result<Void> delUser(@RequestParam String phone) {
+        if (StringUtils.isBlank(phone)) {
+            return new Result<Void>().fail("用户id不能为空！");
+        }
+        return userService.delUser(phone);
+    }
+
     @RequestMapping("/messageList")
     @ResponseBody
     public DataTableDTO messageList(@RequestParam String id) {
