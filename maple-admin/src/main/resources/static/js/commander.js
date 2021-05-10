@@ -1,27 +1,29 @@
 var userId = decodeURIComponent(getCookieByKey("user"));
+var $;
 layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     let form = layui.form;
     let layer = layui.layer;
     let table = layui.table;
     let element = layui.element;
-    let $ = layui.jquery;
+    $ = layui.jquery;
 
     table.on('toolbar(userList)', function(obj) {
         let checkStatus = table.checkStatus(obj.config.id);
         let layEvent = obj.event;//获取该点击事件
         switch(layEvent){
             case 'authUser':
-                if (checkStatus.data.auth) {
+                if (checkStatus.data[0].auth === '是') {
                     layer.msg("该用户已经为管理员，无需添加");
                 } else {
-                    authUser(checkStatus.data.phone);
+                    authUser(checkStatus.data[0].phone);
                 }
                 break;
             case 'delUser':
-                if (checkStatus.data.auth) {
+                console.log(checkStatus.data[0].auth);
+                if (checkStatus.data[0].auth === '是') {
                     layer.msg("该用户已经为管理员，无法注销");
                 } else {
-                    delUser(checkStatus.data.phone);
+                    delUser(checkStatus.data[0].phone);
                 }
                 break;
         };
