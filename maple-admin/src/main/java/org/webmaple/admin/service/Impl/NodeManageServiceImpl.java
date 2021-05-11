@@ -54,45 +54,13 @@ public class NodeManageServiceImpl implements NodeManageService {
             return result.fail("jar包上传出现错误");
         }
 
-        NodeDTO worker = new NodeDTO();
-        worker.setType(NodeType.WORKER.getType());
-        worker.setIp(ip);
-        worker.setPort(port);
-        String workerName = workerContainer.addWorker(worker);
-        if (StringUtils.isBlank(workerName)) {
-            return result.fail("节点类型错误或创建节点个数已达到最大上限");
-        }
-
         Connection conn = SSHUtil.getConnection(ip, user, password);
         SSHUtil.uploadFile(conn, filePath);
         SSHUtil.execCommand(conn, "nohup java -jar " + fileName + " > temp.log 2>&1 &");
         SSHUtil.close(conn);
 
-        HashMap<String, String > param = new HashMap<>();
-        param.put("workerName", workerName);
-        Request request = RequestUtil.getRequest(worker.getIp(), worker.getPort(), "setWorkerName", param);
-
-        try {
-            CloseableHttpResponse response = requestSender.request(RequestUtil.getHttpUriRequest(request));
-            JSONObject responseResult = RequestUtil.getResponseObject(response);
-            if (responseResult.getBoolean("success")) {
-                return result.success();
-
-            } else {
-                shutdownWorkerServer(ip, user, password);
-                workerContainer.remove(workerName);
-                return result.fail("创建节点失败");
-            }
-
-        } catch (Exception e) {
-            return result.fail(e.getMessage());
-        }
+        return result.success("创建节点成功！");
     }
-
-    // TODO: 删除服务器上已经在运行的节点
-    private void shutdownWorkerServer(String ip, String user, String password) {
-    }
-
 
     @Override
     public void removeWorker(String workerName) {

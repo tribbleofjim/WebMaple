@@ -1,6 +1,7 @@
 package org.webmaple.admin.controller;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.webmaple.admin.BeanConfig;
 import org.webmaple.admin.container.WorkerContainer;
 import org.webmaple.admin.service.NodeManageService;
@@ -69,7 +70,7 @@ public class NodeController {
         return dataTableDTO;
     }
 
-    @RequestMapping("/addWorker")
+    @PostMapping("/addWorker")
     @ResponseBody
     public Result<Void> addWorker(@RequestParam String ip, @RequestParam String user,
                                   @RequestParam String password, @RequestParam Integer port, @RequestParam String fileName) {
@@ -78,7 +79,6 @@ public class NodeController {
                 || StringUtils.isBlank(fileName) || port == null) {
             return result.fail("参数为空");
         }
-
         return nodeManageService.addWorker(ip, user, password, port, fileName);
     }
 

@@ -7,8 +7,9 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
     let $ = layui.jquery;
 
     form.on('submit(nodeForm)', function(data) {
+        console.log(filename);
         var filename = layui.data('filename').filename;
-        if (filename) {
+        if (filename != null) {
             $.ajax({
                 type: 'post',
                 url: 'addWorker',
@@ -18,6 +19,28 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
                     password: data.field.password,
                     port: data.field.port,
                     fileName: filename
+                },
+                success: function (res) {
+                    if (res.status == 200) {
+                        layer.alert("创建成功！", {icon: 5}, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                           //刷新页面
+                            parent.location.reload();
+                        });
+
+                    } else {
+                        layer.alert("创建失败，请重试", {icon: 6}, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                            //刷新页面
+                            parent.location.reload();
+                        });
+                    }
                 }
             });
         } else {
@@ -69,31 +92,58 @@ layui.use(['form', 'layer','table', 'jquery', 'element','upload'], function () {
     });
 
     function addNode() {
-        layer.open({
-            type:1,
-            area:['400px','300px'],
-            title: '添加节点',
-            content: $("#nodeInfo"),
-            shade: 0,
-            btn: '提交'
-            ,yes: function(index, layero){
-                let ip = document.getElementById('ip').value;
-                let name = document.getElementById('name').value;
-                let xhr = new XMLHttpRequest();
-                let url = "/addWorker?ip=" + ip + "&name=" + name;
-                xhr.open('GET', url, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.status == 200) {
-                        layer.msg('添加节点成功！');
-                    }
-                }
-                xhr.send(null);
-                return true;
+        let ip = document.getElementById('ip').value;
+        let user = document.getElementById('user').value;
+        let password = document.getElementById('password').value;
+        let port = document.getElementById('port').value;
+        $.ajax({
+            type: 'post',
+            url: "addWorker",
+            data: {
+                ip: ip,
+                user: user,
+                password: password,
+                port: port,
+                fileName: filename
             },
-            cancel: function(layero,index){
-                layer.closeAll();
+            success: function (res) {
+                if (res.status == 200) {
+                    layer.alert("创建成功！", {icon: 5}, function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                       //刷新页面
+                        parent.location.reload();
+                    });
+
+                } else {
+                    layer.alert("创建失败，请重试", {icon: 6}, function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        //刷新页面
+                        parent.location.reload();
+                    });
+                }
             }
         });
+//        layer.open({
+//            type:1,
+//            area:['400px','300px'],
+//            title: '添加节点',
+//            content: $("#nodeInfo"),
+//            shade: 0,
+//            btn: '提交'
+//            ,yes: function(index, layero){
+//
+//                return true;
+//            },
+//            cancel: function(layero,index){
+//                layer.closeAll();
+//            }
+//        });
     }
 
     function removeNode(data) {
