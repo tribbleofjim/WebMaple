@@ -1,4 +1,5 @@
 var form, layer, table, element, $;
+var templateUrl = null;
 layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
     form = layui.form;
     layer = layui.layer;
@@ -71,6 +72,38 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
 
                 } else {
                     layer.alert(res.message, {icon: 6}, function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        //刷新页面
+                        parent.location.reload();
+                    });
+                }
+            }
+        });
+        return false;
+    });
+
+    form.on('submit(formDemo)', function(data) {
+        var fields = data.field;
+        $.ajax({
+            type: 'post',
+            url: templateUrl,
+            data: fields,
+            success: function (res) {
+                if (res.status == 200) {
+                    layer.alert("创建成功！", {icon: 5}, function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                       //刷新页面
+                        parent.location.reload();
+                    });
+
+                } else {
+                    layer.alert("创建失败，请重试", {icon: 6}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame
@@ -233,6 +266,8 @@ function useTemplate() {
             templateName: templateName
         },
         success: function (res) {
+            console.log(res.model.formUrl);
+            templateUrl = res.model.formUrl;
             $("#template").html("\n");
             template.insertAdjacentHTML("beforeEnd", res.model.html);
         }
