@@ -152,7 +152,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                 cronUnit: data.field.cronUnit
             },
             success: function (res) {
-                if (res.model.success) {
+                if (res.success) {
                     layer.alert("创建定时任务成功！", {icon: 6}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
