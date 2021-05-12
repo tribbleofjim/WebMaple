@@ -92,8 +92,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
             url: templateUrl,
             data: fields,
             success: function (res) {
-                if (res.status == 200) {
-                    layer.alert("创建成功！", {icon: 5}, function () {
+                if (res.success) {
+                    layer.alert("创建成功！", {icon: 6}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame
@@ -103,7 +103,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     });
 
                 } else {
-                    layer.alert("创建失败，请重试", {icon: 6}, function () {
+                    layer.alert("创建失败，请重试", {icon: 5}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame
