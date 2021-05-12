@@ -43,7 +43,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                             worker: job.worker
                         },
                         success: function (res) {
-                            layer.alert("启动成功！", {icon: 5}, function () {
+                            layer.alert("启动成功！", {icon: 6}, function () {
                                 // 获得frame索引
                                 var index = parent.layer.getFrameIndex(window.name);
                                 //关闭当前frame
@@ -83,7 +83,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                             worker: job.worker
                         },
                         success: function (res) {
-                            layer.alert("暂停成功", {icon: 5}, function () {
+                            layer.alert("暂停成功", {icon: 6}, function () {
                                 // 获得frame索引
                                 var index = parent.layer.getFrameIndex(window.name);
                                 //关闭当前frame
@@ -122,7 +122,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                             worker: job.worker
                         },
                         success: function (res) {
-                            layer.alert("删除成功", {icon: 5}, function () {
+                            layer.alert("删除成功", {icon: 6}, function () {
                                 // 获得frame索引
                                 var index = parent.layer.getFrameIndex(window.name);
                                 //关闭当前frame
@@ -152,8 +152,8 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                 cronUnit: data.field.cronUnit
             },
             success: function (res) {
-                if (res.status == 200) {
-                    layer.alert("创建定时任务成功！", {icon: 5}, function () {
+                if (res.model.success) {
+                    layer.alert("创建定时任务成功！", {icon: 6}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame
@@ -163,7 +163,7 @@ layui.use(['form', 'layer','table', 'jquery', 'element'], function () {
                     });
 
                 } else {
-                    layer.alert("创建定时任务失败，请重试", {icon: 6}, function () {
+                    layer.alert("创建定时任务失败，请重试", {icon: 5}, function () {
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭当前frame
